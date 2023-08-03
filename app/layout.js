@@ -1,10 +1,17 @@
 import "./globals.css";
-import { Poppins } from "next/font/google";
+import { Poppins, Montserrat } from "next/font/google";
 import { Inter } from "next/font/google";
 
+const inter = Inter({ subsets: ["latin"] });
+
 const poppins = Poppins({
-  weight: ["400", "700"],
-  Subsets: ["latin"],
+  weight: ["700", "500"],
+  subsets: ["latin"],
+});
+
+const montserrat = Montserrat({
+  weight: ["500", "400"],
+  subsets: ["latin"],
 });
 
 export const metadata = {
@@ -15,7 +22,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={poppins.className}>{children}</body>
     </html>
   );
 }

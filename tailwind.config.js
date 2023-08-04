@@ -16,6 +16,10 @@ module.exports = {
         "back-color": "#ffff",
         "search-color": "#F0F2F4",
         "button-color": "#33A833",
+        "link-color": " var(--blue-gray-700, #455A64);",
+      },
+      spacing: {
+        "search-input": "26.125rem",
       },
     },
   },

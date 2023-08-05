@@ -1,4 +1,5 @@
 import Image from "next/image";
+import TopGourmet from "./components/TopGourmet";
 
 
 export default function Home() {
@@ -22,6 +23,9 @@ export default function Home() {
         <div>
           <img src="/img-principal.svg" alt="icon-principal" />
         </div>
+        <section>
+         <TopGourmet />
+        </section>
       </section>
     )   
 }

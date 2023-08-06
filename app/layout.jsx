@@ -1,4 +1,4 @@
-import "./globals.css";
+import "./styles/globals.css";
 import { Poppins, Montserrat } from "next/font/google";
 import { Inter } from "next/font/google";
 import Navbar from "./components/Navbar";

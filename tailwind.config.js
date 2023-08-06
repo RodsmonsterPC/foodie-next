@@ -21,6 +21,9 @@ module.exports = {
       spacing: {
         "search-input": "26.125rem",
       },
+      dropShadow: {
+        navbar: "0px 8px 32px 0px rgba(0, 0, 0, 0.08);",
+      },
     },
   },
   plugins: [],

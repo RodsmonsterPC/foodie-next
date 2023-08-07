@@ -1,3 +1,5 @@
+const { Montserrat } = require("next/font/google");
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
@@ -17,12 +19,17 @@ module.exports = {
         "search-color": "#F0F2F4",
         "button-color": "#33A833",
         "link-color": " var(--blue-gray-700, #455A64);",
+        "back-form": "#F0F5FA",
       },
       spacing: {
         "search-input": "26.125rem",
+        479: "29rem",
       },
       dropShadow: {
         navbar: "0px 8px 32px 0px rgba(0, 0, 0, 0.08);",
+      },
+      fontFamily: {
+        "Sub-title": [Montserrat],
       },
     },
   },

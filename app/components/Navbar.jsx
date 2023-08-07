@@ -12,7 +12,6 @@ const Navbar = () => {
     { name: "Catálogo", link: "/" },
     { name: "Iniciar sesión", link: "/" },
   ];
-
   return (
     <div>
       <nav className="w-screen bg-back-color flex justify-between text-slate-900 h-16 drop-shadow-md">
@@ -57,9 +56,12 @@ const Navbar = () => {
                 <Link href={link.link}>{link.name}</Link>
               </li>
             ))}
-            <div className="hidden sm:flex">
-              <JoinButton />
-            </div>
+
+            <Link href={`/pages/registerUser`}>
+              <div className="hidden sm:flex">
+                <JoinButton name={"¡Unete a Foodie!"} />
+              </div>
+            </Link>
 
             <button className="md:hidden flex text-button-color border border-button-color rounded-full w-96 h-9 py-2.5 hover:text-black duration-500 ml-9">
               <Image

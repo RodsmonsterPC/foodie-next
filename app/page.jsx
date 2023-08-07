@@ -1,42 +1,43 @@
 import Image from "next/image";
-
 export default function Home() {
   return (
-    <section className="flex">
+    <section className="lg:flex-wrap">
       <div>
         <div>
-          <h1 className=" text-5xl font-semibold	h-14 w-[39rem] mt-[9rem] ml-[3rem] text-[#37474F]">
+          <h1 className="mt-[2.5rem] text-[1.9rem] mx-8  font-popins font-semibold  text-[#37474F] lg:mt-[9rem] lg:ml-[3rem] lg:h-14 lg:w-[39rem] lg:text-[3rem] ">
             Saborea la Excelencia
           </h1>
-          <p className="text-[1rem] mt-[1.2rem] font-medium ml-[3rem] w-[36rem] pr-8 text-[#37474F]">
+          <p className="mt-4 text-base mx-8 p-2 text-center font-Montserrat font-medium text-[#37474F] lg:text-[1.2rem] lg:ml-[3rem] lg:w-[36rem] lg:pr-8 lg:mt-5 lg:text-left">
             ¡Bienvenido a nuestro exclusivo rincón culinario! Descubre la
             plataforma de insumos gourmet que te llevará a un viaje de sabores
             excepcionales.
           </p>
         </div>
-        <div className="flex">
-          <button className="text-lg bg-button-color text-white w-80 h-12 rounded-full mt-[4rem] ml-[3rem]">
+        <div className="lg:flex">
+          <button className="mt-8 w-80 h-12 mx-8 bg-button-color rounded-full text-white font-Montserrat lg:text-lg lg:mt-[4rem] lg:ml-[3rem]">
             Explorar opciones gourmet
           </button>
-          <div className="mt-[4rem] ml-[1rem] flex items-center ">
-            <span className="inline-block border border-#455A64 rounded-full h-[3rem] w-[3rem]">
+          <div className="flex flex-col-reverse lg:flex-row lg:h-40">
+          <div className="flex items-center mt-4 mx-8">
+            <span className="inline-block border border-#455A64 rounded-full  h-[3rem] w-[3rem]">
               <img
                 className="ml-2 mt-2"
                 src="icon-person.svg"
                 alt="icon-person"
               />
             </span>
-            <p className="ml-[1rem] font-bold text-[1rem] text-[#455A64]">
+            <p className="font-Montserrat ml-[1rem] font-bold text-[1rem] text-[#455A64]">
               ¡Únete al mundo Culinario!
             </p>
           </div>
+          <div className="relative ">
+            <img className="lg:relative lg:bottom-80 lg:h-[36rem]" src="/img-principal.svg" alt="icon-principal" />
+            <div className="absolute bottom-20">
+            <img className="" src="/logo.svg" alt="logo" />
+            </div>
+          </div>
         </div>
-      </div>
-      <div className="relative w-[38rem] h-[38rem] bottom-10 left-8">
-        <img src="/img-principal.svg" alt="icon-principal" />
-        <div className="absolute h-[2rem] w-[6rem] bottom-24 left-52">
-          <img src="/logo.svg" alt="logo" />
-        </div>
+          </div>
       </div>
     </section>
   );

@@ -24,7 +24,7 @@ export default function Home() {
           <img src="/img-principal.svg" alt="icon-principal" />
         </div>
         <section>
-         <TopGourmet />
+          <TopGourmet />
         </section>
       </section>
     )   

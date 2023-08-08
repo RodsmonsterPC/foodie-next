@@ -5,7 +5,7 @@ const SmallCardLanding = () => {
    return (
       <div className='p-3 bg-slate-500 w-1/4 flex' >
 
-         <Image className='h-full w-1/3' src='../../public/icon-twitter.svg' alt="Product item" />
+         <Image className='h-full w-1/3' src='public/icon-twitter.svg' alt="Product item" />
 
          <div className='h-full w-2/3'>
 

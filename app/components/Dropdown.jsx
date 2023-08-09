@@ -1,7 +1,8 @@
+"use client";
 import React from "react";
-import { BiChevronDown } from "react-icons/bi";
 
-import useState from "react";
+import Image from "next/image";
+import { useState } from "react";
 
 const Dropdown = () => {
   const [inputValue, setInputValue] = useState("");
@@ -17,10 +18,10 @@ const Dropdown = () => {
     { name: "Postres" },
   ];
   return (
-    <div className="w-40 h-11">
+    <div className="w-40 h-11 border border-2 rounded-full">
       <div
         onClick={() => setOpen(!open)}
-        className={`bg-white w-full p-2 flex items-center justify-between rounded ${
+        className={`bg-white w-full p-2 flex items-center justify-between rounded-full ${
           !selected && "text-button-color"
         }`}
       >
@@ -28,8 +29,13 @@ const Dropdown = () => {
           ? selected?.length > 25
             ? selected?.substring(0, 25) + "..."
             : selected
-          : "Select Country"}
-        <BiChevronDown size={20} className={`${open && "rotate-180"}`} />
+          : "Seleccionar"}
+        <Image
+          src={"/chevron-icon.svg"}
+          width={20}
+          height={20}
+          className={`${open && "rotate-180"}`}
+        />
       </div>
       <ul
         className={`bg-white mt-2 overflow-y-auto ${
@@ -43,7 +49,7 @@ const Dropdown = () => {
               category?.name?.toLowerCase() === selected?.toLowerCase() &&
               "bg-button-color "
             } ${
-              category?.name?.toLowerCase().startWith(inputValue)
+              category?.name?.toLowerCase().startsWith(inputValue)
                 ? "block"
                 : "hidden"
             }`}

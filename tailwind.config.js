@@ -31,6 +31,18 @@ module.exports = {
       fontFamily: {
         "Sub-title": [Montserrat],
       },
+      fontFamily:{
+        "popins":['Poppins', 'sans-serif'],
+        "Montserrat":['Montserrat', 'sans-serif'],
+      },
+      backgroundColor:{
+        "btn":'#33A833',
+        "btn2":'#F6BE2C',
+
+      },
+      screens:{
+        'phone': '390px',
+      }
     },
   },
   plugins: [],

@@ -1,6 +1,6 @@
 import React from "react";
 import Image from "next/image";
-import imgLoggin from "../assets/img-loggin.svg";
+import imgLoggin from "../../assets/img-loggin.svg";
 const Loggin = () => {
   return (
     <section className="h-screen w-screen md:flex ">
@@ -33,4 +33,4 @@ const Loggin = () => {
   );
 };
 
-export { Loggin };
+export default Loggin ;

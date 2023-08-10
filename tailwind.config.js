@@ -32,8 +32,8 @@ module.exports = {
         "Sub-title": [Montserrat],
       },
       fontFamily:{
-        "popins":['Poppins', 'sans-serif'],
-        "Montserrat":['Montserrat', 'sans-serif'],
+        "popins":['Poppins'],
+        "Montserrat":['Montserrat'],
       },     
     },
   },

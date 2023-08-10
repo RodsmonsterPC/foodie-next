@@ -5,7 +5,11 @@ import { Poppins, Montserrat } from "next/font/google";
 import { Inter } from "next/font/google";
 import Navbar from "./components/Navbar";
 import RegisterUser from "./pages/registerUser";
+
+import NewProduct from "./pages/newProduct";
+
 import { Footer } from "./components/footer";
+
 
 
 const poppins = Poppins({
@@ -28,8 +32,7 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body className={poppins.className}>
         <Navbar />
-      
-        {/* <RegisterUser /> */}
+        <NewProduct />
         <main>{children}</main>
         <Footer/>
       </body>

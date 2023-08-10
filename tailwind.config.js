@@ -30,9 +30,7 @@ module.exports = {
         "btn2":'#F6BE2C',
 
       },
-      screens:{
-        'phone': '390px',
-      }
+     
     },
   },
   plugins: [],

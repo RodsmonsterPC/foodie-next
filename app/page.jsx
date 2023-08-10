@@ -29,17 +29,18 @@ export default function Home() {
                   alt="icon-person"
                 />
               </span>
-              <p className="font-Montserrat ml-[1rem] font-bold text-[1rem] text-[#455A64]">
+              <p className="font-Montserrat ml-[1rem] font-bold text-[1rem] text-[#455A64]
+              md:w-[16rem]">
                 ¡Únete al mundo Culinario!
               </p>
             </div>
             <div className="relative ">
               <img
-                className="md:relative md:bottom-80"
+                className="md:relative md:w-[30rem] md:h-[34rem] md:bottom-[20rem] md:left-24"
                 src="/img-principal.svg"
                 alt="icon-principal"
               />
-              <div className="absolute bottom-20">
+              <div className="absolute bottom-20 left-[7.5rem] md:bottom-[3.5rem] md:left-[15.5rem]">
                 <img className="" src="/logo.svg" alt="logo" />
               </div>
             </div>

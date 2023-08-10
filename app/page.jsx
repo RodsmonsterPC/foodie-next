@@ -3,20 +3,26 @@ export default function Home() {
     <section className="md:flex-wrap">
       <div>
         <div>
-          <h1 className="mt-[2.5rem] text-[1.9rem] mx-8  font-popins font-semibold  text-[#37474F]
-           md:mt-[10rem] md:ml-[3.5rem] md:h-14 md:w-[39rem] md:text-5xl">
+          <h1
+            className="mt-[2.5rem] text-[1.9rem] mx-8  font-popins font-semibold  text-[#37474F]
+           md:mt-[10rem] md:ml-[3.5rem] md:h-14 md:w-[39rem] md:text-5xl"
+          >
             Saborea la Excelencia
           </h1>
-          <p className="mt-4 text-base mx-8 p-2 text-center font-Montserrat font-medium text-[#37474F] 
-          md:text-[1.2rem] md:ml-[3rem] md:w-[36rem] md:pr-8 md:mt-5 md:text-left">
+          <p
+            className="mt-4 text-base mx-8 p-2 text-center font-Montserrat font-medium text-[#37474F] 
+          md:text-[1.2rem] md:ml-[3rem] md:w-[36rem] md:pr-8 md:mt-5 md:text-left"
+          >
             ¡Bienvenido a nuestro exclusivo rincón culinario! Descubre la
             plataforma de insumos gourmet que te llevará a un viaje de sabores
             excepcionales.
           </p>
         </div>
         <div className="lg:flex">
-          <button className="mt-8 w-80 h-12 mx-8 text-lg bg-button-color rounded-full text-white font-Montserrat 
-           md:mt-20 md:ml-16">
+          <button
+            className="mt-8 w-80 h-12 mx-8 text-lg bg-button-color rounded-full text-white font-Montserrat 
+           md:mt-20 md:ml-16"
+          >
             Explorar opciones gourmet
           </button>
           <div className="flex flex-col-reverse md:flex-row md:h-40">
@@ -28,8 +34,10 @@ export default function Home() {
                   alt="icon-person"
                 />
               </span>
-              <p className="font-Montserrat ml-[1rem] font-bold text-[1rem] text-[#455A64]
-              md:w-[16rem]">
+              <p
+                className="font-Montserrat ml-[1rem] font-bold text-[1rem] text-[#455A64]
+              md:w-[16rem]"
+              >
                 ¡Únete al mundo Culinario!
               </p>
             </div>

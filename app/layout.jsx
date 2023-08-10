@@ -4,6 +4,7 @@ import { Inter } from "next/font/google";
 import Navbar from "./components/Navbar";
 import RegisterUser from "./pages/registerUser";
 import NewProduct from "./pages/newProduct";
+import NewSeller from "./pages/newSeller";
 const poppins = Poppins({
   weight: ["400", "700"],
   subsets: ["latin"],
@@ -24,7 +25,7 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body className={poppins.className}>
         <Navbar />
-        <NewProduct />
+        <NewSeller />
         <main>{children}</main>
       </body>
     </html>

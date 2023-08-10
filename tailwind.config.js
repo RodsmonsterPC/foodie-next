@@ -30,6 +30,10 @@ module.exports = {
         "upload-h": "21.938rem",
         "description-w": "30rem",
         "description-h": "21rem",
+        "seller-title": "20.563rem",
+        "supload-w": "21.875rem",
+        "supload-h": "16.125rem",
+        "save-button": "65rem",
       },
       dropShadow: {
         navbar: "0px 8px 32px 0px rgba(0, 0, 0, 0.08);",

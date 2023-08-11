@@ -14,7 +14,7 @@ const Navbar = () => {
   ];
   return (
     <div>
-      <nav className="w-screen bg-back-color flex justify-between text-slate-900 h-16 drop-shadow-md">
+      <nav className="bg-back-color flex justify-between text-slate-900 h-16 drop-shadow-md">
         <div className="flex justify-between my-3 pl-12">
           <Image
             className="cursor-pointer"
@@ -63,9 +63,9 @@ const Navbar = () => {
               </div>
             </Link>
 
-            <button className="md:hidden flex text-button-color border border-button-color rounded-full w-96 h-9 py-2.5 hover:text-black duration-500 ml-9">
+            <button className="md:hidden flex text-button-color border border-button-color rounded-full w-72 h-9 py-2.5 hover:text-black duration-500 ml-9">
               <Image
-                className="ml-32 mr-3"
+                className="ml-16 mr-3"
                 src="/icon-person.svg"
                 width={20}
                 height={20}
@@ -74,9 +74,9 @@ const Navbar = () => {
               ¡Unete a Foodie!
             </button>
 
-            <div className="md:hidden flex justify-between text-base mt-6 rounded-full bg-search-color h-9 text-center p-1 w-96 ml-9">
+            <div className="md:hidden flex justify-between text-base mt-6 rounded-full bg-search-color h-9 text-center p-1 w-72 ml-9">
               <Image
-                className="ml-6"
+                className="ml-2"
                 src="/search.svg"
                 width={20}
                 height={20}
@@ -85,7 +85,7 @@ const Navbar = () => {
               <input
                 type="text"
                 placeholder="¡Encuentra lo que necesitas!"
-                className="flex text-base bg-search-color text-center w-56"
+                className="flex text-xs bg-search-color text-center w-56"
               />
               <button className="text-sm text-white bg-button-color rounded-full py-1 px-6 h-7">
                 Ir

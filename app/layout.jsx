@@ -5,6 +5,8 @@ import { Poppins, Montserrat } from "next/font/google";
 import { Inter } from "next/font/google";
 import Navbar from "./components/Navbar";
 import RegisterUser from "./pages/registerUser";
+import NewProduct from "./pages/newProduct";
+import NewSeller from "./pages/newSeller";
 import { Footer } from "./components/footer";
 
 

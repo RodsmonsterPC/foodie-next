@@ -8,10 +8,10 @@ const newProduct = () => {
         <h1 className="mt-3.5 mb-5 text-3xl">Nuevo Producto</h1>
       </div>
 
-      <div className="md:w-product-w md:h-product-h md:border md:border-2 md:mx-auto md:rounded-xl md:flex md:flex-row-reverse md:justify-around">
+      <div className="md:w-product-w md:h-product-h md:border-2 md:mx-auto md:rounded-xl md:flex md:flex-row-reverse md:justify-around">
         <div className="flex flex-col items-center  md:mb-9 ">
           <h1 className="mt-9 mb-5 text-3xl md:hidden">Nuevo Producto</h1>
-          <button className="border border-2 w-64 h-40 rounded-md md:w-upload-w md:h-upload-h md:mt-11">
+          <button className="border-2 w-64 h-40 rounded-md md:w-upload-w md:h-upload-h md:mt-11">
             <Image
               className="mx-auto my-auto"
               src={"/Vector.svg"}

@@ -24,7 +24,7 @@ const Navbar = () => {
             alt="logo image"
           />
 
-          <div className="hidden md:flex md:justify-between text-base ml-20 rounded-full bg-search-color h-9 text-center p-1 w-search-input ml-32">
+          <div className="hidden md:flex md:justify-between text-base rounded-full bg-search-color h-9 text-center p-1 w-search-input ml-32">
             <Image
               className="ml-6"
               src="/search.svg"

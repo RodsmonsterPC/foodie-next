@@ -1,6 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import DetailButton from "../components/detailButton";
+import Counter from "../components/Counter";
 const detailProduct = () => {
   return (
     <div>
@@ -40,7 +41,8 @@ const detailProduct = () => {
           </li>
         </ul>
       </div>
-      {/* Contador componente */}
+
+      <Counter />
 
       <div className="ml-6 flex flex-col mb-12">
         <DetailButton name={"Compra rápida"} />

@@ -43,6 +43,10 @@ module.exports = {
       fontFamily: {
         "Sub-title": [Montserrat],
       },
+      fontFamily:{
+        "popins":['Poppins'],
+        "Montserrat":['Montserrat'],
+      },     
     },
   },
   plugins: [],

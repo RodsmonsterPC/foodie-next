@@ -7,7 +7,9 @@ import Navbar from "./components/Navbar";
 import RegisterUser from "./pages/registerUser";
 import NewProduct from "./pages/newProduct";
 import NewSeller from "./pages/newSeller";
+import DetailProduct from "./pages/detailProduct";
 import { Footer } from "./components/footer";
+
 
 
 const poppins = Poppins({
@@ -30,7 +32,11 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body className={poppins.className}>
         <Navbar />
+
+        <DetailProduct />
+
         {/* <RegisterUser /> */}
+
         <main>{children}</main>
         <Footer/>
       </body>

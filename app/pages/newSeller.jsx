@@ -6,12 +6,12 @@ const newSeller = () => {
       <h1 className="hidden md:flex md:justify-center md:w-product-w text-center md:text-4xl md:mt-12">
         Perfecto, ahora brinda la información a detalle de tu empresa
       </h1>
-      <div className="flex flex-col items-center mt-1.5 md:grid md:grid-cols-2 md:flex  md:justify-items-start">
+      <div className="flex flex-col items-center mt-1.5 md:grid md:grid-cols-2 md:justify-items-start">
         <h1 className="md:hidden w-seller-title md:w-product-w text-center text-3xl md:ml-24">
           Perfecto, ahora brinda la información a detalle de tu empresa
         </h1>
         <div className="flex flex-col items-center md:mb-52 md:ml-28 ">
-          <button className="border border-2 w-64 h-40 rounded-md mt-6 md:w-supload-w md:h-supload-h md:mt-10">
+          <button className="border-2 w-64 h-40 rounded-md mt-6 md:w-supload-w md:h-supload-h md:mt-10">
             <Image
               className="mx-auto my-auto"
               src={"/Vector.svg"}

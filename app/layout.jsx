@@ -38,7 +38,7 @@ export default function RootLayout({ children }) {
         {/* <RegisterUser /> */}
 
         <main>{children}</main>
-        <Footer/>
+        {/* <Footer/> */}
       </body>
     </html>
   );

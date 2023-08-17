@@ -1,5 +1,5 @@
-import Image from "next/image";
-
+import CardLanding from "./components/CardLanding";
+import SmallCardRender from "./components/SmallCardRender";
 
 export default function Home() {
   return (
@@ -56,9 +56,43 @@ export default function Home() {
             </div>
           </div>
         </div>
-        <div>
-          <img src="/img-principal.svg" alt="icon-principal" />
+      </div>
+      <section className="mx-10">
+        <div className="text-center">
+          <h2 className="font-semibold text-4xl">Una irresistible variedad de productos</h2>
+          <p className="md:w-1/3 mx-auto py-5"> Conecta con los mejores proveedores, elige los ingredientes más frescos y de alta calidad para tus creaciones culinarias.</p>
+        </div>
+        <SmallCardRender title={'Top Gourmet'} />
+        <SmallCardRender title={'¡Lo nuevo!'} />
+      </section>
+      <section className="my-5 mx-10">
+        <div className="text-center">
+          <h2 className="font-semibold text-4xl">Déjate llevar por una experiencia culinaria única</h2>
+          <p className="md:w-1/3 mx-auto py-5">Encuentra los ingredientes perfectos para tus creaciones culinarias. Conéctate con los mejores proveedores y disfruta de productos frescos y de alta calidad.</p>
+        </div>
+        <div className="md:flex gap-6">
+          <CardLanding
+            title={'¿Listo para desatar tu creatividad gastronómica?'}
+            paragraph={'Únete a la experiencia inigualable de Saborea la Excelencia.'}
+            button={'Únete al Mundo culinario'}
+            bgColor={`bg-[#f6be2c]`}
+            imgUrl={'/culinary-world.svg'}
+            buttonColor={'bg-button-color'}
+            textColor={'black'}
+            textButtonColor={'white'}
+          />
+          <CardLanding
+            title={'Aquí encontrarás todo lo que necesitas'}
+            paragraph={'Desde exquisitas especias hasta selectos productos locales.'}
+            button={'Explorar opciones gourmet'}
+            bgColor={'bg-button-color'}
+            imgUrl={'/gourmet-options.svg'}
+            buttonColor={`bg-[#f6be2c]`}
+            textColor={'white'}
+            textButtonColor={'black'}
+          />
         </div>
       </section>
-    )   
+    </section>
+  );
 }

@@ -1,22 +1,63 @@
+"use client";
 import React from "react";
-
+import { useState } from "react";
+import { loginAccount } from "../api/login";
 const Form = () => {
+  const [values, setValues] = useState();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const result = await loginAccount(values.email, values.contraseña);
+
+    if (!result.success) setError("Error al iniciar Sesión");
+
+    localStorage.setItem("token", result.data.token);
+  };
+  const handleChange = (e) =>
+    setValues({ ...values, [e.target.name]: e.target.value });
+
   const dataForm = [
-    { name: "Email", placeholder: "Ingrese su correo" },
-    { name: "Contraseña", placeholder: "Contraseña" },
-    { name: "Confirmar contraseña", placeholder: "Confirmar contraseña" },
+    {
+      name: "email",
+      placeholder: "Ingrese su correo",
+      onChange: { handleChange },
+    },
+    {
+      name: "contraseña",
+      placeholder: "Contraseña",
+      onChange: { handleChange },
+    },
+    {
+      name: "confirmar contraseña",
+      placeholder: "Confirmar contraseña",
+      onChange: { handleChange },
+    },
   ];
+
   return (
     <div>
-      <form className="flex flex-col w-72 items-center mt-11 mx-auto">
+      <form
+        onSubmit={handleSubmit}
+        className="flex flex-col w-72 items-center mt-11 mx-auto"
+      >
         {dataForm.map((form) => (
           <input
             className="bg-back-form rounded-md text-left font-Sub-title mb-9 w-64 h-10 md:w-96"
+            key={form.name}
             type="text"
             name={form.name}
             placeholder={form.placeholder}
+            onChange={form.onChange}
           />
         ))}
+        <div className="ml-7 mt-14 mb-28 md:flex md:justify-center">
+          <button
+            type="submit"
+            className="bg-button-color font-Sub-title text-white h-14 rounded-full w-72"
+          >
+            ¡Registrate!
+          </button>
+        </div>
       </form>
     </div>
   );

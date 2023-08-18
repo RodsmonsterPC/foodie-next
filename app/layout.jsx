@@ -1,4 +1,3 @@
-
 import "./styles/global.css";
 
 import { Poppins, Montserrat } from "next/font/google";
@@ -9,8 +8,6 @@ import NewProduct from "./pages/newProduct";
 import NewSeller from "./pages/newSeller";
 import DetailProduct from "./pages/detailProduct";
 import { Footer } from "./components/footer";
-
-
 
 const poppins = Poppins({
   weight: ["400", "700"],
@@ -33,9 +30,9 @@ export default function RootLayout({ children }) {
       <body className={poppins.className}>
         <Navbar />
 
-        <DetailProduct />
+        {/* <DetailProduct /> */}
 
-        {/* <RegisterUser /> */}
+        <RegisterUser />
 
         <main>{children}</main>
         {/* <Footer/> */}
@@ -43,4 +40,3 @@ export default function RootLayout({ children }) {
     </html>
   );
 }
-

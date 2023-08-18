@@ -50,10 +50,10 @@ const Form = () => {
             onChange={form.onChange}
           />
         ))}
-        <div className="ml-7 mt-14 mb-28 md:flex md:justify-center">
+        <div className="ml-7 mt-14 mb-24 md:flex md:justify-center">
           <button
             type="submit"
-            className="bg-button-color font-Sub-title text-white h-14 rounded-full w-72"
+            className="bg-button-color font-Sub-title text-white h-14 rounded-full w-72 "
           >
             ¡Registrate!
           </button>

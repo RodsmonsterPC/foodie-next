@@ -32,14 +32,11 @@ export default function RootLayout({ children }) {
           links={[
             { name: "Inicio", link: "/" },
             { name: "Catálogo", link: "/" },
-            { name: "Iniciar sesión", link: "/" },
+            { name: "Iniciar sesión", link: "/loggin" },
           ]}
         />
 
-        {/* <DetailProduct /> */}
-
         <main>{children}</main>
-        {/* <Footer/> */}
       </body>
     </html>
   );

@@ -2,12 +2,14 @@
 import React from "react";
 import { useState } from "react";
 import { loginAccount } from "../api/login";
+import { createAccount } from "../api/signUp";
+import Link from "next/link";
 const Form = () => {
   const [values, setValues] = useState();
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const result = await loginAccount(values.email, values.contraseña);
+    const result = await createAccount(values.email, values.contraseña);
 
     if (!result.success) setError("Error al iniciar Sesión");
 
@@ -20,17 +22,14 @@ const Form = () => {
     {
       name: "email",
       placeholder: "Ingrese su correo",
-      onChange: { handleChange },
     },
     {
       name: "contraseña",
       placeholder: "Contraseña",
-      onChange: { handleChange },
     },
     {
       name: "confirmar contraseña",
       placeholder: "Confirmar contraseña",
-      onChange: { handleChange },
     },
   ];
 
@@ -47,16 +46,18 @@ const Form = () => {
             type="text"
             name={form.name}
             placeholder={form.placeholder}
-            onChange={form.onChange}
+            onChange={handleChange}
           />
         ))}
         <div className="ml-7 mt-14 mb-24 md:flex md:justify-center">
-          <button
-            type="submit"
-            className="bg-button-color font-Sub-title text-white h-14 rounded-full w-72 "
-          >
-            ¡Registrate!
-          </button>
+          <Link href="/loggin">
+            <button
+              type="submit"
+              className="bg-button-color font-Sub-title text-white h-14 rounded-full w-72 "
+            >
+              ¡Registrate!
+            </button>
+          </Link>
         </div>
       </form>
     </div>

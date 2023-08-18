@@ -57,7 +57,7 @@ const Navbar = ({ links }) => {
             {links.map((link) => (
               <li
                 key={link.name}
-                className=" ml-4 mt-8 mb-6 mr-6 md:my-0 text-link-color hover:text-button-color duration-500"
+                className={` ml-4 mt-8 mb-6 mr-6 md:my-0 text-link-color hover:text-button-color duration-500`}
               >
                 <Link href={link.link}>{link.name}</Link>
               </li>
@@ -74,7 +74,7 @@ const Navbar = ({ links }) => {
               </div>
             </Link>
 
-            <Link href={`/pages/registerUser`}>
+            <Link href={`/seller`}>
               <div className="hidden sm:flex">
                 <JoinButton name={"¡Unete a Foodie!"} />
               </div>

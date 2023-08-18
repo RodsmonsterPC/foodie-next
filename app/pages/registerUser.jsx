@@ -5,7 +5,7 @@ import Link from "next/link";
 
 const RegisterUser = () => {
   return (
-    <div className="w-auto md:mx-auto md:w-479 md:border-2 md:rounded-md md:border-black-100/35 md:mt-20">
+    <div className="w-auto md:mx-auto md:w-479 md:border-2 md:rounded-md md:border-black-100/35 md:mt-20 md:mb-8">
       <div>
         <article>
           <Image

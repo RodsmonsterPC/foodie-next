@@ -1,6 +1,6 @@
 import Link from "next/link";
 import React from "react";
-Link
+
 const Loggin = () => {
   return (
     <section className="relative md:flex md:flex-row">
@@ -16,7 +16,7 @@ const Loggin = () => {
           src="/logo.svg"
           alt="logo"
         />
-        <div className="mt-4 ml-5">
+        <div className="mt-4 ml-6">
           <input
             className="bg-back-form text-left font-Sub-title mb-8 w-[21rem] h-12 md:ml-[1.5rem] "
             type="text"

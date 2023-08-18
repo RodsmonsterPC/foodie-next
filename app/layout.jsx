@@ -28,11 +28,15 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={poppins.className}>
-        <Navbar />
+        <Navbar
+          links={[
+            { name: "Inicio", link: "/" },
+            { name: "Catálogo", link: "/" },
+            { name: "Iniciar sesión", link: "/" },
+          ]}
+        />
 
         {/* <DetailProduct /> */}
-
-        <RegisterUser />
 
         <main>{children}</main>
         {/* <Footer/> */}

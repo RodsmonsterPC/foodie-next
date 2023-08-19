@@ -1,6 +1,28 @@
+"use client";
 import React from "react";
 import Image from "next/image";
+import { useState } from "react";
+import { createSeller } from "../api/signSeller";
+import Link from "next/link";
 const newSeller = () => {
+  const [values, setValues] = useState();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const result = await createSeller(
+      values.name,
+      values.phoneNumber,
+      values.email,
+      values.description,
+      values.rfc,
+      values.address
+    );
+    console.log(values);
+    if (!result.success) setError("Error al registrar vendedor");
+  };
+  const handleChange = (e) =>
+    setValues({ ...values, [e.target.name]: e.target.value });
+
   return (
     <div>
       <h1 className="hidden md:flex md:justify-center md:w-product-w text-center md:text-4xl md:mt-12">
@@ -30,12 +52,17 @@ const newSeller = () => {
           <p className="hidden md:flex text-sm md:mb-5">
             Porfavor llenar todos los campos que se solicitan:
           </p>
-          <form className="flex flex-col justify-start md:grid md:grid-cols-2 md:gap-x-20 md:gap-y-10 ">
+          <form
+            onSubmit={handleSubmit}
+            className="flex flex-col justify-start md:grid md:grid-cols-2 md:gap-x-20 md:gap-y-10 "
+          >
             <div>
               <p className="text-2xl">Nombre:</p>
               <input
                 className="bg-back-form rounded-md text-left font-Sub-title mb-2 w-64 h-10 "
                 type="text"
+                name="name"
+                onChange={handleChange}
               />
             </div>
             <div>
@@ -43,6 +70,8 @@ const newSeller = () => {
               <input
                 className="bg-back-form rounded-md text-left font-Sub-title mb-2 w-64 h-10 "
                 type="text"
+                name="phoneNumber"
+                onChange={handleChange}
               />
             </div>
             <div>
@@ -50,6 +79,8 @@ const newSeller = () => {
               <input
                 className="bg-back-form rounded-md text-left font-Sub-title mb-2 w-64 h-10 "
                 type="text"
+                name="description"
+                onChange={handleChange}
               />
             </div>
             <div>
@@ -57,6 +88,8 @@ const newSeller = () => {
               <input
                 className="bg-back-form rounded-md text-left font-Sub-title mb-2 w-64 h-10 "
                 type="text"
+                name="email"
+                onChange={handleChange}
               />
             </div>
             <div>
@@ -64,6 +97,8 @@ const newSeller = () => {
               <input
                 className="bg-back-form rounded-md text-left font-Sub-title mb-2 w-64 h-10"
                 type="text"
+                name="rfc"
+                onChange={handleChange}
               />
             </div>
             <div>
@@ -71,14 +106,21 @@ const newSeller = () => {
               <input
                 className="bg-back-form rounded-md text-left font-Sub-title mb-2 w-64 h-10"
                 type="text"
+                name="address"
+                onChange={handleChange}
               />
             </div>
+            <div className="md:col-span-2 md:ml-[21.5rem]">
+              <Link href="/">
+                <button
+                  type="submit"
+                  className="mt-8 mb-5 bg-button-color text-white w-52 h-14 rounded-xl"
+                >
+                  Guardar
+                </button>
+              </Link>
+            </div>
           </form>
-        </div>
-        <div className="md:col-span-2 md:ml-save-button">
-          <button className="mt-8 mb-5 bg-button-color text-white w-52 h-14 rounded-xl">
-            Guardar
-          </button>
         </div>
       </div>
     </div>

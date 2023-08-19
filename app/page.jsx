@@ -1,5 +1,4 @@
 import CardLanding from "./components/CardLanding";
-import SmallCardCarousel from "./components/SmallCardCarousel";
 import SmallCardRender from "./components/SmallCardRender";
 
 export default function Home() {
@@ -64,7 +63,6 @@ export default function Home() {
           <p className="md:w-1/3 mx-auto py-5"> Conecta con los mejores proveedores, elige los ingredientes más frescos y de alta calidad para tus creaciones culinarias.</p>
         </div>
         <SmallCardRender title={'Top Gourmet'} />
-        <SmallCardCarousel  />
       </section>
       <section className="my-5 mx-5 md:mx-10">
         <div className="text-center">

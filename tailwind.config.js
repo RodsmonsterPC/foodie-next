@@ -1,5 +1,5 @@
 const { Montserrat } = require("next/font/google");
-
+const { Poppins } = require("next/font/google");
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
@@ -43,10 +43,9 @@ module.exports = {
       fontFamily: {
         "Sub-title": [Montserrat],
       },
-      fontFamily:{
-        "popins":['Poppins'],
-        "Montserrat":['Montserrat'],
-      },     
+      fontFamily: {
+        popins: [Poppins],
+      },
     },
   },
   plugins: [],

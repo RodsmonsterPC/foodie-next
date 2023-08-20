@@ -4,14 +4,9 @@ import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
 import JoinButton from "./JoinButton";
-const Navbar = () => {
+const Navbar = ({ links }) => {
   const [open, setOpen] = useState(false);
 
-  let Links = [
-    { name: "Inicio", link: "/" },
-    { name: "Catálogo", link: "/" },
-    { name: "Iniciar sesión", link: "/" },
-  ];
   return (
     <div>
       <nav className="bg-back-color flex justify-between text-slate-900 h-16 drop-shadow-md">
@@ -42,22 +37,44 @@ const Navbar = () => {
             </button>
           </div>
         </div>
+
+        <Link href={"/loggin"}>
+          <div>
+            <Image
+              className="md:hidden mt-6 ml-6"
+              src={"/shopping-car.svg"}
+              width={20}
+              height={20}
+            />
+          </div>
+        </Link>
         <div className="text-sm md:flex md:justify-between md:my-3 md:mr-3.5 md:pr-12 ">
           <ul
-            className={`md:flex md:items-center md:pb-0 pb-12 absolute md:static bg-white md:z-auto z-[-1] left-0 w-full md:w-auto md:pl-0 pl-9 transition-all duration-500 ease-in ${
+            className={`md:flex md:items-center md:pb-0 pb-12 absolute md:static bg-white md:z-40 z-[-1] left-0 w-full md:w-auto md:pl-0 pl-9 transition-all duration-500 ease-in ${
               open ? "top-10 " : "top-[-490px]"
             }`}
           >
-            {Links.map((link) => (
+            {links.map((link) => (
               <li
                 key={link.name}
-                className=" ml-4 mt-8 mb-6 mr-6 md:my-0 text-link-color hover:text-button-color duration-500"
+                className={` ml-4 mt-8 mb-6 mr-6 md:my-0 text-link-color hover:text-button-color duration-500`}
               >
                 <Link href={link.link}>{link.name}</Link>
               </li>
             ))}
 
-            <Link href={`/pages/registerUser`}>
+            <Link href={"/loggin"}>
+              <div>
+                <Image
+                  className="hidden md:flex mr-6"
+                  src={"/shopping-car.svg"}
+                  width={20}
+                  height={20}
+                />
+              </div>
+            </Link>
+
+            <Link href={`/seller`}>
               <div className="hidden sm:flex">
                 <JoinButton name={"¡Unete a Foodie!"} />
               </div>

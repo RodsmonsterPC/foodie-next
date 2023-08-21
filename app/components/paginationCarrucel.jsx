@@ -9,7 +9,7 @@ import { Handlee } from "next/font/google";
 const SlideNavButtons = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [page, setPage] = useState(20);
-  const [windowSize, setWindowSize] = useState(window.innerWidth)
+  // const [windowSize, setWindowSize] = useState(window.innerWidth)
   // const pageSize = ()=>{
   //   setWindowSize(window.innerWidth)
   //   useEffect(()=>{

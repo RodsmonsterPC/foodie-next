@@ -16,17 +16,17 @@ const Loggin = () => {
   };
   const handleChange = (e) =>
     setValues({ ...values, [e.target.name]: e.target.value });
-
+  
   return (
-    <section className="relative md:flex md:flex-row">
+    <section className=" md:flex md:flex-row ">
       <div
-        className="bg-no-repeat bg-cover bg-center h-screen w-screen opacity-20 absolute
-        md:opacity-100 md:static md:bg-auto   md:mt-8 md:w-[850px] md:h-[530px]  md:mr-12"
+        className="hidden bg-no-repeat bg-cover bg-center h-screen w-screen 
+        md:opacity-100 md:block md:bg-auto   md:mt-8 md:w-[850px] md:h-[530px]  md:mr-12"
         style={{ backgroundImage: `url('/img-loggin.png')` }}
       ></div>
       <div
-        className="mt-6 absolute md:static md:border-black md:border border-black 
-      md:rounded-md md:mr-12 md:mt-8 md:w-[450px]"
+        className="mt-6  md:border-black md:border border-black 
+      md:rounded-md md:mr-12 md:mt-8 md:w-[450px] mb-10"
       >
         <form onSubmit={handleSubmit}>
           <img

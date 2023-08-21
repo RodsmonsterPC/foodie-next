@@ -1,26 +1,37 @@
-import React from 'react'
+import React from "react";
+import Link from "next/link";
 
-const SmallCardProduct = ({title, price, description, img}) => {
-   return (
-      <div className='flex w-full md:w-1/4 p-4 bg-slate-100 rounded-xl gap-3' >
-
-         <img className='w-1/3 inline-flex' src={img} alt="Product item" />
-
-         <div className='w-2/3 grid content-between'>
-
-            <div className='flex justify-between gap-0.5'>
-               <div>
-                  <h3 className='text-sm'>{title}</h3>
-                  <p className='font-bold text-xs'>${price}/Kg</p>
-               </div>
-               <img className='self-start' src="/shopping-cart.svg" alt="Add to Cart" />
-            </div>
-
-            <p className='text-xs text-gray-500'>{description}</p>
-
-         </div>
+const SmallCardProduct = ({ title, price, description, img }) => {
+  return (
+    <Link href={"#"}>
+    <div className="flex w-full h-[150px] bg-slate-100 rounded-xl ">
+      <img className="w-24 h-24 my-auto mx-4 object-contain" src={img} alt="Product item" />
+      <div className="w-[60%]">
+        <div className="flex justify-start">
+          <div className="w-full">
+            <h3 className="mt-2 w-[90%] font-popins font-normal text-sm">
+              {title}
+            </h3>
+            <p className="font-bold text-xs mt-2 font-Montserrat">
+              ${price}/Kg
+            </p>
+          </div>
+          <div className="mt-4 mr-2">
+            <Link href={"#"}>
+              <img
+                className="w-10 h-10"
+                src="/shopping-cart.svg"
+                alt="Add to Cart"
+              />
+            </Link>
+          </div>
+        </div>
+        <p className="text-xs text-gray-500 truncate mt-4">{description}</p>
       </div>
-   )
-}
+    </div>
+    </Link>
+    
+  );
+};
 
-export default SmallCardProduct
+export default SmallCardProduct;

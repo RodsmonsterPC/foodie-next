@@ -41,7 +41,6 @@ const Pagination = ({productsPerPage,currentPage,setCurrentPage,totalProducts,})
             currentPage === noPage && "bg-indigo-600 text-white"
           }`}
         >
-          
           {noPage}
         </button>
       ))}

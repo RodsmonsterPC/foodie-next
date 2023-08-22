@@ -1,23 +1,42 @@
 "use client";
 import React from "react";
 import Image from "next/image";
-import { useState } from "react";
-import { createSeller } from "../api/signSeller";
+import { useState, useEffect } from "react";
 import Link from "next/link";
+import { updateAccount } from "../api/signUp";
+
 const newSeller = () => {
   const [values, setValues] = useState();
+
+  function parseJwt(token) {
+    var base64Url = token.split(".")[1];
+    var base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
+    var jsonPayload = decodeURIComponent(
+      window
+        .atob(base64)
+        .split("")
+        .map(function (c) {
+          return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
+        })
+        .join("")
+    );
+    return JSON.parse(jsonPayload);
+  }
+  let user = parseJwt(localStorage.getItem("token"));
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const body = {
+      name: values.name,
+      phoneNumber: values.phoneNumber,
+      description: values.description,
+      email: values.email,
+      rfc: values.rfc,
+      address: values.address,
+    };
 
-    const result = await createSeller(
-      values.name,
-      values.phoneNumber,
-      values.email,
-      values.description,
-      values.rfc,
-      values.address
-    );
-    console.log(values);
+    const result = await updateAccount(user.id, body);
+
     if (!result.success) setError("Error al registrar vendedor");
   };
   const handleChange = (e) =>
@@ -111,14 +130,12 @@ const newSeller = () => {
               />
             </div>
             <div className="md:col-span-2 md:ml-[21.5rem]">
-              <Link href="/">
-                <button
-                  type="submit"
-                  className="mt-8 mb-5 bg-button-color text-white w-52 h-14 rounded-xl"
-                >
-                  Guardar
-                </button>
-              </Link>
+              <button
+                type="submit"
+                className="mt-8 mb-5 bg-button-color text-white w-52 h-14 rounded-xl"
+              >
+                Guardar
+              </button>
             </div>
           </form>
         </div>

@@ -2,10 +2,20 @@
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import JoinButton from "./JoinButton";
+
 const Navbar = ({ links }) => {
   const [open, setOpen] = useState(false);
+  const [login, setLogin] = useState(false);
+
+  useEffect(() => {
+    let token = localStorage.getItem("token");
+
+    if (token) {
+      setLogin(true);
+    }
+  }, []);
 
   return (
     <div>
@@ -54,14 +64,16 @@ const Navbar = ({ links }) => {
               open ? "top-10 " : "top-[-490px]"
             }`}
           >
-            {links.map((link) => (
-              <li
-                key={link.name}
-                className={` ml-4 mt-8 mb-6 mr-6 md:my-0 text-link-color hover:text-button-color duration-500`}
-              >
-                <Link href={link.link}>{link.name}</Link>
-              </li>
-            ))}
+            {links.map((link) =>
+              login && link.name === "Iniciar sesión" ? null : (
+                <li
+                  key={link.name}
+                  className={`ml-4 mt-8 mb-6 mr-6 md:my-0 text-link-color hover:text-button-color duration-500`}
+                >
+                  <Link href={link.link}>{link.name}</Link>
+                </li>
+              )
+            )}
 
             <Link href={"/loggin"}>
               <div>
@@ -75,21 +87,23 @@ const Navbar = ({ links }) => {
             </Link>
 
             <Link href={`/seller`}>
-              <div className="hidden sm:flex">
+              <div className={`hidden sm:flex `}>
                 <JoinButton name={"¡Unete a Foodie!"} />
               </div>
             </Link>
 
-            <button className="md:hidden flex text-button-color border border-button-color rounded-full w-72 h-9 py-2.5 hover:text-black duration-500 ml-9">
-              <Image
-                className="ml-16 mr-3"
-                src="/icon-person.svg"
-                width={20}
-                height={20}
-                alt="person"
-              />
-              ¡Unete a Foodie!
-            </button>
+            <Link href={`/seller`}>
+              <button className="md:hidden flex text-button-color border border-button-color rounded-full w-72 h-9 py-2.5 hover:text-black duration-500 ml-9">
+                <Image
+                  className="ml-16 mr-3"
+                  src="/icon-person.svg"
+                  width={20}
+                  height={20}
+                  alt="person"
+                />
+                ¡Unete a Foodie!
+              </button>
+            </Link>
 
             <div className="md:hidden flex justify-between text-base mt-6 rounded-full bg-search-color h-9 text-center p-1 w-72 ml-9">
               <Image

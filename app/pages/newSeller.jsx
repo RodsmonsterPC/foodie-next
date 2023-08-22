@@ -1,6 +1,34 @@
+"use client";
 import React from "react";
 import Image from "next/image";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 const newSeller = () => {
+  const [values, setValues] = useState();
+  const router = useRouter();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const body = {
+      name: values.name,
+      phoneNumber: values.phoneNumber,
+      description: values.description,
+      email: values.email,
+      rfc: values.rfc,
+      address: values.address,
+    };
+
+    const { status, dataJson } = await updateAccount();
+
+    if (status === 200) {
+      router.push("/");
+    }
+  };
+
+  const handleChange = (e) => {
+    setValues({ ...values, [e.target.name]: e.target.value });
+  };
   return (
     <div>
       <h1 className="hidden md:flex md:justify-center md:w-product-w text-center md:text-4xl md:mt-12">
@@ -36,6 +64,8 @@ const newSeller = () => {
               <input
                 className="bg-back-form rounded-md text-left font-Sub-title mb-2 w-64 h-10 "
                 type="text"
+                onChange={handleChange}
+                name="name"
               />
             </div>
             <div>
@@ -43,6 +73,8 @@ const newSeller = () => {
               <input
                 className="bg-back-form rounded-md text-left font-Sub-title mb-2 w-64 h-10 "
                 type="text"
+                onChange={handleChange}
+                name="phoneNumber"
               />
             </div>
             <div>
@@ -50,6 +82,8 @@ const newSeller = () => {
               <input
                 className="bg-back-form rounded-md text-left font-Sub-title mb-2 w-64 h-10 "
                 type="text"
+                onChange={handleChange}
+                name="description"
               />
             </div>
             <div>
@@ -57,6 +91,8 @@ const newSeller = () => {
               <input
                 className="bg-back-form rounded-md text-left font-Sub-title mb-2 w-64 h-10 "
                 type="text"
+                onChange={handleChange}
+                name="email"
               />
             </div>
             <div>
@@ -64,6 +100,8 @@ const newSeller = () => {
               <input
                 className="bg-back-form rounded-md text-left font-Sub-title mb-2 w-64 h-10"
                 type="text"
+                onChange={handleChange}
+                name="rfc"
               />
             </div>
             <div>
@@ -71,14 +109,19 @@ const newSeller = () => {
               <input
                 className="bg-back-form rounded-md text-left font-Sub-title mb-2 w-64 h-10"
                 type="text"
+                onChange={handleChange}
+                name="address"
               />
             </div>
           </form>
-        </div>
-        <div className="md:col-span-2 md:ml-save-button">
-          <button className="mt-8 mb-5 bg-button-color text-white w-52 h-14 rounded-xl">
-            Guardar
-          </button>
+          <div className="md:col-span-2 md:ml-96">
+            <button
+              type="submit"
+              className="mt-8 mb-5 bg-button-color text-white w-[12.5rem] h-14 rounded-xl"
+            >
+              Guardar
+            </button>
+          </div>
         </div>
       </div>
     </div>

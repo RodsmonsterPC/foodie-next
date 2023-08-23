@@ -58,7 +58,10 @@ const newSeller = () => {
           <p className="hidden md:flex text-sm md:mb-5">
             Porfavor llenar todos los campos que se solicitan:
           </p>
-          <form className="flex flex-col justify-start md:grid md:grid-cols-2 md:gap-x-20 md:gap-y-10 ">
+          <form
+            onSubmit={handleSubmit}
+            className="flex flex-col justify-start md:grid md:grid-cols-2 md:gap-x-20 md:gap-y-10 "
+          >
             <div>
               <p className="text-2xl">Nombre:</p>
               <input

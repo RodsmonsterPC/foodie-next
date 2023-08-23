@@ -74,7 +74,14 @@ const Navbar = ({ links }) => {
                 </li>
               )
             )}
-
+            {login ? (
+              <li
+                onClick={() => localStorage.removeItem("token")}
+                className={`ml-4 mt-8 mb-6 mr-6 md:my-0 text-link-color hover:text-button-color duration-500`}
+              >
+                <Link href="/">Cerrar sesión</Link>
+              </li>
+            ) : null}
             <Link href={"/loggin"}>
               <div>
                 <Image

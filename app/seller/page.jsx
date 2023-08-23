@@ -4,10 +4,11 @@ import Image from "next/image";
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { updateAccount } from "../api/signUp";
+import { Shadows_Into_Light } from "next/font/google";
 
 const newSeller = () => {
   const [values, setValues] = useState();
-
+  const [error, setError] = useState();
   function parseJwt(token) {
     var base64Url = token.split(".")[1];
     var base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
@@ -36,9 +37,12 @@ const newSeller = () => {
     };
 
     const result = await updateAccount(user.id, body);
-
+    console.log(user.id);
+    console.log(body);
+    console.log(result);
     if (!result.success) setError("Error al registrar vendedor");
   };
+
   const handleChange = (e) =>
     setValues({ ...values, [e.target.name]: e.target.value });
 

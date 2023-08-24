@@ -10,59 +10,73 @@ const initialState = {
 
 const SmallCardRender = ({ title }) => {
   const [data, setData] = useState([]);
-  const [carrousel, setCarrousel] = useState(initialState);
   useEffect(() => {
     (async () => {
       try {
         const response = await fetch(
           "https://fakestoreapi.com/products?limit=24"
         );
-        const data = await response.json();
-        setData(data);
-        console.log(data); // Hacer algo con los datos obtenidos
+        const dataApi = await response.json();
+        setData(dataApi);
       } catch (error) {
         console.error("Fetch error:", error);
       }
     })();
   }, []);
 
-  //const carrouselAction = (suma) => {
-  //   setCarrousel( {
-  //      ...carrousel,
-  //      paginationInitial: suma,
-  //      paginationFinal: suma
-  //   }
-  //)
-  //
-  //   console.log(carrousel)
-  //   console.log(carrousel.paginationInitial)
-  //}
-
   return (
     <>
-      <h2 className="font-bold m-3 text-lg">{title}</h2>
-      <div className="md:flex gap-6">
-        {data.map((item, idx) => {
-          return (
-            idx >= carrousel.paginationInitial &&
-            idx < carrousel.paginationFinal && (
-              <SmallCardProduct
-                key={item.id}
-                title={item.title}
-                price={item.price}
-                description={item.description}
-                img={item.image}
-              />
-            )
-          );
-        })}
-      </div>
-      <CarrouselButtons
-        carrousel={carrousel}
-        onClick={setCarrousel}
-        pagination={carrousel.paginationFinal}
-        final={data.length}
-      />
+      <Swiper
+        breakpoints={{
+          0: {
+            slidesPerView: 1,
+            spaceBetween: 10,
+          },
+          1024: {
+            slidesPerView: 4,
+            spaceBetween: 15,
+          },
+        }}
+      >
+        {data.map((item) => (
+          <SwiperSlide key={item.id}>
+            <SmallCardProduct
+              key={item.id}
+              title={item.title}
+              price={item.price}
+              description={item.description}
+              img={item.image}
+            />
+          </SwiperSlide>
+        ))}
+        <SlideNavButtons />
+      </Swiper>
+      <Swiper
+        breakpoints={{
+          0: {
+            slidesPerView: 1,
+            spaceBetween: 10,
+          },
+          1024: {
+            slidesPerView: 4,
+            spaceBetween: 15,
+          },
+        }}
+        className="mt-10"
+      >
+        {data.map((item) => (
+          <SwiperSlide key={item.id}>
+            <SmallCardProduct
+              key={item.id}
+              title={item.title}
+              price={item.price}
+              description={item.description}
+              img={item.image}
+            />
+          </SwiperSlide>
+        ))}
+        <SlideNavButtons />
+      </Swiper>
     </>
   );
 };

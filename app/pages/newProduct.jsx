@@ -4,17 +4,6 @@ import Image from "next/image";
 import Dropdown from "../components/Dropdown";
 import { updateAccount } from "../api/signUp";
 const newProduct = () => {
-  const [values, setValues] = useState();
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    const result = await updateAccount();
-  };
-
-  const handleChange = (e) => {
-    setValues({ ...values, [e.target.name]: e.target.value });
-  };
   return (
     <div>
       <div className="hidden md:flex md:justify-center">

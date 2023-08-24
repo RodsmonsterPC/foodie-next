@@ -4,7 +4,6 @@ import Link from "next/link";
 import Image from "next/image";
 import { useState, useEffect } from "react";
 import JoinButton from "./JoinButton";
-
 const Navbar = ({ links }) => {
   const [open, setOpen] = useState(false);
   const [login, setLogin] = useState(false);
@@ -16,7 +15,6 @@ const Navbar = ({ links }) => {
       setLogin(true);
     }
   }, []);
-
   return (
     <div>
       <nav className="bg-back-color flex justify-between text-slate-900 h-16 drop-shadow-md">
@@ -82,6 +80,7 @@ const Navbar = ({ links }) => {
                 <Link href="/">Cerrar sesión</Link>
               </li>
             ) : null}
+
             <Link href={"/loggin"}>
               <div>
                 <Image
@@ -94,23 +93,21 @@ const Navbar = ({ links }) => {
             </Link>
 
             <Link href={`/seller`}>
-              <div className={`hidden sm:flex `}>
+              <div className="hidden sm:flex">
                 <JoinButton name={"¡Unete a Foodie!"} />
               </div>
             </Link>
 
-            <Link href={`/seller`}>
-              <button className="md:hidden flex text-button-color border border-button-color rounded-full w-72 h-9 py-2.5 hover:text-black duration-500 ml-9">
-                <Image
-                  className="ml-16 mr-3"
-                  src="/icon-person.svg"
-                  width={20}
-                  height={20}
-                  alt="person"
-                />
-                ¡Unete a Foodie!
-              </button>
-            </Link>
+            <button className="md:hidden flex text-button-color border border-button-color rounded-full w-72 h-9 py-2.5 hover:text-black duration-500 ml-9">
+              <Image
+                className="ml-16 mr-3"
+                src="/icon-person.svg"
+                width={20}
+                height={20}
+                alt="person"
+              />
+              ¡Unete a Foodie!
+            </button>
 
             <div className="md:hidden flex justify-between text-base mt-6 rounded-full bg-search-color h-9 text-center p-1 w-72 ml-9">
               <Image

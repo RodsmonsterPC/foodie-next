@@ -22,6 +22,7 @@ const SmallCardRender = () => {
       }
     })();
   }, []);
+  
   return (
     <>
       <Swiper

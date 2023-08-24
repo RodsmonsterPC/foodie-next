@@ -2,11 +2,19 @@
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import JoinButton from "./JoinButton";
 const Navbar = ({ links }) => {
   const [open, setOpen] = useState(false);
+  const [login, setLogin] = useState(false);
 
+  useEffect(() => {
+    let token = localStorage.getItem("token");
+
+    if (token) {
+      setLogin(true);
+    }
+  }, []);
   return (
     <div>
       <nav className="bg-back-color flex justify-between text-slate-900 h-16 drop-shadow-md">
@@ -54,14 +62,24 @@ const Navbar = ({ links }) => {
               open ? "top-10 " : "top-[-490px]"
             }`}
           >
-            {links.map((link) => (
+            {links.map((link) =>
+              login && link.name === "Iniciar sesión" ? null : (
+                <li
+                  key={link.name}
+                  className={`ml-4 mt-8 mb-6 mr-6 md:my-0 text-link-color hover:text-button-color duration-500`}
+                >
+                  <Link href={link.link}>{link.name}</Link>
+                </li>
+              )
+            )}
+            {login ? (
               <li
-                key={link.name}
-                className={` ml-4 mt-8 mb-6 mr-6 md:my-0 text-link-color hover:text-button-color duration-500`}
+                onClick={() => localStorage.removeItem("token")}
+                className={`ml-4 mt-8 mb-6 mr-6 md:my-0 text-link-color hover:text-button-color duration-500`}
               >
-                <Link href={link.link}>{link.name}</Link>
+                <Link href="/">Cerrar sesión</Link>
               </li>
-            ))}
+            ) : null}
 
             <Link href={"/loggin"}>
               <div>

@@ -15,27 +15,28 @@ const sectionLink = [
 
 const Footer = () => {
   return (
-    <footer className="bg-[#FAFFC0]  h-[50rem] md:h-[24rem] ">
+    <footer className="bg-[#FAFFC0]  h-[50rem] md:h-[24rem] mt-12">
       <div className="md:flex">
         <div className="flex md:flex-col ml-4 md:ml-[3.5rem]">
           <img className="mt-12 w-48 h-16 mr-[2.8rem] md:mt-[5.5rem] md:mr-0 md:pr-8" src="/logo.svg" alt="logo" />
           <div className="flex flex-row md:justify-around">
            {
             //falta poner una key
-            sectionSocial.map((link)=> (
-              <Link href={link.link}>
+            sectionSocial.map((link,i)=> (
+              <Link href={link.link} key={i}>
               <img className="mt-16 w-8 h-8 mr-5 md:mt-8" src={link.url} alt={link.name} />
               </Link>
             ))
            }
           </div>
         </div>
-        <div className="mt-[1.75rem] ml-4 flex flex-col md:mx-20 md:mt-[5.5rem] ">
+        <div className="mt-[1.75rem] ml-4 flex flex-col md:mx-16 md:mt-[5.5rem] ">
           <h5 className="font-semibold text-xl text-[#263238] font-popins"> Nosotros </h5>
           {
             //Falta poner una key
-            sectionLink.map((link) => (
+            sectionLink.map((link,i) => (
               <Link
+                key={i}
                 href={link.link}
                 className="font-medium text-base text-[#455A64] mt-4 font-Montserrat">
                 {link.name}
@@ -43,7 +44,7 @@ const Footer = () => {
             ))
           }
         </div>
-        <div className="mt-[1.75rem] ml-4 md:mt-[5.5rem] md:mr-20 ">
+        <div className="mt-[1.75rem] ml-4 md:mt-[5.5rem] md:mr-10 md:ml-0 ">
           <h5 className="font-semibold text-xl text-[#263238] font-popins">Contacto </h5>
           <div className="flex items-center mt-4">
             <img className="inline-block" src="/icon-phone.svg" alt="icon-phone"/>
@@ -61,7 +62,9 @@ const Footer = () => {
         </div>
         <div className="flex flex-col mt-8 md:mt-[5.5rem] ">
           <h5 className="font-semibold text-xl text-[#263238] mx-auto font-popins">¡Únete a Foodie</h5>
-          <button className="mt-4 w-[18.7rem] h-12 text-lg bg-button-color text-white rounded-full mx-auto font-Montserrat"> ¡Regístrate! </button>
+          <Link className="mx-auto " href={"/loggin"}>
+          <button className="mt-4 w-[18.7rem] h-12 text-lg bg-button-color text-white rounded-full font-Montserrat"> ¡Regístrate! </button>
+          </Link>
         </div>
       </div>
       <div className="mt-8 mx-5 text-center md:mt-20">

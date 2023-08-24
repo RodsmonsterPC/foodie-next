@@ -10,8 +10,8 @@ import Link from "next/link";
 const DasboardUser = () => {
   
   const btnUser = [
-    { name: "Productos", src: list, alt: "list-product" ,num:1 },
-    { name: "Compras", src: shopping, alt: "icon-shopping",num:2 },
+    { name: "Productos", src: list, alt: "list-product" ,num:1,href:"/Productos" },
+    { name: "Compras", src: shopping, alt: "icon-shopping",num:2,href:"/Compras" },
   ];
   return (
       <div className="flex flex-col-reverse mt-8 mx-4 md:flex-col md:ml-14 md:mt-4 md:w-[20%] ">
@@ -26,8 +26,9 @@ const DasboardUser = () => {
             General
           </h2>
           <div>
-            {btnUser.map((btn) => (
-              <Link href={""}>
+            {btnUser.map((btn,i) => (
+              <Link href={btn.href}
+              key={i}>
                 <button onClick={""}
                   className={"border-2 border-[#33A833] text-black w-36 h-10 ml-5 mt-5 rounded-lg font-medium text-xl font-Montserrat md:flex md:ml-8 md:mb-10 md:mt-0 md:w-48 md:h-10 md:p-1"}
                 >

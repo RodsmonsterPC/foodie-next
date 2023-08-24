@@ -4,7 +4,6 @@ import { Poppins, Montserrat } from "next/font/google";
 import { Inter } from "next/font/google";
 import Navbar from "./components/Navbar";
 import RegisterUser from "./pages/registerUser";
-import NewProduct from "./pages/newProduct";
 import NewSeller from "./pages/newSeller";
 import DetailProduct from "./pages/detailProduct";
 import { Footer } from "./components/footer";
@@ -28,6 +27,11 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={poppins.className}>
+       
+
+        {/* <DetailProduct /> */}
+
+        {/* <RegisterUser /> */}
         <Navbar
           links={[
             { name: "Inicio", link: "/" },

@@ -1,14 +1,13 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
 import SmallCardProduct from "./SmallCardProduct";
-import CarrouselButtons from "./CarrouselButtons";
+import { Swiper, SwiperSlide } from "swiper/react";
+import React, { useEffect, useState } from "react";
+import SlideNavButtons from "./paginationCarrucel";
 
-const initialState = {
-  paginationInitial: 0,
-  paginationFinal: 4,
-};
-
-const SmallCardRender = ({ title }) => {
+const SmallCardRender = () => {
   const [data, setData] = useState([]);
   useEffect(() => {
     (async () => {

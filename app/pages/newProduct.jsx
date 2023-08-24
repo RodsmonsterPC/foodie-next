@@ -1,9 +1,7 @@
-"use client";
 import React from "react";
 import Image from "next/image";
 import Dropdown from "../components/Dropdown";
-import { updateAccount } from "../api/signUp";
-const newProduct = () => {
+const NewProduct = () => {
   return (
     <div>
       <div className="hidden md:flex md:justify-center">
@@ -104,4 +102,4 @@ const newProduct = () => {
   );
 };
 
-export default newProduct;
+export default NewProduct;

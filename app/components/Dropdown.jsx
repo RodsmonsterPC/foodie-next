@@ -4,9 +4,9 @@ import React from "react";
 import Image from "next/image";
 import { useState } from "react";
 
-const Dropdown = () => {
+const Dropdown = ({ selected, setSelected }) => {
   const [inputValue, setInputValue] = useState("");
-  const [selected, setSelected] = useState("");
+
   const [open, setOpen] = useState(false);
 
   const categories = [

@@ -2,9 +2,11 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import Dropdown from "../components/Dropdown";
+import { Akaya_Telivigala } from "next/font/google";
 const NewProduct = () => {
   const [selected, setSelected] = useState("");
   const [values, setValues] = useState();
+  const [active, setActive] = useState(false);
   const handleSubmit = async (e) => {
     e.preventDefault();
     const body = {
@@ -13,8 +15,9 @@ const NewProduct = () => {
       price: values.price,
       existence: values.existence,
       category: selected,
-      active: values.active,
+      active: active,
     };
+    console.log(body);
   };
 
   const handleChange = (e) => {
@@ -60,6 +63,7 @@ const NewProduct = () => {
                   className="sr-only peer"
                   name="active"
                   onChange={handleChange}
+                  onClick={() => setActive(!active)}
                 />
                 <span className="w-2/5 h-4/5 bg-button-color absolute rounded-full left-1 top-1 peer:checked:bg-button-color-100/30 peer-checked:left-11 transition-all duration-500"></span>
               </label>
@@ -96,7 +100,7 @@ const NewProduct = () => {
                   <input
                     className="bg-back-form rounded-md text-left font-Sub-title mb-9 w-24 h-10 md:w-48"
                     type="text"
-                    name="existencias"
+                    name="existence"
                     onChange={handleChange}
                   />
                 </div>
@@ -118,6 +122,7 @@ const NewProduct = () => {
                   className="sr-only peer"
                   name="active"
                   onChange={handleChange}
+                  onClick={() => setActive(!active)}
                 />
                 <span className="w-2/5 h-4/5 bg-button-color absolute rounded-full left-1 top-1 peer:checked:bg-button-color-100/30 peer-checked:left-11 transition-all duration-500"></span>
               </label>

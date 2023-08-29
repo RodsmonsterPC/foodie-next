@@ -1,3 +1,5 @@
+const { Montserrat } = require("next/font/google");
+const { Poppins } = require("next/font/google");
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
@@ -17,22 +19,33 @@ module.exports = {
         "search-color": "#F0F2F4",
         "button-color": "#33A833",
         "link-color": " var(--blue-gray-700, #455A64);",
+        "back-form": "#F0F5FA",
       },
       spacing: {
         "search-input": "26.125rem",
+        479: "29rem",
+        "product-w": "80.25rem",
+        "product-h": "47.93rem",
+        "upload-w": "32.813rem",
+        "upload-h": "21.938rem",
+        "description-w": "30rem",
+        "description-h": "21rem",
+        "seller-title": "20.563rem",
+        "supload-w": "21.875rem",
+        "supload-h": "16.125rem",
+        "save-button": "65rem",
+        "detail-w": "25rem",
+        "deatil-h": "26rem",
       },
-      fontFamily:{
-        "popins":['Poppins', 'sans-serif'],
-        "Montserrat":['Montserrat', 'sans-serif'],
+      dropShadow: {
+        navbar: "0px 8px 32px 0px rgba(0, 0, 0, 0.08);",
       },
-      backgroundColor:{
-        "btn":'#33A833',
-        "btn2":'#F6BE2C',
-
+      fontFamily: {
+        "Sub-title": [Montserrat],
       },
-      screens:{
-        'phone': '390px',
-      }
+      fontFamily: {
+        popins: [Poppins],
+      },
     },
   },
   plugins: [],

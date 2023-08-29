@@ -4,17 +4,19 @@ import Link from "next/link";
 import Image from "next/image";
 import { useState, useEffect } from "react";
 import JoinButton from "./JoinButton";
+import { useUserContext } from "../contexts/userContext";
 const Navbar = ({ links }) => {
+  const userToken = useUserContext();
+  console.log(userToken);
   const [open, setOpen] = useState(false);
-  const [login, setLogin] = useState(false);
 
-  useEffect(() => {
-    let token = localStorage.getItem("token");
+  // useEffect(() => {
+  //   let token = localStorage.getItem("token");
 
-    if (token) {
-      setLogin(true);
-    }
-  }, []);
+  //   if (token) {
+  //     setLogin(true);
+  //   }
+  // }, []);
   return (
     <div>
       <nav className="bg-back-color flex justify-between text-slate-900 h-16 drop-shadow-md">
@@ -62,24 +64,31 @@ const Navbar = ({ links }) => {
               open ? "top-10 " : "top-[-490px]"
             }`}
           >
-            {links.map((link) =>
-              login && link.name === "Iniciar sesión" ? null : (
-                <li
-                  key={link.name}
-                  className={`ml-4 mt-8 mb-6 mr-6 md:my-0 text-link-color hover:text-button-color duration-500`}
-                >
-                  <Link href={link.link}>{link.name}</Link>
-                </li>
-              )
-            )}
-            {login ? (
+            {links.map((link) => (
               <li
-                onClick={() => localStorage.removeItem("token")}
+                key={link.name}
+                className={`ml-4 mt-8 mb-6 mr-6 md:my-0 text-link-color hover:text-button-color duration-500`}
+              >
+                <Link href={link.link}>{link.name}</Link>
+              </li>
+            ))}
+            {userToken.token ? (
+              <li
+                onClick={() => {
+                  localStorage.removeItem("token");
+                  userToken.setToken("");
+                }}
                 className={`ml-4 mt-8 mb-6 mr-6 md:my-0 text-link-color hover:text-button-color duration-500`}
               >
                 <Link href="/">Cerrar sesión</Link>
               </li>
-            ) : null}
+            ) : (
+              <li
+                className={`ml-4 mt-8 mb-6 mr-6 md:my-0 text-link-color hover:text-button-color duration-500`}
+              >
+                <Link href="/loggin">Iniciar sesión</Link>
+              </li>
+            )}
 
             <Link href={"/loggin"}>
               <div>

@@ -4,9 +4,11 @@ import React from "react";
 import { useState } from "react";
 import { loginAccount } from "../api/login";
 import { useRouter } from "next/navigation";
+import { useUserContext } from "../contexts/userContext";
 const Loggin = () => {
   const [values, setValues] = useState();
   const [error, setError] = useState();
+  const { token, setToken } = useUserContext();
   const router = useRouter();
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -18,6 +20,7 @@ const Loggin = () => {
 
     if (status === 200) {
       localStorage.setItem("token", dataJson.data.token);
+      setToken(dataJson.data.token);
       router.push("/");
       //setteas el token a local storage
       // redirecciones a tal pagina
@@ -27,7 +30,7 @@ const Loggin = () => {
   };
   const handleChange = (e) =>
     setValues({ ...values, [e.target.name]: e.target.value });
-  
+
   return (
     <section className=" md:flex md:flex-row ">
       <div

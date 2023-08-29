@@ -3,20 +3,34 @@ import Link from "next/link";
 import React from "react";
 import { useState } from "react";
 import { loginAccount } from "../api/login";
+import { useRouter } from "next/navigation";
+import { useUserContext } from "../contexts/userContext";
 const Loggin = () => {
   const [values, setValues] = useState();
+  const [error, setError] = useState();
+  const { token, setToken } = useUserContext();
+  const router = useRouter();
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const result = await loginAccount(values.email, values.password);
+    const { status, dataJson } = await loginAccount(
+      values.email,
+      values.password
+    );
 
-    if (!result.success) setError("Error al iniciar Sesión");
-    console.log(result);
-    localStorage.setItem("token", result.data.token);
+    if (status === 200) {
+      localStorage.setItem("token", dataJson.data.token);
+      setToken(dataJson.data.token);
+      router.push("/");
+      //setteas el token a local storage
+      // redirecciones a tal pagina
+    } else {
+      if (!dataJson.success) setError("Error al iniciar Sesión");
+    }
   };
   const handleChange = (e) =>
     setValues({ ...values, [e.target.name]: e.target.value });
-  
+
   return (
     <section className=" md:flex md:flex-row ">
       <div
@@ -49,14 +63,13 @@ const Loggin = () => {
               name="password"
               onChange={handleChange}
             />
-            <Link href={"/"}>
-              <button
-                type="submit"
-                className=" bg-[#33A833] text-white w-[18.7rem] h-12 rounded-full mx-8 mb-[3.7rem] md:mb-[2.5rem]"
-              >
-                Iniciar sesión
-              </button>
-            </Link>
+            {error && <p className="">{error}</p>}
+            <button
+              type="submit"
+              className=" bg-[#33A833] text-white w-[18.7rem] h-12 rounded-full mx-8 mb-[3.7rem] md:mb-[2.5rem]"
+            >
+              Iniciar sesión
+            </button>
           </div>
         </form>
         <div className="border-t-2 border-[#D9D9D9] ml-0">

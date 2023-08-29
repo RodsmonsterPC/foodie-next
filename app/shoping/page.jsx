@@ -37,7 +37,6 @@ const Shoping = () => {
     },
   ];
   const [product, setProduct] = useState(1); //Va el estado del producto previamente
-  const [priceProduct, setPriceProduct] = useState(0);
   const [total,setTotal] = useState(0)
 
   const getProduct = (price) => {
@@ -50,7 +49,6 @@ const Shoping = () => {
       setTotal(total - price)
     }
   };
-
   return (
     <div className="mt-8 ml-4 mr-4">
       <h2 className="font-poppins font-semibold text-2xl">

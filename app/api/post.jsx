@@ -1,17 +1,17 @@
 export const getPost = async () => {
-  const response = await fetch("http://localhost:8081/post/");
+  const response = await fetch("http://localhost:8081/posts/");
   const data = await response.json();
   return data.posts;
 };
 
 export const getPostId = async (id) => {
-  const response = await fetch(`http://localhost:8081/post/${id}`);
+  const response = await fetch(`http://localhost:8081/posts/${id}`);
   const data = await response.json();
   return data.posts;
 };
 
 export const postPost = async (data, token) => {
-  const response = await fetch(`http://localhost:8081/post`, {
+  const response = await fetch(`http://localhost:8081/posts`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -19,12 +19,15 @@ export const postPost = async (data, token) => {
     },
     body: JSON.stringify(data),
   });
-  const data = await response.json();
-  return data.posts;
+  const dataProduct = await response.json();
+  return {
+    status: response.status,
+    dataProduct,
+  };
 };
 
 export const updatePost = async (id, data, token) => {
-  const response = await fetch(`http://localhost:8081/post/${id}`, {
+  const response = await fetch(`http://localhost:8081/posts/${id}`, {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json",
@@ -32,18 +35,23 @@ export const updatePost = async (id, data, token) => {
     },
     body: JSON.stringify(data),
   });
-  const data = await response.json();
-  return data.posts;
+  const dataUpdate = await response.json();
+  return {
+    status: response.status,
+    dataUpdate,
+  };
 };
 
 export const deletePost = async (id, data) => {
-  const response = await fetch(`http://localhost:8081/post/${id}`, {
+  const response = await fetch(`http://localhost:8081/posts/${id}`, {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json",
       // Authorization: `Bearer ${token}`
     },
   });
-  const data = await response.json();
-  return data.posts;
+  const dataDelete = await response.json();
+  return {
+    status: response.status,
+  };
 };

@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import Image from "next/image";
 import Dropdown from "../components/Dropdown";
 import { Akaya_Telivigala } from "next/font/google";
+import { postPost } from "../api/post";
 const NewProduct = () => {
   const [selected, setSelected] = useState("");
   const [values, setValues] = useState();
@@ -17,7 +18,7 @@ const NewProduct = () => {
       category: selected,
       active: active,
     };
-    console.log(body);
+    const { status, data } = await postPost(body);
   };
 
   const handleChange = (e) => {
@@ -61,11 +62,9 @@ const NewProduct = () => {
                   type="checkbox"
                   id="check"
                   className="sr-only peer"
-                  name="active"
-                  onChange={handleChange}
                   onClick={() => setActive(!active)}
                 />
-                <span className="w-2/5 h-4/5 bg-button-color absolute rounded-full left-1 top-1 peer:checked:bg-button-color-100/30 peer-checked:left-11 transition-all duration-500"></span>
+                <span className="w-2/5 h-4/5 bg-red-600  absolute rounded-full left-1 top-1 peer-checked:bg-button-color peer-checked:left-11 transition-all duration-500"></span>
               </label>
             </div>
           </div>
@@ -110,21 +109,19 @@ const NewProduct = () => {
               <p className="mr-1">Tu categoria:</p>
               <Dropdown selected={selected} setSelected={setSelected} />
             </div>
-            <div className="flex items-center mt-7 mr-28 z-0 md:hidden">
+            <div className="flex items-center mt-7  z-0 md:hidden">
               <p className="mr-3">Activo:</p>
               <label
-                for="check"
+                for="check2"
                 className="bg-back-form relative w-20 h-10 rounded-lg"
               >
                 <input
                   type="checkbox"
-                  id="check"
+                  id="check2"
                   className="sr-only peer"
-                  name="active"
-                  onChange={handleChange}
                   onClick={() => setActive(!active)}
                 />
-                <span className="w-2/5 h-4/5 bg-button-color absolute rounded-full left-1 top-1 peer:checked:bg-button-color-100/30 peer-checked:left-11 transition-all duration-500"></span>
+                <span className="w-2/5 h-4/5 bg-red-600  absolute rounded-full left-1 top-1 peer-checked:bg-button-color peer-checked:left-11 transition-all duration-500"></span>
               </label>
             </div>
 

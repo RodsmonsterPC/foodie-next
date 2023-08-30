@@ -1,10 +1,10 @@
 "use client";
 import "swiper/css";
 import "swiper/css/navigation";
-import 'swiper/css/pagination';
+import "swiper/css/pagination";
 import SmallCardProduct from "./SmallCardProduct";
 import { Swiper, SwiperSlide } from "swiper/react";
-import React, { useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import SlideNavButtons from "./paginationCarrucel";
 
 const SmallCardRender = () => {
@@ -22,13 +22,13 @@ const SmallCardRender = () => {
       }
     })();
   }, []);
-  
+
   return (
     <>
       <Swiper
         breakpoints={{
           0: {
-            slidesPerView:1,
+            slidesPerView: 1,
             spaceBetween: 10,
           },
           1024: {
@@ -48,12 +48,12 @@ const SmallCardRender = () => {
             />
           </SwiperSlide>
         ))}
-        <SlideNavButtons/>
+        <SlideNavButtons />
       </Swiper>
       <Swiper
         breakpoints={{
           0: {
-            slidesPerView:1,
+            slidesPerView: 1,
             spaceBetween: 10,
           },
           1024: {
@@ -74,9 +74,8 @@ const SmallCardRender = () => {
             />
           </SwiperSlide>
         ))}
-        <SlideNavButtons/>
+        <SlideNavButtons />
       </Swiper>
-
     </>
   );
 };

@@ -4,7 +4,7 @@ import SmallCardRender from "./components/SmallCardRender";
 export default function Home() {
   return (
     <section className="md:flex-wrap">
-       <div className="md:mb-44">
+      <div className="md:mb-44">
         <div>
           <h1
             className="mt-[2.5rem] text-[1.9rem]  mx-4 font-popins font-semibold  text-[#37474F]
@@ -56,31 +56,47 @@ export default function Home() {
       </div>
       <section className=" mx-5 md:mx-10 mb-16">
         <div className="text-center">
-          <h2 className="font-semibold text-4xl mb-8">Una irresistible variedad de productos</h2>
-          <p className="md:w-1/3 mx-auto py-5 mb-8"> Conecta con los mejores proveedores, elige los ingredientes más frescos y de alta calidad para tus creaciones culinarias.</p>
+          <h2 className="font-semibold text-4xl mb-8">
+            Una irresistible variedad de productos
+          </h2>
+          <p className="md:w-1/3 mx-auto py-5 mb-8">
+            {" "}
+            Conecta con los mejores proveedores, elige los ingredientes más
+            frescos y de alta calidad para tus creaciones culinarias.
+          </p>
         </div>
-        <SmallCardRender title={'Top Gourmet'} />
+        <SmallCardRender title={"Top Gourmet"} />
       </section>
       <section className="my-10 mx-5 md:mx-10">
         <div className="text-center">
-          <h2 className="font-semibold text-4xl md:mb-4">Déjate llevar por una experiencia culinaria única</h2>
-          <p className="md:w-1/3 mx-auto py-5">Encuentra los ingredientes perfectos para tus creaciones culinarias. Conéctate con los mejores proveedores y disfruta de productos frescos y de alta calidad.</p>
+          <h2 className="font-semibold text-4xl md:mb-4">
+            Déjate llevar por una experiencia culinaria única
+          </h2>
+          <p className="md:w-1/3 mx-auto py-5">
+            Encuentra los ingredientes perfectos para tus creaciones culinarias.
+            Conéctate con los mejores proveedores y disfruta de productos
+            frescos y de alta calidad.
+          </p>
         </div>
         <div className="md:flex gap-10">
           <CardLanding
-            title={'¿Listo para desatar tu creatividad gastronómica?'}
-            paragraph={'Únete a la experiencia inigualable de Saborea la Excelencia.'}
-            button={'Únete al Mundo culinario'}
+            title={"¿Listo para desatar tu creatividad gastronómica?"}
+            paragraph={
+              "Únete a la experiencia inigualable de Saborea la Excelencia."
+            }
+            button={"Únete al Mundo culinario"}
             divExtraStyles={`bg-[#f6be2c] text-black`}
-            imgUrl={'/culinary-world.svg'}
-            buttonExtraStyles={'text-white bg-button-color'}
+            imgUrl={"/culinary-world.svg"}
+            buttonExtraStyles={"text-white bg-button-color"}
           />
           <CardLanding
-            title={'Aquí encontrarás todo lo que necesitas'}
-            paragraph={'Desde exquisitas especias hasta selectos productos locales.'}
-            button={'Explorar opciones gourmet'}
-            divExtraStyles={'bg-button-color text-white'}
-            imgUrl={'/gourmet-options.svg'}
+            title={"Aquí encontrarás todo lo que necesitas"}
+            paragraph={
+              "Desde exquisitas especias hasta selectos productos locales."
+            }
+            button={"Explorar opciones gourmet"}
+            divExtraStyles={"bg-button-color text-white"}
+            imgUrl={"/gourmet-options.svg"}
             buttonExtraStyles={`text-black bg-[#f6be2c]`}
           />
         </div>

@@ -6,6 +6,7 @@ import { createAccount } from "../api/signUp";
 import Link from "next/link";
 const Form = () => {
   const [values, setValues] = useState();
+  const [error, setError] = useState();
   const handleSubmit = async (e) => {
     e.preventDefault();
 

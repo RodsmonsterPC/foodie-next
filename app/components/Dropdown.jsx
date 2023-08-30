@@ -19,7 +19,6 @@ const Dropdown = ({ selected, setSelected }) => {
   ];
   return (
 
-  
     <div className="w-48 h-11 border border-2 rounded-full">
 
       <div

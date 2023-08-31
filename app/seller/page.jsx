@@ -9,21 +9,29 @@ import { Shadows_Into_Light } from "next/font/google";
 const newSeller = () => {
   const [values, setValues] = useState();
   const [error, setError] = useState();
-  function parseJwt(token) {
-    var base64Url = token.split(".")[1];
-    var base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
-    var jsonPayload = decodeURIComponent(
-      window
-        .atob(base64)
-        .split("")
-        .map(function (c) {
-          return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
-        })
-        .join("")
-    );
-    return JSON.parse(jsonPayload);
-  }
-  let user = parseJwt(localStorage.getItem("token"));
+  const [token, setToken] = useState("");
+
+  useEffect(() => {
+    function parseJwt(token) {
+      var base64Url = token.split(".")[1];
+      var base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
+      var jsonPayload = decodeURIComponent(
+        window
+          .atob(base64)
+          .split("")
+          .map(function (c) {
+            return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
+          })
+          .join("")
+      );
+      return JSON.parse(jsonPayload);
+    }
+    let user = localStorage.getItem("token");
+
+    let id = parseJwt(user);
+
+    setToken(id);
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -36,8 +44,8 @@ const newSeller = () => {
       address: values.address,
     };
 
-    const result = await updateAccount(user.id, body);
-    console.log(user.id);
+    const result = await updateAccount(token.id, body);
+    console.log(token.id);
     console.log(body);
     console.log(result);
     if (!result.success) setError("Error al registrar vendedor");

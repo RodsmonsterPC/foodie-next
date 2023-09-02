@@ -7,16 +7,9 @@ import JoinButton from "./JoinButton";
 import { useUserContext } from "../contexts/userContext";
 const Navbar = ({ links }) => {
   const userToken = useUserContext();
-  console.log(userToken);
+
   const [open, setOpen] = useState(false);
 
-  // useEffect(() => {
-  //   let token = localStorage.getItem("token");
-
-  //   if (token) {
-  //     setLogin(true);
-  //   }
-  // }, []);
   return (
     <div>
       <nav className="bg-back-color flex justify-between text-slate-900 h-16 drop-shadow-md">
@@ -107,16 +100,18 @@ const Navbar = ({ links }) => {
               </div>
             </Link>
 
-            <button className="md:hidden flex text-button-color border border-button-color rounded-full w-72 h-9 py-2.5 hover:text-black duration-500 ml-9">
-              <Image
-                className="ml-16 mr-3"
-                src="/icon-person.svg"
-                width={20}
-                height={20}
-                alt="person"
-              />
-              ¡Unete a Foodie!
-            </button>
+            <Link href={`/seller`}>
+              <button className="md:hidden flex text-button-color border border-button-color rounded-full w-72 h-9 py-2.5 hover:text-black duration-500 ml-9">
+                <Image
+                  className="ml-16 mr-3"
+                  src="/icon-person.svg"
+                  width={20}
+                  height={20}
+                  alt="person"
+                />
+                ¡Unete a Foodie!
+              </button>
+            </Link>
 
             <div className="md:hidden flex justify-between text-base mt-6 rounded-full bg-search-color h-9 text-center p-1 w-72 ml-9">
               <Image

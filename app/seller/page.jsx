@@ -5,11 +5,14 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { updateAccount } from "../api/signUp";
 import { Shadows_Into_Light } from "next/font/google";
+import { useRouter } from "next/navigation";
 
 const newSeller = () => {
-  const [values, setValues] = useState();
+  const [values, setValues] = useState({});
   const [error, setError] = useState();
   const [token, setToken] = useState("");
+  const [isEmpty, setIsEmpty] = useState(false);
+  const router = useRouter();
 
   useEffect(() => {
     function parseJwt(token) {
@@ -35,6 +38,9 @@ const newSeller = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (Object.keys(values).length === 0) {
+      return setIsEmpty(true);
+    }
     const body = {
       name: values.name,
       phoneNumber: values.phoneNumber,
@@ -44,11 +50,17 @@ const newSeller = () => {
       address: values.address,
     };
 
-    const result = await updateAccount(token.id, body);
-    console.log(token.id);
-    console.log(body);
-    console.log(result);
-    if (!result.success) setError("Error al registrar vendedor");
+    const { status, newData } = await updateAccount(token.id, body);
+
+    if (status === 200) {
+      router.push("/");
+      //setteas el token a local storage
+      // redirecciones a tal pagina
+    } else {
+      if (!newData.success)
+        setError("Error al registrarse, revise sus datos porfavor");
+      setIsEmpty(false);
+    }
   };
 
   const handleChange = (e) =>
@@ -75,6 +87,7 @@ const newSeller = () => {
           <p className="sm:hidden w-64 text-sm mt-6">
             Porfavor llenar todos los campos que se solicitan:
           </p>
+
           <p className="hidden md:flex text-sm md:mt-6 md:mr-14">
             Proporcionar imagen clara y concisa
           </p>
@@ -90,7 +103,9 @@ const newSeller = () => {
             <div>
               <p className="text-2xl">Nombre:</p>
               <input
-                className="bg-back-form rounded-md text-left font-Sub-title mb-2 w-64 h-10 "
+                className={`bg-back-form rounded-md text-left font-Sub-title mb-2 w-64 h-10 ${
+                  isEmpty ? "border-2 border-red-600" : ""
+                }`}
                 type="text"
                 name="name"
                 onChange={handleChange}
@@ -99,7 +114,9 @@ const newSeller = () => {
             <div>
               <p className="text-2xl">Número:</p>
               <input
-                className="bg-back-form rounded-md text-left font-Sub-title mb-2 w-64 h-10 "
+                className={`bg-back-form rounded-md text-left font-Sub-title mb-2 w-64 h-10 ${
+                  isEmpty ? "border-2 border-red-600" : ""
+                }`}
                 type="text"
                 name="phoneNumber"
                 onChange={handleChange}
@@ -108,7 +125,9 @@ const newSeller = () => {
             <div>
               <p className="text-2xl">Descripción:</p>
               <input
-                className="bg-back-form rounded-md text-left font-Sub-title mb-2 w-64 h-10 "
+                className={`bg-back-form rounded-md text-left font-Sub-title mb-2 w-64 h-10 ${
+                  isEmpty ? "border-2 border-red-600" : ""
+                }`}
                 type="text"
                 name="description"
                 onChange={handleChange}
@@ -117,7 +136,9 @@ const newSeller = () => {
             <div>
               <p className="text-2xl">Correo:</p>
               <input
-                className="bg-back-form rounded-md text-left font-Sub-title mb-2 w-64 h-10 "
+                className={`bg-back-form rounded-md text-left font-Sub-title mb-2 w-64 h-10 ${
+                  isEmpty ? "border-2 border-red-600" : ""
+                }`}
                 type="text"
                 name="email"
                 onChange={handleChange}
@@ -126,7 +147,9 @@ const newSeller = () => {
             <div>
               <p className="text-2xl">RFC:</p>
               <input
-                className="bg-back-form rounded-md text-left font-Sub-title mb-2 w-64 h-10"
+                className={`bg-back-form rounded-md text-left font-Sub-title mb-2 w-64 h-10 ${
+                  isEmpty ? "border-2 border-red-600" : ""
+                }`}
                 type="text"
                 name="rfc"
                 onChange={handleChange}
@@ -135,12 +158,24 @@ const newSeller = () => {
             <div>
               <p className="text-2xl">Dirección:</p>
               <input
-                className="bg-back-form rounded-md text-left font-Sub-title mb-2 w-64 h-10"
+                className={`bg-back-form rounded-md text-left font-Sub-title mb-2 w-64 h-10 ${
+                  isEmpty ? "border-2 border-red-600" : ""
+                }`}
                 type="text"
                 name="address"
                 onChange={handleChange}
               />
             </div>
+            {isEmpty ? (
+              <p className="text-red-500 flex justify-center">
+                Los campos no pueden estar vacios
+              </p>
+            ) : (
+              ""
+            )}
+            {error && (
+              <p className="text-red-500 flex justify-center">{error}</p>
+            )}
             <div className="md:col-span-2 md:ml-[21.5rem]">
               <button
                 type="submit"

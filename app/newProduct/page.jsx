@@ -6,7 +6,7 @@ import { Akaya_Telivigala } from "next/font/google";
 import { postPost } from "../api/post";
 const NewProduct = () => {
   const [selected, setSelected] = useState("");
-  const [values, setValues] = useState();
+  const [values, setValues] = useState({});
   const [active, setActive] = useState(false);
   const handleSubmit = async (e) => {
     e.preventDefault();

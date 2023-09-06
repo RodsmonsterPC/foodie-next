@@ -5,18 +5,44 @@ import Image from "next/image";
 import { useState, useEffect } from "react";
 import JoinButton from "./JoinButton";
 import { useUserContext } from "../contexts/userContext";
+import { getUser } from "../api/signUp";
 const Navbar = ({ links }) => {
   const userToken = useUserContext();
-  console.log(userToken);
+
   const [open, setOpen] = useState(false);
+  const [user, setUser] = useState([]);
 
-  // useEffect(() => {
-  //   let token = localStorage.getItem("token");
+  useEffect(() => {
+    function parseJwt(token) {
+      var base64Url = token.split(".")[1];
+      var base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
+      var jsonPayload = decodeURIComponent(
+        window
+          .atob(base64)
+          .split("")
+          .map(function (c) {
+            return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
+          })
+          .join("")
+      );
+      return JSON.parse(jsonPayload);
+    }
+    let user = localStorage.getItem("token");
 
-  //   if (token) {
-  //     setLogin(true);
-  //   }
-  // }, []);
+    let id = parseJwt(user);
+
+    getUser(id.id)
+      .then((data) => {
+        setUser(data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
+  if (user.length === 0) {
+    return <span>loading.....</span>;
+  }
+
   return (
     <div>
       <nav className="bg-back-color flex justify-between text-slate-900 h-16 drop-shadow-md">
@@ -55,6 +81,7 @@ const Navbar = ({ links }) => {
               src={"/shopping-car.svg"}
               width={20}
               height={20}
+              alt="shopping car"
             />
           </div>
         </Link>
@@ -101,22 +128,54 @@ const Navbar = ({ links }) => {
               </div>
             </Link>
 
+            {user.dataJson.data.users.role[0] === "seller" ? (
+              <Link href={"/newProduct"}>
+                {" "}
+                <div className="hidden sm:flex">
+                  <JoinButton name={"Crear producto"} />
+                </div>{" "}
+              </Link>
+            ) : null}
+
             <Link href={`/seller`}>
-              <div className="hidden sm:flex">
+              <div
+                className={`hidden sm:flex ${
+                  user.dataJson.data.users.role[0] === "seller"
+                    ? "sm:hidden"
+                    : null
+                }`}
+              >
                 <JoinButton name={"¡Unete a Foodie!"} />
               </div>
             </Link>
 
-            <button className="md:hidden flex text-button-color border border-button-color rounded-full w-72 h-9 py-2.5 hover:text-black duration-500 ml-9">
-              <Image
-                className="ml-16 mr-3"
-                src="/icon-person.svg"
-                width={20}
-                height={20}
-                alt="person"
-              />
-              ¡Unete a Foodie!
-            </button>
+            {user.dataJson.data.users.role[0] === "seller" ? (
+              <Link href={`/newProduct`}>
+                <button className="md:hidden flex text-button-color border border-button-color rounded-full w-72 h-9 py-2.5 hover:text-black duration-500 ml-9">
+                  <Image
+                    className="ml-16 mr-3"
+                    src="/icon-person.svg"
+                    width={20}
+                    height={20}
+                    alt="person"
+                  />
+                  Crear producto
+                </button>
+              </Link>
+            ) : (
+              <Link href={`/seller`}>
+                <button className="md:hidden flex text-button-color border border-button-color rounded-full w-72 h-9 py-2.5 hover:text-black duration-500 ml-9">
+                  <Image
+                    className="ml-16 mr-3"
+                    src="/icon-person.svg"
+                    width={20}
+                    height={20}
+                    alt="person"
+                  />
+                  ¡Unete a Foodie!
+                </button>
+              </Link>
+            )}
 
             <div className="md:hidden flex justify-between text-base mt-6 rounded-full bg-search-color h-9 text-center p-1 w-72 ml-9">
               <Image

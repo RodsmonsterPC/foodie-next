@@ -3,13 +3,19 @@ import React from "react";
 import Image from "next/image";
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { updateAccount } from "../api/signUp";
+import { getUser, updateAccount } from "../api/signUp";
 import { Shadows_Into_Light } from "next/font/google";
+import { useRouter } from "next/navigation";
+import { data } from "autoprefixer";
 
 const newSeller = () => {
-  const [values, setValues] = useState();
+  const [values, setValues] = useState({});
+  const [isLoading, setLoading] = useState(false);
   const [error, setError] = useState();
   const [token, setToken] = useState("");
+  const [isEmpty, setIsEmpty] = useState(false);
+  const [user, setUser] = useState([]);
+  const router = useRouter();
 
   useEffect(() => {
     function parseJwt(token) {
@@ -31,10 +37,24 @@ const newSeller = () => {
     let id = parseJwt(user);
 
     setToken(id);
+    getUser(id.id)
+      .then((data) => {
+        setUser(data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }, []);
 
+  if (user.length === 0) {
+    return <span>loading.....</span>;
+  }
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (Object.keys(values).length === 0) {
+      return setIsEmpty(true);
+    }
+
     const body = {
       name: values.name,
       phoneNumber: values.phoneNumber,
@@ -42,13 +62,30 @@ const newSeller = () => {
       email: values.email,
       rfc: values.rfc,
       address: values.address,
+      role: "seller",
     };
 
-    const result = await updateAccount(token.id, body);
-    console.log(token.id);
-    console.log(body);
-    console.log(result);
-    if (!result.success) setError("Error al registrar vendedor");
+    if (
+      values.name &&
+      values.name !== "" &&
+      values.phoneNumber &&
+      values.phoneNumber !== "" &&
+      values.description &&
+      values.description !== "" &&
+      values.email &&
+      values.email !== "" &&
+      values.rfc &&
+      values.rfc !== "" &&
+      values.address &&
+      values.address !== ""
+    ) {
+      const newSeller = await updateAccount(token.id, body);
+
+      router.push("/");
+    } else {
+      setError("Error al registrarse, llenar todos los campos");
+      setIsEmpty(false);
+    }
   };
 
   const handleChange = (e) =>
@@ -70,11 +107,13 @@ const newSeller = () => {
               src={"/Vector.svg"}
               width={100}
               height={95}
+              alt="upload"
             />
           </button>
           <p className="sm:hidden w-64 text-sm mt-6">
             Porfavor llenar todos los campos que se solicitan:
           </p>
+
           <p className="hidden md:flex text-sm md:mt-6 md:mr-14">
             Proporcionar imagen clara y concisa
           </p>
@@ -90,7 +129,9 @@ const newSeller = () => {
             <div>
               <p className="text-2xl">Nombre:</p>
               <input
-                className="bg-back-form rounded-md text-left font-Sub-title mb-2 w-64 h-10 "
+                className={`bg-back-form rounded-md text-left font-Sub-title mb-2 w-64 h-10 ${
+                  isEmpty ? "border-2 border-red-600" : ""
+                }`}
                 type="text"
                 name="name"
                 onChange={handleChange}
@@ -99,7 +140,9 @@ const newSeller = () => {
             <div>
               <p className="text-2xl">Número:</p>
               <input
-                className="bg-back-form rounded-md text-left font-Sub-title mb-2 w-64 h-10 "
+                className={`bg-back-form rounded-md text-left font-Sub-title mb-2 w-64 h-10 ${
+                  isEmpty ? "border-2 border-red-600" : ""
+                }`}
                 type="text"
                 name="phoneNumber"
                 onChange={handleChange}
@@ -108,7 +151,9 @@ const newSeller = () => {
             <div>
               <p className="text-2xl">Descripción:</p>
               <input
-                className="bg-back-form rounded-md text-left font-Sub-title mb-2 w-64 h-10 "
+                className={`bg-back-form rounded-md text-left font-Sub-title mb-2 w-64 h-10 ${
+                  isEmpty ? "border-2 border-red-600" : ""
+                }`}
                 type="text"
                 name="description"
                 onChange={handleChange}
@@ -117,16 +162,21 @@ const newSeller = () => {
             <div>
               <p className="text-2xl">Correo:</p>
               <input
-                className="bg-back-form rounded-md text-left font-Sub-title mb-2 w-64 h-10 "
+                className={`bg-back-form rounded-md text-left font-Sub-title mb-2 w-64 h-10 ${
+                  isEmpty ? "border-2 border-red-600" : ""
+                }`}
                 type="text"
                 name="email"
+                placeholder={`${user.dataJson.data.users.email}`}
                 onChange={handleChange}
               />
             </div>
             <div>
               <p className="text-2xl">RFC:</p>
               <input
-                className="bg-back-form rounded-md text-left font-Sub-title mb-2 w-64 h-10"
+                className={`bg-back-form rounded-md text-left font-Sub-title mb-2 w-64 h-10 ${
+                  isEmpty ? "border-2 border-red-600" : ""
+                }`}
                 type="text"
                 name="rfc"
                 onChange={handleChange}
@@ -135,12 +185,26 @@ const newSeller = () => {
             <div>
               <p className="text-2xl">Dirección:</p>
               <input
-                className="bg-back-form rounded-md text-left font-Sub-title mb-2 w-64 h-10"
+                className={`bg-back-form rounded-md text-left font-Sub-title mb-2 w-64 h-10 ${
+                  isEmpty ? "border-2 border-red-600" : ""
+                }`}
                 type="text"
                 name="address"
                 onChange={handleChange}
               />
             </div>
+            {isEmpty ? (
+              <p className="text-red-500 flex justify-center text-sm">
+                Los campos no pueden estar vacios
+              </p>
+            ) : (
+              ""
+            )}
+            {error && (
+              <p className="text-red-500 flex justify-center text-xs md:text-sm">
+                {error}
+              </p>
+            )}
             <div className="md:col-span-2 md:ml-[21.5rem]">
               <button
                 type="submit"

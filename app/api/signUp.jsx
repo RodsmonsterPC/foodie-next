@@ -4,7 +4,20 @@ export const createAccount = async (email, password) => {
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ email, password }),
   });
-  return await response.json();
+  const dataJson = await response.json();
+  return {
+    status: response.status,
+    dataJson,
+  };
+};
+
+export const getUser = async (id) => {
+  const response = await fetch(`http://localhost:8081/users/${id}`);
+  const dataJson = await response.json();
+  return {
+    status: response.status,
+    dataJson,
+  };
 };
 
 export const updateAccount = async (id, data) => {

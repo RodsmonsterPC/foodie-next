@@ -4,12 +4,20 @@ import Image from "next/image";
 import Dropdown from "../components/Dropdown";
 import { Akaya_Telivigala } from "next/font/google";
 import { postPost } from "../api/post";
+import { useRouter } from "next/navigation";
 const NewProduct = () => {
   const [selected, setSelected] = useState("");
   const [values, setValues] = useState({});
   const [active, setActive] = useState(false);
+  const [isEmpty, setIsEmpty] = useState(false);
+  const [error, setError] = useState();
+
+  const router = useRouter();
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (Object.keys(values).length === 0 || selected === "Seleccionar") {
+      return setIsEmpty(true);
+    }
     const body = {
       name: values.name,
       description: values.description,
@@ -18,7 +26,14 @@ const NewProduct = () => {
       category: selected,
       active: active,
     };
-    const { status, data } = await postPost(body);
+    const { status } = await postPost(body);
+
+    if (status === 200) {
+      router.push("/");
+    } else {
+      setError("Error al crear el producto, revise sus datos");
+      setIsEmpty(false);
+    }
   };
 
   const handleChange = (e) => {
@@ -49,6 +64,11 @@ const NewProduct = () => {
               <p className="mr-6 md:text-3xl">Tu categoria:</p>
               <Dropdown selected={selected} setSelected={setSelected} />
             </div>
+            {isEmpty ? (
+              <p className="text-red-600 text-sm ml-20 mt-4">
+                Por favor, seleccione una categoria
+              </p>
+            ) : null}
             <p className="hidden md:flex mt-3 text-md">
               Asi es como posibles clientes pueden encontrar tu producto{" "}
             </p>
@@ -72,14 +92,18 @@ const NewProduct = () => {
             <div>
               <p>Nombre del producto:</p>
               <input
-                className="bg-back-form rounded-md text-left font-Sub-title mb-9 w-64 h-10 md:w-description-w"
+                className={`bg-back-form rounded-md text-left font-Sub-title mb-9 w-64 h-10 md:w-description-w ${
+                  isEmpty ? "border-2 border-red-600" : ""
+                }`}
                 type="text"
                 name="name"
                 onChange={handleChange}
               />
               <p className="md:mt-4">Descripción:</p>
               <input
-                className="bg-back-form rounded-md text-left font-Sub-title mb-9 w-64 h-56 md:w-description-w md:h-description-h"
+                className={`bg-back-form rounded-md text-left font-Sub-title mb-9 w-64 h-56 md:w-description-w md:h-description-h ${
+                  isEmpty ? "border-2 border-red-600" : ""
+                }`}
                 type="text"
                 name="description"
                 onChange={handleChange}
@@ -88,7 +112,9 @@ const NewProduct = () => {
                 <div className="">
                   <p className="mt-14">Precio:</p>
                   <input
-                    className="bg-back-form rounded-md text-left font-Sub-title mb-9 w-24 h-10 md:w-40"
+                    className={`bg-back-form rounded-md text-left font-Sub-title mb-9 w-24 h-10 md:w-40 ${
+                      isEmpty ? "border-2 border-red-600" : ""
+                    }`}
                     type="text"
                     name="price"
                     onChange={handleChange}
@@ -97,7 +123,9 @@ const NewProduct = () => {
                 <div>
                   <p className="mt-14">Existencias:</p>
                   <input
-                    className="bg-back-form rounded-md text-left font-Sub-title mb-9 w-24 h-10 md:w-48"
+                    className={`bg-back-form rounded-md text-left font-Sub-title mb-9 w-24 h-10 md:w-48 ${
+                      isEmpty ? "border-2 border-red-600" : ""
+                    }`}
                     type="text"
                     name="existence"
                     onChange={handleChange}
@@ -109,6 +137,23 @@ const NewProduct = () => {
               <p className="mr-1">Tu categoria:</p>
               <Dropdown selected={selected} setSelected={setSelected} />
             </div>
+            {error && (
+              <p className="text-red-500 flex justify-center text-lg">
+                {error}
+              </p>
+            )}
+            {isEmpty ? (
+              <p className="text-red-500 flex justify-center text-lg">
+                Los campos no pueden estar vacios
+              </p>
+            ) : (
+              ""
+            )}
+            {isEmpty ? (
+              <p className="text-red-600 text-xs mt-2 md:hidden">
+                Por favor, seleccione una categoria
+              </p>
+            ) : null}
             <div className="flex items-center mt-7  z-0 md:hidden">
               <p className="mr-3">Activo:</p>
               <label

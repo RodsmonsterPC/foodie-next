@@ -27,7 +27,7 @@ const Loggin = () => {
       setToken(dataJson.data.token);
 
       router.push("/");
-      router.reload();
+
       //setteas el token a local storage
       // redirecciones a tal pagina
     } else {

@@ -38,14 +38,17 @@ const Form = () => {
     {
       name: "email",
       placeholder: "Ingrese su correo",
+      type: "text",
     },
     {
       name: "contraseña",
       placeholder: "Contraseña",
+      type: "password",
     },
     {
       name: "confirmar contraseña",
       placeholder: "Confirmar contraseña",
+      type: "password",
     },
   ];
 
@@ -61,7 +64,7 @@ const Form = () => {
               isEmpty ? "border-2 border-red-600" : ""
             }`}
             key={form.name}
-            type="text"
+            type={form.type}
             name={form.name}
             placeholder={form.placeholder}
             onChange={handleChange}

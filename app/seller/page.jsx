@@ -14,6 +14,7 @@ const newSeller = () => {
   const [error, setError] = useState();
   const [isEmpty, setIsEmpty] = useState(false);
   const [user, setUser] = useState([]);
+  const [id, setId] = useState();
   const router = useRouter();
 
   const parseJwt = (token) => {
@@ -35,6 +36,7 @@ const newSeller = () => {
     let user = localStorage.getItem("token");
 
     let { id } = parseJwt(user);
+    setId(id);
 
     getUser(id)
       .then((data) => {
@@ -48,6 +50,7 @@ const newSeller = () => {
   if (user.length === 0) {
     return <span>loading.....</span>;
   }
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (Object.keys(values).length === 0) {
@@ -78,7 +81,7 @@ const newSeller = () => {
       values.address &&
       values.address !== ""
     ) {
-      const newSeller = await updateAccount(token.id, body);
+      const newSeller = await updateAccount(id, body);
 
       router.push("/");
     } else {
@@ -146,7 +149,13 @@ const newSeller = () => {
                 name="phoneNumber"
                 onChange={handleChange}
               />
+              <small className="text-xs hidden md:flex">
+                10 digitos sin número lada
+              </small>
             </div>
+            <small className="text-xs md:hidden">
+              10 digitos sin número lada
+            </small>
             <div>
               <p className="text-2xl">Descripción:</p>
               <input
@@ -180,7 +189,13 @@ const newSeller = () => {
                 name="rfc"
                 onChange={handleChange}
               />
+              <small className="text-xs hidden md:flex">
+                Agregar sus 13 digitos de RFC
+              </small>
             </div>
+            <small className="text-xs md:hidden">
+              Agregar sus 13 digitos de RFC
+            </small>
             <div>
               <p className="text-2xl">Dirección:</p>
               <input

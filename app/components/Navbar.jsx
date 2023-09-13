@@ -54,7 +54,6 @@ const Navbar = ({ links }) => {
     return <span>loading.....</span>;
   }
 
-  console.log(notLoged);
   return (
     <div>
       <nav className="bg-back-color flex justify-between text-slate-900 h-16 drop-shadow-md">

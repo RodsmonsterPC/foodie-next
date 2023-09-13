@@ -12,32 +12,31 @@ const newSeller = () => {
   const [values, setValues] = useState({});
   const [isLoading, setLoading] = useState(false);
   const [error, setError] = useState();
-  const [token, setToken] = useState("");
   const [isEmpty, setIsEmpty] = useState(false);
   const [user, setUser] = useState([]);
   const router = useRouter();
 
+  const parseJwt = (token) => {
+    var base64Url = token.split(".")[1];
+    var base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
+    var jsonPayload = decodeURIComponent(
+      window
+        .atob(base64)
+        .split("")
+        .map(function (c) {
+          return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
+        })
+        .join("")
+    );
+    return JSON.parse(jsonPayload);
+  };
+
   useEffect(() => {
-    function parseJwt(token) {
-      var base64Url = token.split(".")[1];
-      var base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
-      var jsonPayload = decodeURIComponent(
-        window
-          .atob(base64)
-          .split("")
-          .map(function (c) {
-            return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
-          })
-          .join("")
-      );
-      return JSON.parse(jsonPayload);
-    }
     let user = localStorage.getItem("token");
 
-    let id = parseJwt(user);
+    let { id } = parseJwt(user);
 
-    setToken(id);
-    getUser(id.id)
+    getUser(id)
       .then((data) => {
         setUser(data);
       })

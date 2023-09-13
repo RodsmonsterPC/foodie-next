@@ -25,7 +25,9 @@ const Loggin = () => {
     if (status === 200) {
       localStorage.setItem("token", dataJson.data.token);
       setToken(dataJson.data.token);
+
       router.push("/");
+      router.reload();
       //setteas el token a local storage
       // redirecciones a tal pagina
     } else {

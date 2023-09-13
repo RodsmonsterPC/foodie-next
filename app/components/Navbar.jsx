@@ -6,32 +6,42 @@ import { useState, useEffect } from "react";
 import JoinButton from "./JoinButton";
 import { useUserContext } from "../contexts/userContext";
 import { getUser } from "../api/signUp";
+import { useRouter } from "next/navigation";
 const Navbar = ({ links }) => {
   const userToken = useUserContext();
-
+  const router = useRouter();
   const [open, setOpen] = useState(false);
   const [user, setUser] = useState([]);
+  const [notLoged, setLoged] = useState(false);
+
+  const handleRefresh = () => {
+    router.reload();
+  };
+  const parseJwt = (token) => {
+    var base64Url = token?.split(".")[1] || "";
+    var base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
+    var jsonPayload = decodeURIComponent(
+      window
+        .atob(base64)
+        .split("")
+        .map(function (c) {
+          return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
+        })
+        .join("")
+    );
+    if (jsonPayload === "") {
+      return;
+    }
+    return JSON.parse(jsonPayload);
+  };
 
   useEffect(() => {
-    function parseJwt(token) {
-      var base64Url = token.split(".")[1];
-      var base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
-      var jsonPayload = decodeURIComponent(
-        window
-          .atob(base64)
-          .split("")
-          .map(function (c) {
-            return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
-          })
-          .join("")
-      );
-      return JSON.parse(jsonPayload);
+    let infoUser = localStorage.getItem("token");
+    if (!infoUser) {
+      return setLoged(true);
     }
-    let user = localStorage.getItem("token");
-
-    let id = parseJwt(user);
-
-    getUser(id.id)
+    const { id } = parseJwt(infoUser);
+    getUser(id)
       .then((data) => {
         setUser(data);
       })
@@ -39,10 +49,12 @@ const Navbar = ({ links }) => {
         console.log(error);
       });
   }, []);
-  if (user.length === 0) {
+
+  if (user.length === 0 && !notLoged) {
     return <span>loading.....</span>;
   }
 
+  console.log(notLoged);
   return (
     <div>
       <nav className="bg-back-color flex justify-between text-slate-900 h-16 drop-shadow-md">
@@ -107,7 +119,9 @@ const Navbar = ({ links }) => {
                 }}
                 className={`ml-4 mt-8 mb-6 mr-6 md:my-0 text-link-color hover:text-button-color duration-500`}
               >
-                <Link href="/">Cerrar sesión</Link>
+                <Link href="/" onClick={handleRefresh}>
+                  Cerrar sesión
+                </Link>
               </li>
             ) : (
               <li
@@ -128,7 +142,7 @@ const Navbar = ({ links }) => {
               </div>
             </Link>
 
-            {user.dataJson.data.users.role[0] === "seller" ? (
+            {!notLoged && user.dataJson.data.users.role[0] === "seller" ? (
               <Link href={"/newProduct"}>
                 {" "}
                 <div className="hidden sm:flex">
@@ -140,7 +154,7 @@ const Navbar = ({ links }) => {
             <Link href={`/seller`}>
               <div
                 className={`hidden sm:flex ${
-                  user.dataJson.data.users.role[0] === "seller"
+                  !notLoged && user.dataJson.data.users.role[0] === "seller"
                     ? "sm:hidden"
                     : null
                 }`}
@@ -149,7 +163,7 @@ const Navbar = ({ links }) => {
               </div>
             </Link>
 
-            {user.dataJson.data.users.role[0] === "seller" ? (
+            {!notLoged && user.dataJson.data.users.role[0] === "seller" ? (
               <Link href={`/newProduct`}>
                 <button className="md:hidden flex text-button-color border border-button-color rounded-full w-72 h-9 py-2.5 hover:text-black duration-500 ml-9">
                   <Image

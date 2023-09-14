@@ -18,5 +18,9 @@ export const createSeller = async (
       address,
     }),
   });
-  return await response.json();
+  const dataJson = await response.json();
+  return {
+    status: response.status,
+    dataJson,
+  };
 };

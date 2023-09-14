@@ -6,12 +6,16 @@ import { loginAccount } from "../api/login";
 import { useRouter } from "next/navigation";
 import { useUserContext } from "../contexts/userContext";
 const Loggin = () => {
-  const [values, setValues] = useState();
+  const [values, setValues] = useState({});
   const [error, setError] = useState();
+  const [isEmpty, setIsEmpty] = useState(false);
   const { token, setToken } = useUserContext();
   const router = useRouter();
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (Object.keys(values).length === 0) {
+      return setIsEmpty(true);
+    }
 
     const { status, dataJson } = await loginAccount(
       values.email,
@@ -21,11 +25,15 @@ const Loggin = () => {
     if (status === 200) {
       localStorage.setItem("token", dataJson.data.token);
       setToken(dataJson.data.token);
+
       router.push("/");
+
       //setteas el token a local storage
       // redirecciones a tal pagina
     } else {
-      if (!dataJson.success) setError("Error al iniciar Sesión");
+      if (!dataJson.success)
+        setError("Error al iniciar sesión, revise sus datos porfavor");
+      setIsEmpty(false);
     }
   };
   const handleChange = (e) =>
@@ -50,20 +58,34 @@ const Loggin = () => {
           />
           <div className="mt-4 ml-5">
             <input
-              className="bg-back-form text-left font-Sub-title mb-8 w-[21rem] h-12 md:ml-[1.5rem] "
+              className={`bg-back-form  text-left font-Sub-title mb-8 w-[21rem] h-12 md:ml-[1.5rem] ${
+                isEmpty ? "border-2 border-red-600 md:border-red-600" : ""
+              }`}
               type="text"
               placeholder="Email"
               name="email"
               onChange={handleChange}
             />
+
             <input
-              className="bg-back-form text-left font-Sub-title mb-8 w-[21rem] h-12 md:ml-[1.5rem]"
+              className={`bg-back-form  text-left font-Sub-title mb-8 w-[21rem] h-12 md:ml-[1.5rem] ${
+                isEmpty ? "border-2 border-red-600 md:border-red-600" : ""
+              }`}
               type="password"
               placeholder="Password"
               name="password"
               onChange={handleChange}
             />
-            {error && <p className="">{error}</p>}
+            {isEmpty ? (
+              <p className="text-red-500 flex justify-center mb-3">
+                Los campos no pueden estar vacios
+              </p>
+            ) : (
+              ""
+            )}
+            {error && (
+              <p className="text-red-500 flex justify-center mb-3">{error}</p>
+            )}
             <button
               type="submit"
               className=" bg-[#33A833] text-white w-[18.7rem] h-12 rounded-full mx-8 mb-[3.7rem] md:mb-[2.5rem]"

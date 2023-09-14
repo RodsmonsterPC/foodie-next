@@ -18,11 +18,9 @@ const Dropdown = ({ selected, setSelected }) => {
     { name: "Postres" },
   ];
   return (
-<<<<<<< HEAD
-    <div className="w-40 h-11 border md:border-2 rounded-full">
-=======
+
     <div className="w-48 h-11 border border-2 rounded-full">
->>>>>>> bfdf065c9de336f343aacf4a24324a401766b9d5
+
       <div
         onClick={() => setOpen(!open)}
         className={`bg-white w-full p-2 flex items-center justify-between rounded-full ${

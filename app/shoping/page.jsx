@@ -36,19 +36,7 @@ const Shoping = () => {
       img: imgPlatano,
     },
   ];
-  const [product, setProduct] = useState(1); //Va el estado del producto previamente
-  const [total,setTotal] = useState(0)
 
-  const getProduct = (price) => {
-    setProduct(product + 1);
-    setTotal(total + price)
-  };
-  const restProduct = (price) => {
-    if (product !== 1) {
-      setProduct(product - 1);
-      setTotal(total - price)
-    }
-  };
   return (
     <div className="mt-8 ml-4 mr-4">
       <h2 className="font-poppins font-semibold text-2xl">
@@ -107,16 +95,15 @@ const Shoping = () => {
             <p className="font-poppins font-normal text-base mr-14">Cantidad</p>
             <div className="flex mb-5">
               <button
-                onClick= {restProduct(list.price)}
+                
                 className="bg-[#33A833] w-14 h-6 rounded-lg text-white mr-4"
               >
                 -
               </button>
               <p className="mr-4 font-Montserrat font-semibold text-sm text-center w-8">
-                {product}
+                0
               </p>
-              <button
-                onClick={getProduct(list.price)}
+              <button 
                 className="bg-[#33A833] w-14 h-6 rounded-lg text-white"
               >
                 +
@@ -129,7 +116,7 @@ const Shoping = () => {
       <div>
         <div className="flex justify-between ">
           <p className="font-poppins text-sm font-bold">Costo Total</p>
-          <p className="mr-8 w-auto text-lg font-Montserrat font-bold ">${total}</p>
+          <p className="mr-8 w-auto text-lg font-Montserrat font-bold ">$0</p>
         </div>
         <button className=" bg-[#33A833] text-white w-[18.7rem] h-12 rounded-full mx-8 mt-5 ">
           Proceder al Pago

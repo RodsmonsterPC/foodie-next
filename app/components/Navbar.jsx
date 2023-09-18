@@ -13,6 +13,7 @@ const Navbar = ({ links }) => {
   const [open, setOpen] = useState(false);
   const [user, setUser] = useState([]);
   const [notLoged, setLoged] = useState(false);
+  const [isSeller, setSeller] = useState(false);
 
   const handleRefresh = () => {
     router.reload();
@@ -115,6 +116,7 @@ const Navbar = ({ links }) => {
                 onClick={() => {
                   localStorage.removeItem("token");
                   userToken.setToken("");
+                  setLoged(false);
                 }}
                 className={`ml-4 mt-8 mb-6 mr-6 md:my-0 text-link-color hover:text-button-color duration-500`}
               >
@@ -148,19 +150,19 @@ const Navbar = ({ links }) => {
                   <JoinButton name={"Crear producto"} />
                 </div>{" "}
               </Link>
-            ) : null}
-
-            <Link href={`/seller`}>
-              <div
-                className={`hidden sm:flex ${
-                  !notLoged && user.dataJson.data.users.role[0] === "seller"
-                    ? "sm:hidden"
-                    : null
-                }`}
-              >
-                <JoinButton name={"¡Unete a Foodie!"} />
-              </div>
-            </Link>
+            ) : (
+              <Link href={`/seller`}>
+                <div
+                  className={`hidden sm:flex ${
+                    !notLoged && user.dataJson.data.users.role[0] === "seller"
+                      ? "sm:hidden"
+                      : null
+                  }`}
+                >
+                  <JoinButton name={"¡Unete a Foodie!"} />
+                </div>
+              </Link>
+            )}
 
             {!notLoged && user.dataJson.data.users.role[0] === "seller" ? (
               <Link href={`/newProduct`}>

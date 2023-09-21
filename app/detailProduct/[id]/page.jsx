@@ -31,12 +31,13 @@ const detailProduct = ({ params: { id } }) => {
     return <span>loading.....</span>;
   }
   const { dataProduct } = data;
+  console.log(dataProduct)
  
   return (
     <div>
       <div>
         <p className="text-3xl mt-12 ml-8 md:flex md:justify-center md:text-5xl md:mt-24">
-          {dataProduct.data.products.name}
+          {dataProduct.data.productss.name}
         </p>
       </div>
       <div className="md:flex md:flex-row md:mb-28">
@@ -47,17 +48,18 @@ const detailProduct = ({ params: { id } }) => {
             width={144}
             height={150}
           />
-          <Image
+          {/* <Image
             className="hidden md:flex "
-            src={"/icon-person.svg"}
+            src={dataProduct.data.productss.file}
             width={414}
             height={431}
-          />
+          /> */}
+          <img src={dataProduct.data.productss.file} alt="product" />
           <div className="ml-4 mt-4 text-xl">
-            <h2 className="md:hidden">${dataProduct.data.products.price}/kg</h2>
+            <h2 className="md:hidden">${dataProduct.data.productss.price}/kg</h2>
             <div className="flex flex-col mt-4 text-xs font-bold md:items-center  md:text-base">
               <small>Cantidad Disponible:</small>
-              <small>{dataProduct.data.products.existence}</small>
+              <small>{dataProduct.data.productss.existence}</small>
             </div>
           </div>
         </div>
@@ -67,7 +69,7 @@ const detailProduct = ({ params: { id } }) => {
             <li className="flex mt-4">
               <Image src={"/check-icon.svg"} width={18} height={18} />{" "}
               <p className="text-base">
-                {dataProduct.data.products.description}
+                {dataProduct.data.productss.description}
               </p>{" "}
             </li>
             <li className="flex mt-4">
@@ -88,7 +90,7 @@ const detailProduct = ({ params: { id } }) => {
         </div>
         <div className="md:flex md:flex-col md:ml-24">
           <h2 className="hidden md:flex md:justify-center md:text-4xl">
-            ${dataProduct.data.products.price}/kg
+            ${dataProduct.data.productss.price}/kg
           </h2>
           <Counter />
 

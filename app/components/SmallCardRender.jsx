@@ -20,13 +20,12 @@ const SmallCardRender = () => {
       }
     })();
   }, []);
-
   if (info.length === 0) {
     return <span>loading.....</span>;
   }
 
   const { success, data } = info;
-  console.log(data);
+  console.log(data.product);
   return (
     <>
       <Swiper
@@ -49,7 +48,7 @@ const SmallCardRender = () => {
               title={item.name}
               price={item.price}
               description={item.description}
-              // img={item.image}
+              img={item.file}
             />
           </SwiperSlide>
         ))}
@@ -76,7 +75,7 @@ const SmallCardRender = () => {
               title={item.name}
               price={item.price}
               description={item.description}
-              // img={item.image}
+              img={item.file}
             />
           </SwiperSlide>
         ))}

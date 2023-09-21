@@ -1,11 +1,10 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Dropdown from "../components/Dropdown";
-import { Akaya_Telivigala } from "next/font/google";
 import { postPost } from "../api/post";
 import { useRouter } from "next/navigation";
-import axios from "axios";
+
 const NewProduct = () => {
   const [selected, setSelected] = useState("");
   const [values, setValues] = useState({});
@@ -21,9 +20,9 @@ const NewProduct = () => {
       return setIsEmpty(true);
     }
     const data = new FormData();
-    const newPrice = parseInt(values.price)
-    const newExt = parseInt(values.existence)
-    console.log(newExt,newPrice)
+    const newPrice = parseInt(values.price);
+    const newExt = parseInt(values.existence);
+    console.log(newExt, newPrice);
     data.append("avatar", file);
     data.append("name", values.name);
     data.append("description", values.description);
@@ -43,6 +42,7 @@ const NewProduct = () => {
   const handleChange = (e) => {
     setValues({ ...values, [e.target.name]: e.target.value });
   };
+
   return (
     <form
       action="/profile"
@@ -60,19 +60,23 @@ const NewProduct = () => {
             <h1 className="mt-9 mb-5 text-3xl md:hidden">Nuevo Producto</h1>
             <div className="border-2 w-64 h-40 rounded-md md:w-upload-w md:h-upload-h md:mt-11">
               <label htmlFor="file-upload">
-                <Image
-                  className="mx-auto my-auto"
-                  src={"/Vector.svg"}
-                  width={75}
-                  height={66}
-                />
+                {file ? (
+                  <img src={URL.createObjectURL(file)} alt="" />
+                ) : (
+                  <Image
+                    className="mx-auto my-auto"
+                    src={"/Vector.svg"}
+                    width={75}
+                    height={66}
+                  />
+                )}
               </label>
               <input
                 id="file-upload"
                 type="file"
                 label="Image"
                 name="avatar"
-                // accept=".jpeg,.png,.jpg"
+                accept=".jpeg,.png,.jpg"
                 className="hidden"
                 onChange={(e) => {
                   setFile(e.target.files[0]);

@@ -13,11 +13,7 @@ export const getPostId = async (id) => {
 export const postPost = async (data, token) => {
   const response = await fetch(`http://localhost:8081/posts`, {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      // Authorization: `Bearer ${token}`
-    },
-    body: JSON.stringify(data),
+    body: data
   });
   const dataProduct = await response.json();
   return {

@@ -4,10 +4,13 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import SmallCardProduct from "./SmallCardProduct";
 import { Swiper, SwiperSlide } from "swiper/react";
+import { useUserContext } from "../contexts/userContext";
 import React, { useEffect, useState } from "react";
 import SlideNavButtons from "./paginationCarrucel";
 import Link from "next/link";
 const SmallCardRender = () => {
+  const userToken = useUserContext();
+
   const [info, setInfo] = useState([]);
   useEffect(() => {
     (async () => {
@@ -20,13 +23,12 @@ const SmallCardRender = () => {
       }
     })();
   }, []);
-
   if (info.length === 0) {
     return <span>loading.....</span>;
   }
 
   const { success, data } = info;
-  console.log(data);
+
   return (
     <>
       <Swiper

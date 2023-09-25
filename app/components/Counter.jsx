@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import { useState, useEffect } from "react";
-const Counter = () => {
+const Counter = ({ existence }) => {
   const [value, setValue] = useState(0);
   const rest = () => setValue(value - 1);
   const add = () => setValue(value + 1);
@@ -30,7 +30,7 @@ const Counter = () => {
           <button
             onClick={add}
             className={`w-14 h-7 bg-button-color text-white rounded-full justify-center ${
-              value >= 20 ? "hidden" : "flex"
+              value >= existence ? "hidden" : "flex"
             }`}
           >
             <p>+</p>

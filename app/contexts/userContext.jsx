@@ -9,6 +9,9 @@ export function useUserContext() {
 
 export function UserProvider(props) {
   const [token, setToken] = useState("");
+  const [allProducts, setAllProducts] = useState([]);
+  const [total, setTotal] = useState(0);
+  const [countProducts, setCountProducts] = useState(0);
 
   useEffect(() => {
     let token = localStorage.getItem("token");
@@ -17,7 +20,18 @@ export function UserProvider(props) {
   }, []);
 
   return (
-    <userContext.Provider value={{ token, setToken }}>
+    <userContext.Provider
+      value={{
+        token,
+        setToken,
+        allProducts,
+        setAllProducts,
+        total,
+        setTotal,
+        countProducts,
+        setCountProducts,
+      }}
+    >
       {props.children}
     </userContext.Provider>
   );

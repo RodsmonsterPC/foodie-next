@@ -17,7 +17,6 @@ const detailProduct = ({ params: { id } }) => {
         dataProduct,
       };
     };
-
     getPostId(id)
       .then((data) => {
         setData(data);
@@ -26,13 +25,22 @@ const detailProduct = ({ params: { id } }) => {
         console.log(error);
       });
   }, []);
+ 
+    const checkout = async() =>{
+      const response = await fetch('/create-order',{
+        method:"POST"
+      })
+      const data = await response.json()
+      console.log(data)
+      window.location.href = data.links[1].href
+    }
 
   if (data.length === 0) {
     return <span>loading.....</span>;
   }
   const { dataProduct } = data;
-  console.log(dataProduct)
- 
+  console.log(dataProduct);
+
   return (
     <div>
       <div>
@@ -56,7 +64,9 @@ const detailProduct = ({ params: { id } }) => {
           /> */}
           <img src={dataProduct.data.productss.file} alt="product" />
           <div className="ml-4 mt-4 text-xl">
-            <h2 className="md:hidden">${dataProduct.data.productss.price}/kg</h2>
+            <h2 className="md:hidden">
+              ${dataProduct.data.productss.price}/kg
+            </h2>
             <div className="flex flex-col mt-4 text-xs font-bold md:items-center  md:text-base">
               <small>Cantidad Disponible:</small>
               <small>{dataProduct.data.productss.existence}</small>
@@ -95,7 +105,8 @@ const detailProduct = ({ params: { id } }) => {
           <Counter />
 
           <div className="ml-6 flex flex-col mb-12 md:items-center">
-            <DetailButton name={"Compra rápida"} />
+            <button onClick={checkout}  className= "text-white text-lg bg-button-color w-description-h h-12 rounded-full mt-7 drop-shadow-xl"></button>
+            {/* <DetailButton name={"Compra rápida"} /> */}
             <DetailButton name={"Agregar el carrito"} />
           </div>
         </div>

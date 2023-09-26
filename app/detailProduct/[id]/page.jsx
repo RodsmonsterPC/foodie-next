@@ -4,10 +4,10 @@ import Image from "next/image";
 import DetailButton from "../../components/detailButton";
 import Counter from "../../components/Counter";
 import { useEffect, useState } from "react";
-
+import { useUserContext } from "@/app/contexts/userContext";
 const detailProduct = ({ params: { id } }) => {
   const [data, setData] = useState([]);
-
+  const userToken = useUserContext();
   useEffect(() => {
     const getPostId = async (id) => {
       const response = await fetch(`http://localhost:8081/posts/${id}`);
@@ -39,7 +39,31 @@ const detailProduct = ({ params: { id } }) => {
     return <span>loading.....</span>;
   }
   const { dataProduct } = data;
-  console.log(dataProduct);
+
+  const {
+    setAllProducts,
+    allProducts,
+    countProducts,
+    setCountProducts,
+    total,
+    setTotal,
+  } = userToken;
+  const onAddProduct = (product) => {
+    if (allProducts.find((item) => item._id === product._id)) {
+      const products = allProducts.map((item) =>
+        item._id === product._id
+          ? { ...item, quantity: item.quantity + 1 }
+          : item
+      );
+      setTotal(total + product.price * product.quantity);
+      setCountProducts(countProducts + product.quantity);
+      return setAllProducts([...products]);
+    }
+
+    setTotal(total + product.price * product.quantity);
+    setCountProducts(countProducts + product.quantity);
+    setAllProducts([...allProducts, product]);
+  };
 
   return (
     <div>
@@ -102,12 +126,17 @@ const detailProduct = ({ params: { id } }) => {
           <h2 className="hidden md:flex md:justify-center md:text-4xl">
             ${dataProduct.data.productss.price}/kg
           </h2>
-          <Counter />
+          <Counter existence={dataProduct.data.products.existence} />
 
           <div className="ml-6 flex flex-col mb-12 md:items-center">
-            <button onClick={checkout}  className= "text-white text-lg bg-button-color w-description-h h-12 rounded-full mt-7 drop-shadow-xl"></button>
-            {/* <DetailButton name={"Compra rápida"} /> */}
-            <DetailButton name={"Agregar el carrito"} />
+            <DetailButton name={"Compra rápida"} />
+            <button
+              onClick={() => onAddProduct(dataProduct.data.products)}
+              className="text-white text-lg bg-button-color w-description-h h-12 rounded-full mt-7 drop-shadow-xl"
+            >
+              Agregar al carrito
+            </button>
+            {/* <DetailButton name={"Agregar el carrito"} /> */}
           </div>
         </div>
       </div>

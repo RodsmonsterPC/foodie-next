@@ -8,6 +8,7 @@ import NewSeller from "./pages/newSeller";
 import DetailProduct from "./pages/detailProduct";
 import { Footer } from "./components/footer";
 import { UserProvider } from "./contexts/userContext";
+
 const poppins = Poppins({
   weight: ["400", "700"],
   subsets: ["latin"],
@@ -28,9 +29,6 @@ export default function RootLayout({ children }) {
     <UserProvider>
       <html lang="en">
         <body className={poppins.className}>
-          {/* <DetailProduct /> */}
-
-          {/* <RegisterUser /> */}
           <Navbar
             links={[
               { name: "Inicio", link: "/" },

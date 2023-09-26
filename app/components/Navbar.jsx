@@ -62,7 +62,7 @@ const Navbar = ({ links }) => {
     );
 
     userToken.setTotal(userToken.total - products.price * products.quantity);
-    userToken.setCountProducts(userToken.countProducts + products.quantity);
+    userToken.setCountProducts(userToken.countProducts - products.quantity);
     userToken.setAllProducts(results);
   };
 
@@ -210,8 +210,61 @@ const Navbar = ({ links }) => {
                 height={20}
               />
               <div className="hidden md:flex rounded-full bg-button-color w-4 h-4 text-center items-center justify-center absolute bottom-3 left-3 ">
-                <span className="text-xs text-white">0</span>
+                <span className="text-xs text-white">
+                  {userToken.countProducts}
+                </span>
               </div>
+            </div>
+
+            <div
+              className={`flex flex-col w-[16rem] bg-white absolute top-16 right-64 shadow-2xl rounded-md  ${
+                active ? "" : "hidden"
+              }`}
+            >
+              {userToken.allProducts.length ? (
+                <>
+                  <div className="flex flex-col justify-between border-b-2 border-gray-200">
+                    {userToken.allProducts.map((products) => (
+                      <>
+                        <div
+                          className="flex justify-between items-center "
+                          key={products._id}
+                        >
+                          <span className="m-4 text-sm ">
+                            {products.quantity}
+                          </span>
+                          <p className="text-xs w-[100px]">{products.name}</p>
+
+                          <span className=" text-sm font-semibold ">
+                            ${products.price}
+                          </span>
+                          <Image
+                            className="m-3 "
+                            width={15}
+                            height={15}
+                            src={"/icon-close.svg"}
+                            alt="close icon"
+                            onClick={() => onDeleteProducts(products)}
+                          />
+                        </div>
+                      </>
+                    ))}
+                  </div>
+                  <div className="flex items-center justify-center pt-3 pb-3">
+                    <h3 className="text-sm font-semibold mr-3">Total:</h3>
+                    <span className="text-sm">${userToken.total}</span>
+                  </div>
+
+                  <button
+                    onClick={onClearCart}
+                    className="bg-button-color p-[.5rem] w-full rounded-b-lg text-white transition ease-in-out delay-150 hover:-translate-y-0 hover:scale-110 hover:bg-white-500 hover:text-white duration-300"
+                  >
+                    Vaciar el carrito
+                  </button>
+                </>
+              ) : (
+                <p className="ml-16 text-sm">El carrito esta vacio</p>
+              )}
             </div>
 
             {!notLoged && user.dataJson.data.users.role[0] === "seller" ? (

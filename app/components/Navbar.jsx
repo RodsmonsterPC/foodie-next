@@ -36,7 +36,7 @@ const Navbar = ({ links }) => {
     }
     return JSON.parse(jsonPayload);
   };
-  console.log(userToken);
+
   useEffect(() => {
     let infoUser = localStorage.getItem("token");
     if (!infoUser) {
@@ -182,18 +182,25 @@ const Navbar = ({ links }) => {
               </li>
             ))}
             {userToken.token ? (
-              <li
-                onClick={() => {
-                  localStorage.removeItem("token");
-                  userToken.setToken("");
-                  setLoged(false);
-                }}
-                className={`ml-4 mt-8 mb-6 mr-6 md:my-0 text-link-color hover:text-button-color duration-500`}
-              >
-                <Link href="/" onClick={handleRefresh}>
-                  Cerrar sesión
-                </Link>
-              </li>
+              <>
+                <li
+                  className={`ml-4 mt-8 mb-6 mr-6 md:my-0 text-link-color hover:text-button-color duration-500`}
+                >
+                  <Link href="/profile">Perfil</Link>
+                </li>
+                <li
+                  onClick={() => {
+                    localStorage.removeItem("token");
+                    userToken.setToken("");
+                    setLoged(false);
+                  }}
+                  className={`ml-4 mt-8 mb-6 mr-6 md:my-0 text-link-color hover:text-button-color duration-500`}
+                >
+                  <Link href="/" onClick={handleRefresh}>
+                    Cerrar sesión
+                  </Link>
+                </li>
+              </>
             ) : (
               <li
                 className={`ml-4 mt-8 mb-6 mr-6 md:my-0 text-link-color hover:text-button-color duration-500`}

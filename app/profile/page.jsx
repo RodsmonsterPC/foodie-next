@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import DasboardUser from "../components/DashBoard";
 import Image from "next/image";
 import add from "../../assets/img-add.svg";
@@ -9,6 +9,7 @@ import Link from "next/link";
 import newProduct from "../../assets/img-create-new-product.svg";
 import trash from "../../assets/img-trash.svg";
 
+import { getUser } from "../api/signUp";
 const Products = () => {
   const info = [
     {
@@ -197,12 +198,50 @@ const Products = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [productsPerPage, setproductsPerPage] = useState(6);
   const [showModal, setShowModal] = useState(false);
+  const [infoUser, setInfoUser] = useState();
   const totalProducts = info.length;
   const lasIndex = currentPage * productsPerPage;
   const firsIndex = lasIndex - productsPerPage;
+
+  const parseJwt = (token) => {
+    var base64Url = token?.split(".")[1] || "";
+    var base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
+    var jsonPayload = decodeURIComponent(
+      window
+        .atob(base64)
+        .split("")
+        .map(function (c) {
+          return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
+        })
+        .join("")
+    );
+    if (jsonPayload === "") {
+      return;
+    }
+    return JSON.parse(jsonPayload);
+  };
+
+  useEffect(() => {
+    const dataUser = localStorage.getItem("token");
+    const { id } = parseJwt(dataUser);
+    getUser(id)
+      .then((data) => {
+        setInfoUser(data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
+
+  console.log(infoUser);
+  const { dataJson } = infoUser;
+
   return (
     <section className="md:flex ">
-      <DasboardUser />
+      <DasboardUser
+        name={dataJson.data.users.name}
+        email={dataJson.data.users.email}
+      />
       <div className="mx-8 mt-5 md:w-[70%] md:block">
         <div className="flex flex-row-reverse  justify-between">
           <Link href={"/newProduct"}>

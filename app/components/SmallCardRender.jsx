@@ -4,24 +4,30 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import SmallCardProduct from "./SmallCardProduct";
 import { Swiper, SwiperSlide } from "swiper/react";
+import { useUserContext } from "../contexts/userContext";
 import React, { useEffect, useState } from "react";
 import SlideNavButtons from "./paginationCarrucel";
-
+import Link from "next/link";
 const SmallCardRender = () => {
-  const [data, setData] = useState([]);
+  const userToken = useUserContext();
+
+  const [info, setInfo] = useState([]);
   useEffect(() => {
     (async () => {
       try {
-        const response = await fetch(
-          "https://fakestoreapi.com/products?limit=24"
-        );
+        const response = await fetch("http://localhost:8081/posts");
         const dataApi = await response.json();
-        setData(dataApi);
+        setInfo(dataApi);
       } catch (error) {
         console.error("Fetch error:", error);
       }
     })();
   }, []);
+  if (info.length === 0) {
+    return <span>loading.....</span>;
+  }
+
+  const { success, data } = info;
 
   return (
     <>
@@ -37,14 +43,15 @@ const SmallCardRender = () => {
           },
         }}
       >
-        {data.map((item) => (
+        {data.product.map((item) => (
           <SwiperSlide key={item.id}>
             <SmallCardProduct
               key={item.id}
-              title={item.title}
+              id={item._id}
+              title={item.name}
               price={item.price}
               description={item.description}
-              img={item.image}
+              img={item.file}
             />
           </SwiperSlide>
         ))}
@@ -63,17 +70,19 @@ const SmallCardRender = () => {
         }}
         className="mt-10"
       >
-        {data.map((item) => (
+        {data.product.map((item) => (
           <SwiperSlide key={item.id}>
             <SmallCardProduct
               key={item.id}
-              title={item.title}
+              id={item._id}
+              title={item.name}
               price={item.price}
               description={item.description}
-              img={item.image}
+              img={item.file}
             />
           </SwiperSlide>
         ))}
+
         <SlideNavButtons />
       </Swiper>
     </>

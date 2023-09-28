@@ -6,18 +6,17 @@ export const getPost = async () => {
 
 export const getPostId = async (id) => {
   const response = await fetch(`http://localhost:8081/posts/${id}`);
-  const data = await response.json();
-  return data.posts;
+  const dataProduct = await response.json();
+  return {
+    status: response.status,
+    dataProduct,
+  };
 };
 
 export const postPost = async (data, token) => {
   const response = await fetch(`http://localhost:8081/posts`, {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      // Authorization: `Bearer ${token}`
-    },
-    body: JSON.stringify(data),
+    body: data
   });
   const dataProduct = await response.json();
   return {

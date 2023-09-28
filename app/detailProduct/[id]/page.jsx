@@ -5,6 +5,9 @@ import DetailButton from "../../components/detailButton";
 import Counter from "../../components/Counter";
 import { useEffect, useState } from "react";
 import { useUserContext } from "@/app/contexts/userContext";
+import { PayPalScriptProvider } from "@paypal/react-paypal-js";
+import PayPalPayment from "../../components/paypal";
+
 const detailProduct = ({ params: { id } }) => {
   const [data, setData] = useState([]);
   const userToken = useUserContext();
@@ -25,21 +28,26 @@ const detailProduct = ({ params: { id } }) => {
         console.log(error);
       });
   }, []);
- 
-    const checkout = async() =>{
-      const response = await fetch('/create-order',{
-        method:"POST"
-      })
-      const data = await response.json()
-      console.log(data)
-      window.location.href = data.links[1].href
-    }
+  const initialOptions = {
+    clientId:
+      "AQygtExv1sWlPYCnnaY_A05_kye-F-GOCVUC52dlMsPaJ3yzDIg-Ldog-ssYfTlu15xNdFxCCNCjUiT5",
+    currency: "USD",
+    intent: "capture",
+  };
+  const checkout = async () => {
+    const response = await fetch("/create-order", {
+      method: "POST",
+    });
+    const data = await response.json();
+    console.log(data);
+    window.location.href = data.links[1].href;
+  };
 
   if (data.length === 0) {
     return <span>loading.....</span>;
   }
   const { dataProduct } = data;
-
+ 
   const {
     setAllProducts,
     allProducts,
@@ -69,7 +77,7 @@ const detailProduct = ({ params: { id } }) => {
     <div>
       <div>
         <p className="text-3xl mt-12 ml-8 md:flex md:justify-center md:text-5xl md:mt-24">
-          {dataProduct.data.productss.name}
+          {dataProduct.data.products.name}
         </p>
       </div>
       <div className="md:flex md:flex-row md:mb-28">
@@ -86,14 +94,12 @@ const detailProduct = ({ params: { id } }) => {
             width={414}
             height={431}
           /> */}
-          <img src={dataProduct.data.productss.file} alt="product" />
+          <img src={dataProduct.data.products.file} alt="product" />
           <div className="ml-4 mt-4 text-xl">
-            <h2 className="md:hidden">
-              ${dataProduct.data.productss.price}/kg
-            </h2>
+            <h2 className="md:hidden">${dataProduct.data.products.price}/kg</h2>
             <div className="flex flex-col mt-4 text-xs font-bold md:items-center  md:text-base">
               <small>Cantidad Disponible:</small>
-              <small>{dataProduct.data.productss.existence}</small>
+              <small>{dataProduct.data.products.existence}</small>
             </div>
           </div>
         </div>
@@ -103,7 +109,7 @@ const detailProduct = ({ params: { id } }) => {
             <li className="flex mt-4">
               <Image src={"/check-icon.svg"} width={18} height={18} />{" "}
               <p className="text-base">
-                {dataProduct.data.productss.description}
+                {dataProduct.data.products.description}
               </p>{" "}
             </li>
             <li className="flex mt-4">
@@ -124,12 +130,15 @@ const detailProduct = ({ params: { id } }) => {
         </div>
         <div className="md:flex md:flex-col md:ml-24">
           <h2 className="hidden md:flex md:justify-center md:text-4xl">
-            ${dataProduct.data.productss.price}/kg
+            ${dataProduct.data.products.price}/kg
           </h2>
           <Counter existence={dataProduct.data.products.existence} />
 
           <div className="ml-6 flex flex-col mb-12 md:items-center">
-            <DetailButton name={"Compra rápida"} />
+            {/* <DetailButton name={"Compra rápida"} /> */}
+            <PayPalScriptProvider options={initialOptions}>
+              <PayPalPayment product={dataProduct.data.products}/>
+            </PayPalScriptProvider>
             <button
               onClick={() => onAddProduct(dataProduct.data.products)}
               className="text-white text-lg bg-button-color w-description-h h-12 rounded-full mt-7 drop-shadow-xl"

@@ -13,12 +13,24 @@ const Navbar = ({ links }) => {
   const [open, setOpen] = useState(false);
   const [user, setUser] = useState([]);
   const [notLoged, setLoged] = useState(false);
-  const [isSeller, setSeller] = useState(false);
   const [active, setActive] = useState(false);
 
   const handleRefresh = () => {
     router.reload();
   };
+
+  const register = () => {
+    router.push("/register");
+  };
+
+  const newProduct = () => {
+    router.push("/newProduct");
+  };
+
+  const newSeller = () => {
+    router.push("/seller");
+  };
+
   const parseJwt = (token) => {
     var base64Url = token?.split(".")[1] || "";
     var base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
@@ -40,7 +52,7 @@ const Navbar = ({ links }) => {
   useEffect(() => {
     let infoUser = localStorage.getItem("token");
     if (!infoUser) {
-      return setLoged(true);
+      return;
     }
     const { id } = parseJwt(infoUser);
     getUser(id)
@@ -50,12 +62,13 @@ const Navbar = ({ links }) => {
       .catch((error) => {
         console.log(error);
       });
-  }, []);
-
-  if (user.length === 0 && !notLoged) {
+  }, [userToken.user]);
+  console.log(user);
+  if (user.length === 0 && userToken.loged) {
     return <span>loading.....</span>;
   }
 
+  console.log(userToken.loged);
   const onDeleteProducts = (products) => {
     const results = userToken.allProducts.filter(
       (item) => item._id !== products._id
@@ -71,6 +84,8 @@ const Navbar = ({ links }) => {
     userToken.setTotal(0);
     userToken.setCountProducts(0);
   };
+
+  console.log(user);
 
   return (
     <div>
@@ -154,7 +169,9 @@ const Navbar = ({ links }) => {
                 <h3 className="text-sm font-semibold mr-3">Total:</h3>
                 <span className="text-sm">${userToken.total}</span>
               </div>
-
+              <button className="bg-gray-100 p-[.5rem] w-full  text-button-color transition ease-in-out delay-150 hover:-translate-y-0 hover:scale-110 hover:bg-green-500 hover:text-white duration-300">
+                Pagar
+              </button>
               <button
                 onClick={onClearCart}
                 className="bg-button-color p-[.5rem] w-full rounded-b-lg text-white transition ease-in-out delay-150 hover:-translate-y-0 hover:scale-110 hover:bg-white-500 hover:text-white duration-300"
@@ -262,6 +279,10 @@ const Navbar = ({ links }) => {
                     <span className="text-sm">${userToken.total}</span>
                   </div>
 
+                  <button className="bg-gray-100 p-[.5rem] w-full  text-button-color transition ease-in-out delay-150 hover:-translate-y-0 hover:scale-110 hover:bg-green-500 hover:text-white duration-300">
+                    Pagar
+                  </button>
+
                   <button
                     onClick={onClearCart}
                     className="bg-button-color p-[.5rem] w-full rounded-b-lg text-white transition ease-in-out delay-150 hover:-translate-y-0 hover:scale-110 hover:bg-white-500 hover:text-white duration-300"
@@ -274,15 +295,16 @@ const Navbar = ({ links }) => {
               )}
             </div>
 
-            {!notLoged && user.dataJson.data.users.role[0] === "seller" ? (
-              <Link href={"/newProduct"}>
-                {" "}
+            {userToken.loged &&
+            user.dataJson.data.users.role[0] === "seller" ? (
+              <>
                 <div className="hidden sm:flex">
-                  <JoinButton name={"Crear producto"} />
-                </div>{" "}
-              </Link>
-            ) : (
-              <Link href={`/seller`}>
+                  <JoinButton name={"Crear producto"} onClick={newProduct} />
+                </div>
+              </>
+            ) : userToken.loged &&
+              user.dataJson.data.users.role[0] === "buyer" ? (
+              <>
                 <div
                   className={`hidden sm:flex ${
                     !notLoged && user.dataJson.data.users.role[0] === "seller"
@@ -290,37 +312,68 @@ const Navbar = ({ links }) => {
                       : null
                   }`}
                 >
-                  <JoinButton name={"¡Unete a Foodie!"} />
+                  <JoinButton name={"¡Unete a Foodie!"} onClick={newSeller} />
                 </div>
-              </Link>
+              </>
+            ) : (
+              <>
+                <div
+                  className={`hidden sm:flex ${
+                    userToken.loged &&
+                    user.dataJson.data.users.role[0] === "seller"
+                      ? "sm:hidden"
+                      : null
+                  }`}
+                >
+                  <JoinButton name={"¡ Registrate ! "} onClick={register} />
+                </div>
+              </>
             )}
 
-            {!notLoged && user.dataJson.data.users.role[0] === "seller" ? (
-              <Link href={`/newProduct`}>
-                <button className="md:hidden flex text-button-color border border-button-color rounded-full w-72 h-9 py-2.5 hover:text-black duration-500 ml-9">
-                  <Image
-                    className="ml-16 mr-3"
-                    src="/icon-person.svg"
-                    width={20}
-                    height={20}
-                    alt="person"
-                  />
-                  Crear producto
-                </button>
-              </Link>
+            {userToken.loged &&
+            user.dataJson.data.users.role[0] === "seller" ? (
+              <button
+                onClick={newProduct}
+                className="md:hidden flex text-button-color border border-button-color rounded-full w-72 h-9 py-2.5 hover:text-black duration-500 ml-9"
+              >
+                <Image
+                  className="ml-16 mr-3"
+                  src="/icon-person.svg"
+                  width={20}
+                  height={20}
+                  alt="person"
+                />
+                Crear producto
+              </button>
+            ) : userToken.loged &&
+              user.dataJson.data.users.role[0] === "buyer" ? (
+              <button
+                onClick={newSeller}
+                className="md:hidden flex text-button-color border border-button-color rounded-full w-72 h-9 py-2.5 hover:text-black duration-500 ml-9"
+              >
+                <Image
+                  className="ml-16 mr-3"
+                  src="/icon-person.svg"
+                  width={20}
+                  height={20}
+                  alt="person"
+                />
+                ¡Unete a Foodie!
+              </button>
             ) : (
-              <Link href={`/seller`}>
-                <button className="md:hidden flex text-button-color border border-button-color rounded-full w-72 h-9 py-2.5 hover:text-black duration-500 ml-9">
-                  <Image
-                    className="ml-16 mr-3"
-                    src="/icon-person.svg"
-                    width={20}
-                    height={20}
-                    alt="person"
-                  />
-                  ¡Unete a Foodie!
-                </button>
-              </Link>
+              <button
+                onClick={register}
+                className="md:hidden flex text-button-color border border-button-color rounded-full w-72 h-9 py-2.5 hover:text-black duration-500 ml-9"
+              >
+                <Image
+                  className="ml-16 mr-3"
+                  src="/icon-person.svg"
+                  width={20}
+                  height={20}
+                  alt="person"
+                />
+                ¡ Registrate !
+              </button>
             )}
 
             <div className="md:hidden flex justify-between text-base mt-6 rounded-full bg-search-color h-9 text-center p-1 w-72 ml-9">

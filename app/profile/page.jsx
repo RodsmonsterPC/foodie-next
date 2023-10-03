@@ -223,6 +223,7 @@ const Products = () => {
 
   useEffect(() => {
     const dataUser = localStorage.getItem("token");
+    console.log(dataUser);
     const { id } = parseJwt(dataUser);
     getUser(id)
       .then((data) => {

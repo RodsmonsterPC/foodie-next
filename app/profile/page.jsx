@@ -221,27 +221,28 @@ const Products = () => {
     return JSON.parse(jsonPayload);
   };
 
-  useEffect(() => {
-    const dataUser = localStorage.getItem("token");
-    console.log(dataUser);
-    const { id } = parseJwt(dataUser);
-    getUser(id)
-      .then((data) => {
-        setInfoUser(data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, []);
+  // useEffect(() => {
+  //   const dataUser = localStorage.getItem("token");
+  //   const { id } = parseJwt(dataUser);
+  //   getUser(id)
+  //     .then((data) => {
+  //       setInfoUser(data);
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //     });
+  // }, []);
 
-  console.log(infoUser);
-  const { dataJson } = infoUser;
+  // console.log(infoUser);
+  // const { dataJson } = infoUser;
 
   return (
     <section className="md:flex ">
       <DasboardUser
-        name={dataJson.data.users.name}
-        email={dataJson.data.users.email}
+        // name={dataJson.data.users.name}
+        // email={dataJson.data.users.email}
+        name={"Miguel"}
+        email={"miguel@gmail.com"}
       />
       <div className="mx-8 mt-5 md:w-[70%] md:block">
         <div className="flex flex-row-reverse  justify-between">

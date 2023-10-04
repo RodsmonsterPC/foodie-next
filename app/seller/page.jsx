@@ -7,16 +7,16 @@ import { getUser, updateAccount } from "../api/signUp";
 import { Shadows_Into_Light } from "next/font/google";
 import { useRouter } from "next/navigation";
 import { data } from "autoprefixer";
-
+import { useUserContext } from "../contexts/userContext";
 const newSeller = () => {
   const [values, setValues] = useState({});
   const [isLoading, setLoading] = useState(false);
   const [error, setError] = useState();
   const [isEmpty, setIsEmpty] = useState(false);
-  const [user, setUser] = useState([]);
+  const [info, setInfo] = useState([]);
   const [id, setId] = useState();
   const router = useRouter();
-
+  const { setLoged, setUser } = useUserContext();
   const parseJwt = (token) => {
     var base64Url = token.split(".")[1];
     var base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
@@ -40,14 +40,14 @@ const newSeller = () => {
 
     getUser(id)
       .then((data) => {
-        setUser(data);
+        setInfo(data);
       })
       .catch((error) => {
         console.log(error);
       });
   }, []);
 
-  if (user.length === 0) {
+  if (info.length === 0) {
     return <span>loading.....</span>;
   }
 
@@ -82,7 +82,8 @@ const newSeller = () => {
       values.address !== ""
     ) {
       const newSeller = await updateAccount(id, body);
-
+      setLoged(true);
+      setUser("seller");
       router.push("/");
     } else {
       setError("Error al registrarse, llenar todos los campos");
@@ -175,7 +176,7 @@ const newSeller = () => {
                 }`}
                 type="text"
                 name="email"
-                placeholder={`${user.dataJson.data.users.email}`}
+                placeholder={`${info.dataJson.data.users.email}`}
                 onChange={handleChange}
               />
             </div>

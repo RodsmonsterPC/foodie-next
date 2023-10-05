@@ -63,7 +63,7 @@ const Navbar = ({ links }) => {
         console.log(error);
       });
   }, [userToken.user]);
-  console.log(user);
+
   if (user.length === 0 && userToken.loged) {
     return <span>loading.....</span>;
   }
@@ -84,8 +84,6 @@ const Navbar = ({ links }) => {
     userToken.setTotal(0);
     userToken.setCountProducts(0);
   };
-
-  console.log(user);
 
   return (
     <div>

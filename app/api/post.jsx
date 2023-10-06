@@ -19,6 +19,7 @@ export const postPost = async (data, token) => {
     body: data
   });
   const dataProduct = await response.json();
+  console.log(dataProduct)
   return {
     status: response.status,
     dataProduct,

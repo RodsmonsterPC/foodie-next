@@ -239,7 +239,7 @@ const Navbar = ({ links }) => {
             </div>
 
             <div
-              className={`flex flex-col w-[16rem] bg-white absolute top-16 right-64 shadow-2xl rounded-md  ${
+              className={`hidden md:flex flex-col w-[16rem] bg-white absolute top-16 right-64 shadow-2xl rounded-md  ${
                 active ? "" : "hidden"
               }`}
             >

@@ -12,7 +12,8 @@ export function UserProvider(props) {
   const [allProducts, setAllProducts] = useState([]);
   const [total, setTotal] = useState(0);
   const [countProducts, setCountProducts] = useState(0);
-
+  const [loged, setLoged] = useState(false);
+  const [user, setUser] = useState("");
   useEffect(() => {
     let token = localStorage.getItem("token");
 
@@ -30,6 +31,10 @@ export function UserProvider(props) {
         setTotal,
         countProducts,
         setCountProducts,
+        loged,
+        setLoged,
+        user,
+        setUser,
       }}
     >
       {props.children}

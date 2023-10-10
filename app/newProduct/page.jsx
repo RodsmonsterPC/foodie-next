@@ -22,7 +22,7 @@ const NewProduct = () => {
     const data = new FormData();
     const newPrice = parseInt(values.price);
     const newExt = parseInt(values.existence);
-    console.log(newExt, newPrice);
+    
     data.append("avatar", file);
     data.append("name", values.name);
     data.append("description", values.description);

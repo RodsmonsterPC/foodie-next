@@ -9,7 +9,7 @@ const Loggin = () => {
   const [values, setValues] = useState({});
   const [error, setError] = useState();
   const [isEmpty, setIsEmpty] = useState(false);
-  const { token, setToken } = useUserContext();
+  const { setToken, setLoged, setUser } = useUserContext();
   const router = useRouter();
 
   const handleSubmit = async (e) => {
@@ -22,11 +22,12 @@ const Loggin = () => {
       values.email,
       values.password
     );
-
+      console.log(status)
     if (status === 200) {
       localStorage.setItem("token", dataJson.data.token);
       setToken(dataJson.data.token);
-
+      setLoged(true);
+      setUser("buyer");
       router.push("/");
 
       //setteas el token a local storage

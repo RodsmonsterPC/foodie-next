@@ -2,21 +2,20 @@
 import React from "react";
 import Image from "next/image";
 import { useState, useEffect } from "react";
-import Link from "next/link";
 import { getUser, updateAccount } from "../api/signUp";
-import { Shadows_Into_Light } from "next/font/google";
 import { useRouter } from "next/navigation";
-import { data } from "autoprefixer";
+import { useUserContext } from "../contexts/userContext";
 
 const newSeller = () => {
   const [values, setValues] = useState({});
   const [isLoading, setLoading] = useState(false);
   const [error, setError] = useState();
   const [isEmpty, setIsEmpty] = useState(false);
-  const [user, setUser] = useState([]);
+  const [info, setInfo] = useState([]);
   const [id, setId] = useState();
+  const [file, setFile] = useState();
   const router = useRouter();
-
+  const { setLoged, setUser } = useUserContext();
   const parseJwt = (token) => {
     var base64Url = token.split(".")[1];
     var base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
@@ -40,14 +39,14 @@ const newSeller = () => {
 
     getUser(id)
       .then((data) => {
-        setUser(data);
+        setInfo(data);
       })
       .catch((error) => {
         console.log(error);
       });
   }, []);
 
-  if (user.length === 0) {
+  if (info.length === 0) {
     return <span>loading.....</span>;
   }
 
@@ -56,17 +55,17 @@ const newSeller = () => {
     if (Object.keys(values).length === 0) {
       return setIsEmpty(true);
     }
-
-    const body = {
-      name: values.name,
-      phoneNumber: values.phoneNumber,
-      description: values.description,
-      email: values.email,
-      rfc: values.rfc,
-      address: values.address,
-      role: "seller",
-    };
-
+    const data = new FormData();
+    const phone = parseInt(values.phoneNumber);
+    data.append("imgSeller",file)
+    data.append("name", values.name);
+    data.append("phoneNumber", phone);
+    data.append("description", values.description);
+    data.append("email", values.email);
+    data.append("rfc", values.rfc);
+    data.append("address", values.address);
+    data.append("role", "seller");
+  
     if (
       values.name &&
       values.name !== "" &&
@@ -81,8 +80,10 @@ const newSeller = () => {
       values.address &&
       values.address !== ""
     ) {
-      const newSeller = await updateAccount(id, body);
-
+      const newSeller = await updateAccount(id, data);
+      console.log(id, data);
+      setLoged(true);
+      setUser("seller");
       router.push("/");
     } else {
       setError("Error al registrarse, llenar todos los campos");
@@ -103,15 +104,39 @@ const newSeller = () => {
           Perfecto, ahora brinda la información a detalle de tu empresa
         </h1>
         <div className="flex flex-col items-center md:mb-52 md:ml-28 ">
-          <button className="border-2 w-64 h-40 rounded-md mt-6 md:w-supload-w md:h-supload-h md:mt-10">
-            <Image
-              className="mx-auto my-auto"
-              src={"/Vector.svg"}
-              width={100}
-              height={95}
-              alt="upload"
-            />
-          </button>
+          <form enctype="multipart/form-data" method="patch">
+            <div className="border-2 w-72 h-48">
+              <label htmlFor="file-upload">
+                {file ? (
+                  <img
+                    className="h-32 w-32 mx-auto mt-6"
+                    src={URL.createObjectURL(file)}
+                    alt="img-person"
+                  />
+                ) : (
+                  <Image
+                    className="mx-auto my-[3rem]"
+                    src={"/Vector.svg"}
+                    width={100}
+                    height={95}
+                    alt="upload"
+                  />
+                )}
+              </label>
+              <input
+                id="file-upload"
+                type="file"
+                label="Image"
+                name="imgSeller"
+                accept=".jpeg,.png,.jpg"
+                className="hidden"
+                onChange={(e) => {
+                  setFile(e.target.files[0]);
+                }}
+              />
+            </div>
+          </form>
+
           <p className="sm:hidden w-64 text-sm mt-6">
             Porfavor llenar todos los campos que se solicitan:
           </p>
@@ -175,7 +200,7 @@ const newSeller = () => {
                 }`}
                 type="text"
                 name="email"
-                placeholder={`${user.dataJson.data.users.email}`}
+                placeholder={`${info.dataJson.data.users.email}`}
                 onChange={handleChange}
               />
             </div>

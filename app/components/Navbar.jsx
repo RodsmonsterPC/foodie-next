@@ -68,7 +68,6 @@ const Navbar = ({ links }) => {
     return <span>loading.....</span>;
   }
 
-  console.log(userToken.loged);
   const onDeleteProducts = (products) => {
     const results = userToken.allProducts.filter(
       (item) => item._id !== products._id
@@ -85,6 +84,7 @@ const Navbar = ({ links }) => {
     userToken.setCountProducts(0);
   };
 
+  console.log(active);
   return (
     <div>
       <nav className="bg-back-color flex justify-between text-slate-900 h-16 drop-shadow-md">
@@ -239,7 +239,7 @@ const Navbar = ({ links }) => {
             </div>
 
             <div
-              className={`hidden md:flex flex-col w-[16rem] bg-white absolute top-16 right-64 shadow-2xl rounded-md  ${
+              className={`flex flex-col w-[16rem] bg-white absolute top-16 right-64 shadow-2xl rounded-md  ${
                 active ? "" : "hidden"
               }`}
             >

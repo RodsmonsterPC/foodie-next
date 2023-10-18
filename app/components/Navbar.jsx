@@ -64,10 +64,17 @@ const Navbar = ({ links }) => {
       });
   }, [userToken.user]);
 
+  // const { dataJson } = user;
+
   if (user.length === 0 && userToken.loged) {
     return <span>loading.....</span>;
   }
-
+  // if (user.length && dataJson.data.users.role[0] === "buyer") {
+  //   userToken.setUser("buyer");
+  // } else if (user.length && dataJson.data.users.role[0] === "seller") {
+  //   userToken.setUser("seller");
+  // }
+  // console.log(userToken.user);
   const onDeleteProducts = (products) => {
     const results = userToken.allProducts.filter(
       (item) => item._id !== products._id
@@ -84,7 +91,6 @@ const Navbar = ({ links }) => {
     userToken.setCountProducts(0);
   };
 
-  console.log(active);
   return (
     <div>
       <nav className="bg-back-color flex justify-between text-slate-900 h-16 drop-shadow-md">
@@ -206,7 +212,7 @@ const Navbar = ({ links }) => {
                 <li
                   onClick={() => {
                     localStorage.removeItem("token");
-                    userToken.setToken("");
+
                     setLoged(false);
                   }}
                   className={`ml-4 mt-8 mb-6 mr-6 md:my-0 text-link-color hover:text-button-color duration-500`}

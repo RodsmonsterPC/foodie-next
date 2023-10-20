@@ -5,12 +5,16 @@ import DetailButton from "../../components/detailButton";
 import Counter from "../../components/Counter";
 import { useEffect, useState } from "react";
 import { useUserContext } from "@/app/contexts/userContext";
+import { useRouter } from "next/navigation";
+import { deletePost } from "../../api/post";
 import { PayPalScriptProvider } from "@paypal/react-paypal-js";
 import PayPalPayment from "../../components/paypal";
+
 
 const detailProduct = ({ params: { id } }) => {
   const [data, setData] = useState([]);
   const userToken = useUserContext();
+  const router = useRouter();
   useEffect(() => {
     const getPostId = async (id) => {
       const response = await fetch(`http://localhost:8081/posts/${id}`);
@@ -46,6 +50,10 @@ const detailProduct = ({ params: { id } }) => {
   if (data.length === 0) {
     return <span>loading.....</span>;
   }
+  const updatePost = () => {
+    router.push(`/updateProduct/${id}`);
+  };
+
   const { dataProduct } = data;
  
   const {
@@ -73,6 +81,14 @@ const detailProduct = ({ params: { id } }) => {
     setAllProducts([...allProducts, product]);
   };
 
+  const deleteProduct = async () => {
+    const { status } = await deletePost(id);
+
+    if (status === 200) {
+      router.push("/");
+    }
+  };
+
   return (
     <div>
       <div>
@@ -80,8 +96,28 @@ const detailProduct = ({ params: { id } }) => {
           {dataProduct.data.products.name}
         </p>
       </div>
+      <div className="flex justify-end mr-4">
+        <button>
+          <Image
+            onClick={updatePost}
+            className="md:m-3"
+            src={"/edit-icon.svg"}
+            width={40}
+            height={30}
+          />
+        </button>
+        <button>
+          <Image
+            onClick={deleteProduct}
+            className="md:m-3"
+            src={"/delete-icon.svg"}
+            width={30}
+            height={30}
+          />
+        </button>
+      </div>
       <div className="md:flex md:flex-row md:mb-28">
-        <div className="flex justify-center mr-2 mt-11 md:flex-col md:ml-2 md:mt-0 ">
+        <div className="flex justify-center mr-2 mt-4 md:flex-col md:ml-2 md:mt-0 ">
           <Image
             className="md:hidden"
             src={"/icon-person.svg"}
@@ -145,7 +181,6 @@ const detailProduct = ({ params: { id } }) => {
             >
               Agregar al carrito
             </button>
-            {/* <DetailButton name={"Agregar el carrito"} /> */}
           </div>
         </div>
       </div>

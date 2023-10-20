@@ -45,7 +45,7 @@ export const updatePost = async (id, data, token) => {
   };
 };
 
-export const deletePost = async (id, data) => {
+export const deletePost = async (id) => {
   const response = await fetch(`http://localhost:8081/posts/${id}`, {
     method: "DELETE",
     headers: {

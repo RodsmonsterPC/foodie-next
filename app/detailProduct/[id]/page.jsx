@@ -6,6 +6,7 @@ import Counter from "../../components/Counter";
 import { useEffect, useState } from "react";
 import { useUserContext } from "@/app/contexts/userContext";
 import { useRouter } from "next/navigation";
+import { deletePost } from "../../api/post";
 const detailProduct = ({ params: { id } }) => {
   const [data, setData] = useState([]);
   const userToken = useUserContext();
@@ -63,6 +64,14 @@ const detailProduct = ({ params: { id } }) => {
     setAllProducts([...allProducts, product]);
   };
 
+  const deleteProduct = async () => {
+    const { status } = await deletePost(id);
+
+    if (status === 200) {
+      router.push("/");
+    }
+  };
+
   return (
     <div>
       <div>
@@ -82,6 +91,7 @@ const detailProduct = ({ params: { id } }) => {
         </button>
         <button>
           <Image
+            onClick={deleteProduct}
             className="md:m-3"
             src={"/delete-icon.svg"}
             width={30}

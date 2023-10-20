@@ -4,6 +4,7 @@ import Image from "next/image";
 import Dropdown from "../../components/Dropdown";
 import { Akaya_Telivigala } from "next/font/google";
 import { useRouter } from "next/navigation";
+import { updatePost } from "../../api/post";
 const UpdateProduct = ({ params: { id } }) => {
   const [selected, setSelected] = useState("");
   const [values, setValues] = useState({});
@@ -11,6 +12,12 @@ const UpdateProduct = ({ params: { id } }) => {
   const [isEmpty, setIsEmpty] = useState(false);
   const [error, setError] = useState();
   const [data, setData] = useState([]);
+
+  const [title, setTitle] = useState([]);
+  const [description, setDescription] = useState([]);
+  const [category, setCategory] = useState([]);
+  const [existence, setExistence] = useState([]);
+  const [price, setPrice] = useState([]);
   useEffect(() => {
     const getPostId = async (id) => {
       const response = await fetch(`http://localhost:8081/posts/${id}`);
@@ -24,12 +31,17 @@ const UpdateProduct = ({ params: { id } }) => {
     getPostId(id)
       .then((data) => {
         setData(data);
+        setTitle(data.dataProduct.data.products.name);
+        setDescription(data.dataProduct.data.products.description);
+        setCategory(data.dataProduct.data.products.category);
+        setExistence(data.dataProduct.data.products.existence);
+        setPrice(data.dataProduct.data.products.price);
       })
       .catch((error) => {
         console.log(error);
       });
   }, []);
-  console.log(data);
+
   if (data.length === 0) {
     return <span>loading.....</span>;
   }
@@ -37,18 +49,25 @@ const UpdateProduct = ({ params: { id } }) => {
   const router = useRouter();
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (Object.keys(values).length === 0 || selected === "Seleccionar") {
+
+    if (
+      title === "" ||
+      description === "" ||
+      price === "" ||
+      existence === "" ||
+      selected === "Seleccionar"
+    ) {
       return setIsEmpty(true);
     }
     const body = {
-      name: values.name,
-      description: values.description,
-      price: values.price,
-      existence: values.existence,
+      name: title,
+      description: description,
+      price: price,
+      existence: existence,
       category: selected,
       active: active,
     };
-    const { status } = await postPost(body);
+    const { status } = await updatePost(id, body);
 
     if (status === 200) {
       router.push("/");
@@ -58,9 +77,6 @@ const UpdateProduct = ({ params: { id } }) => {
     }
   };
 
-  const handleChange = (e) => {
-    setValues({ ...values, [e.target.name]: e.target.value });
-  };
   return (
     <form onSubmit={handleSubmit}>
       <div>
@@ -119,7 +135,8 @@ const UpdateProduct = ({ params: { id } }) => {
                 }`}
                 type="text"
                 name="name"
-                onChange={handleChange}
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
               />
               <p className="md:mt-4">Descripción:</p>
               <input
@@ -128,7 +145,8 @@ const UpdateProduct = ({ params: { id } }) => {
                 }`}
                 type="text"
                 name="description"
-                onChange={handleChange}
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
               />
               <div className="grid gap-16 grid-cols-2">
                 <div className="">
@@ -139,7 +157,8 @@ const UpdateProduct = ({ params: { id } }) => {
                     }`}
                     type="text"
                     name="price"
-                    onChange={handleChange}
+                    value={price}
+                    onChange={(e) => setPrice(e.target.value)}
                   />
                 </div>
                 <div>
@@ -150,7 +169,8 @@ const UpdateProduct = ({ params: { id } }) => {
                     }`}
                     type="text"
                     name="existence"
-                    onChange={handleChange}
+                    value={existence}
+                    onChange={(e) => setExistence(e.target.value)}
                   />
                 </div>
               </div>

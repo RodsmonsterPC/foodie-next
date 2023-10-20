@@ -21,12 +21,14 @@ export const getUser = async (id) => {
 };
 
 export const updateAccount = async (id, data) => {
+ 
   const response = await fetch(`http://localhost:8081/users/${id}`, {
     method: "PATCH",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(data),
+    // headers: { "Content-Type": "application/json" },
+    body: data
   });
   const newData = await response.json();
+  console.log(newData)
   return {
     status: response.status,
     newData,

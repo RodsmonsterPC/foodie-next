@@ -51,7 +51,7 @@ const SmallCardRender = () => {
               title={item.name}
               price={item.price}
               description={item.description}
-              // img={item.image}
+              img={item.file}
             />
           </SwiperSlide>
         ))}
@@ -78,7 +78,7 @@ const SmallCardRender = () => {
               title={item.name}
               price={item.price}
               description={item.description}
-              // img={item.image}
+              img={item.file}
             />
           </SwiperSlide>
         ))}

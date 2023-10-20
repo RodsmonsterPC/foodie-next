@@ -119,10 +119,9 @@ const Shoping = () => {
                 -
               </button>
               <p className="mr-4 font-Montserrat font-semibold text-sm text-center w-8">
-                {product}
+                0
               </p>
-              <button
-                onClick={getProduct(list.price)}
+              <button 
                 className="bg-[#33A833] w-14 h-6 rounded-lg text-white"
               >
                 +

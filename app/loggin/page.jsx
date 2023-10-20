@@ -22,7 +22,7 @@ const Loggin = () => {
       values.email,
       values.password
     );
-
+      console.log(status)
     if (status === 200) {
       localStorage.setItem("token", dataJson.data.token);
       setToken(dataJson.data.token);

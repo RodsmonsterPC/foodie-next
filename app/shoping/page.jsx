@@ -188,7 +188,7 @@ const Shoping = () => {
         </div>
         
         <PayPalScriptProvider options={initialOptions}>
-          <PayPalPayment product={total} click={valuePay()}/>
+          <PayPalPayment product={total} />
         </PayPalScriptProvider>
       </div>
       <Pagination

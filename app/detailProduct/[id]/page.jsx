@@ -1,14 +1,9 @@
 "use client";
 import React from "react";
 import Image from "next/image";
-import DetailButton from "../../components/detailButton";
 import Counter from "../../components/Counter";
 import { useEffect, useState } from "react";
 import { useUserContext } from "@/app/contexts/userContext";
-import { useRouter } from "next/navigation";
-import { deletePost } from "../../api/post";
-import { PayPalScriptProvider } from "@paypal/react-paypal-js";
-import PayPalPayment from "../../components/paypal";
 
 
 const detailProduct = ({ params: { id } }) => {
@@ -32,18 +27,12 @@ const detailProduct = ({ params: { id } }) => {
         console.log(error);
       });
   }, []);
-  const initialOptions = {
-    clientId:
-      "AQygtExv1sWlPYCnnaY_A05_kye-F-GOCVUC52dlMsPaJ3yzDIg-Ldog-ssYfTlu15xNdFxCCNCjUiT5",
-    currency: "USD",
-    intent: "capture",
-  };
+  
   const checkout = async () => {
     const response = await fetch("/create-order", {
       method: "POST",
     });
     const data = await response.json();
-    console.log(data);
     window.location.href = data.links[1].href;
   };
 
@@ -171,16 +160,13 @@ const detailProduct = ({ params: { id } }) => {
           <Counter existence={dataProduct.data.products.existence} />
 
           <div className="ml-6 flex flex-col mb-12 md:items-center">
-            {/* <DetailButton name={"Compra rápida"} /> */}
-            <PayPalScriptProvider options={initialOptions}>
-              <PayPalPayment product={dataProduct.data.products}/>
-            </PayPalScriptProvider>
             <button
               onClick={() => onAddProduct(dataProduct.data.products)}
               className="text-white text-lg bg-button-color w-description-h h-12 rounded-full mt-7 drop-shadow-xl"
             >
               Agregar al carrito
             </button>
+            {/* <DetailButton name={"Agregar el carrito"} /> */}
           </div>
         </div>
       </div>

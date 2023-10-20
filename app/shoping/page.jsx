@@ -56,33 +56,33 @@ const Shoping = () => {
       }
     });
   };
-  // const valuePay = (data) => {
-  //   if (!data) return null;
-  //   else {
-  //     const { purchase_units } = data;
-  //     let idValue = "";
-  //     let priceValue = 0
-  //     purchase_units.forEach((item) => {
-  //       idValue = item.reference_id;
-  //       const { payments } = item;
-  //       const { captures } = payments;
-  //       captures.forEach((item) => {
-  //         const { amount } = item;
-  //         priceValue = amount.value;
-  //       });
-  //     });
-  //     let counterValue = 0
-  //     allProducts.forEach(item =>{
-  //       if(item._id === idValue){
-  //         counterValue = item.quantity
-  //       }
-  //     })
-  //     const filter = allProducts.filter((item) => item._id != idValue);
-  //     // setAllProducts(filter);
-  //     // setCountProducts(countProducts - counterValue)
-  //     // setTotal(total - priceValue)
-  //   }  
-  // };
+   const valuePay = (data) => {
+    if (!data) return null;
+    else {
+     const { purchase_units } = data;
+     let idValue = "";
+      let priceValue = 0
+      purchase_units.forEach((item) => {
+      idValue = item.reference_id;
+      const { payments } = item;
+    const { captures } = payments;
+      captures.forEach((item) => {
+       const { amount } = item;
+        priceValue = amount.value;
+      });
+      });
+     let counterValue = 0
+      allProducts.forEach(item =>{
+      if(item._id === idValue){
+       counterValue = item.quantity
+       }
+    })
+   const filter = allProducts.filter((item) => item._id != idValue);
+   setAllProducts(filter);
+   setCountProducts(countProducts - counterValue)
+       setTotal(total - priceValue)
+    }  
+   };
 
   const initialOptions = {
     clientId:

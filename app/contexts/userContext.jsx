@@ -14,6 +14,7 @@ export function UserProvider(props) {
   const [countProducts, setCountProducts] = useState(0);
   const [loged, setLoged] = useState(false);
   const [user, setUser] = useState("");
+  const [paypal , setPaypal] = useState()
   useEffect(() => {
     let token = localStorage.getItem("token");
 
@@ -35,6 +36,8 @@ export function UserProvider(props) {
         setLoged,
         user,
         setUser,
+        paypal,
+        setPaypal
       }}
     >
       {props.children}

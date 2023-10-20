@@ -28,7 +28,6 @@ export const updateAccount = async (id, data) => {
     body: data
   });
   const newData = await response.json();
-  console.log(newData)
   return {
     status: response.status,
     newData,

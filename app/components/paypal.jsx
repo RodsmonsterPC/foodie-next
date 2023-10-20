@@ -1,10 +1,12 @@
 import { PayPalButtons } from "@paypal/react-paypal-js";
+import { useUserContext } from "../contexts/userContext";
 
-const PayPalPayment = ({product}) => {
 
+const PayPalPayment = ({ product,id,click}) => {
+  
+  const value = useUserContext();
   const URL = "http://localhost:8081";
   const createOrder = () => {
-    // Order is created on the server and the order id is returned
     return fetch(`${URL}/my-server/create-paypal-order`, {
       method: "POST",
       headers: {
@@ -12,8 +14,8 @@ const PayPalPayment = ({product}) => {
       },
       body: JSON.stringify({
         product: {
-          description: product.name,
-          cost: product.price,
+          cost: product ,
+          idProduct:id,
         },
       }),
     })
@@ -31,16 +33,26 @@ const PayPalPayment = ({product}) => {
       }),
     })
       .then((response) => {
-        console.log("payment successful");
         return response.json();
       })
-      .then((data) => console.log(data));
+      .then((data) => value.setPaypal(data));
   };
+
   return (
-    <PayPalButtons
-      createOrder={(data, actions) => createOrder(data, actions)}
-      onApprove={(data, actions) => onApprove(data, actions)}
-    />
+   
+      <PayPalButtons
+   
+        style={{
+          layout: "horizontal",
+          color: "blue",
+          label: "paypal",
+          shape:"pill",
+          tagline: false,
+        }}
+        createOrder={(data, actions) => createOrder(data, actions)}
+        onApprove={(data, actions) => onApprove(data, actions)}
+      />
+   
   );
 };
 

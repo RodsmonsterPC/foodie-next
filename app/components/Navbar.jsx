@@ -68,7 +68,6 @@ const Navbar = ({ links }) => {
     return <span>loading.....</span>;
   }
 
-  console.log(userToken.loged);
   const onDeleteProducts = (products) => {
     const results = userToken.allProducts.filter(
       (item) => item._id !== products._id
@@ -167,9 +166,7 @@ const Navbar = ({ links }) => {
                 <h3 className="text-sm font-semibold mr-3">Total:</h3>
                 <span className="text-sm">${userToken.total}</span>
               </div>
-              <button className="bg-gray-100 p-[.5rem] w-full  text-button-color transition ease-in-out delay-150 hover:-translate-y-0 hover:scale-110 hover:bg-green-500 hover:text-white duration-300">
-                Pagar
-              </button>
+                <Link href={"/shoping"} className="bg-gray-100 p-[.5rem] w-full inline-block text-center  text-button-color transition ease-in-out delay-150 hover:-translate-y-0 hover:scale-110 hover:bg-green-500 hover:text-white duration-300">Pagar</Link>
               <button
                 onClick={onClearCart}
                 className="bg-button-color p-[.5rem] w-full rounded-b-lg text-white transition ease-in-out delay-150 hover:-translate-y-0 hover:scale-110 hover:bg-white-500 hover:text-white duration-300"
@@ -276,11 +273,7 @@ const Navbar = ({ links }) => {
                     <h3 className="text-sm font-semibold mr-3">Total:</h3>
                     <span className="text-sm">${userToken.total}</span>
                   </div>
-
-                  <button className="bg-gray-100 p-[.5rem] w-full  text-button-color transition ease-in-out delay-150 hover:-translate-y-0 hover:scale-110 hover:bg-green-500 hover:text-white duration-300">
-                    Pagar
-                  </button>
-
+                   <Link href={"/shoping"} className="bg-gray-100 p-[.5rem] w-full inline-block text-center  text-button-color transition ease-in-out delay-150 hover:-translate-y-0 hover:scale-110 hover:bg-green-500 hover:text-white duration-300">Pagar</Link>
                   <button
                     onClick={onClearCart}
                     className="bg-button-color p-[.5rem] w-full rounded-b-lg text-white transition ease-in-out delay-150 hover:-translate-y-0 hover:scale-110 hover:bg-white-500 hover:text-white duration-300"

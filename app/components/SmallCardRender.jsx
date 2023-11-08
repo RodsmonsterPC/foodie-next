@@ -27,7 +27,7 @@ const SmallCardRender = () => {
     return <span>loading.....</span>;
   }
 
-  const { success, data } = info;
+  const { success, products } = info;
 
   return (
     <>
@@ -43,7 +43,7 @@ const SmallCardRender = () => {
           },
         }}
       >
-        {data.product.map((item) => (
+        {products.product.map((item) => (
           <SwiperSlide key={item.id}>
             <SmallCardProduct
               key={item.id}
@@ -70,7 +70,7 @@ const SmallCardRender = () => {
         }}
         className="mt-10"
       >
-        {data.product.map((item) => (
+        {products.product.map((item) => (
           <SwiperSlide key={item.id}>
             <SmallCardProduct
               key={item.id}

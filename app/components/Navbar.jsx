@@ -119,13 +119,13 @@ const Navbar = ({ links }) => {
 
         <div className="relative" onClick={() => setActive(!active)}>
           <Image
-            className="md:hidden mt-6 ml-6"
+            className="md:hidden mt-6 mr-8"
             src={"/shopping-car.svg"}
             width={20}
             height={20}
             alt="shopping car"
           />
-          <div className="md:hidden flex rounded-full bg-button-color w-4 h-4 text-center absolute items-center justify-center bottom-8 left-9 ">
+          <div className="md:hidden flex rounded-full bg-button-color w-4 h-4 text-center absolute items-center justify-center bottom-8 right-6 ">
             <span className="text-xs text-white">
               {userToken.countProducts}
             </span>

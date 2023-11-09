@@ -32,7 +32,7 @@ export default function RootLayout({ children }) {
           <Navbar
             links={[
               { name: "Inicio", link: "/" },
-              { name: "Catálogo", link: "/" },
+              { name: "Catálogo", link: "/search" },
             ]}
           />
 

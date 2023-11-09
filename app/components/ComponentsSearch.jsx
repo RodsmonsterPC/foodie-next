@@ -3,9 +3,9 @@ import React, { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 
-const Search = ({ name, price, description, img }) => {
+const Search = ({ id, name, price, description, img }) => {
   return (
-    <Link href={"#"}>
+    <Link href={`/detailProduct/${id}`}>
       <div className="w-[18rem] bg-[#F0F5FA]  mb-5 h-[190px] ml-3 rounded-lg md:w-[2]">
         <div className="flex mt-4 ml-3 w-full ">
           <Image

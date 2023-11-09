@@ -11,6 +11,7 @@ const detailProduct = ({ params: { id } }) => {
   const [data, setData] = useState([]);
   const userToken = useUserContext();
   const router = useRouter();
+  console.log(id);
   useEffect(() => {
     const getPostId = async (id) => {
       const response = await fetch(`http://localhost:8081/posts/${id}`);
@@ -71,7 +72,7 @@ const detailProduct = ({ params: { id } }) => {
       router.push("/");
     }
   };
-
+  console.log(dataProduct);
   return (
     <div>
       <div>

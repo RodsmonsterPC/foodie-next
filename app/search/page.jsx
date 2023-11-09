@@ -17,6 +17,41 @@ const SearchShoping = () => {
   const lasIndex = currentPage * productsPerPage;
   const firsIndex = lasIndex - productsPerPage;
 
+  //Botanas
+  const [productsPerPageBotanas, setProductsPerPageBotanas] = useState(4);
+  const [currentPageBotanas, setCurrentPageBotanas] = useState(1);
+  const lastIndexBotanas = currentPageBotanas * productsPerPageBotanas;
+  const firstIndexBotanas = lastIndexBotanas - productsPerPageBotanas;
+  //Bebidas
+  const [productsPerPageBebidas, setProductsPerPageBebidas] = useState(4);
+  const [currentPageBebidas, setCurrentPageBebidas] = useState(1);
+  const lastIndexBebidas = currentPageBebidas * productsPerPageBebidas;
+  const firstIndexBebidas = lastIndexBebidas - productsPerPageBebidas;
+
+  //Carnes
+  const [productsPerPageCarnes, setProductsPerPageCarnes] = useState(4);
+  const [currentPageCarnes, setCurrentPageCarnes] = useState(1);
+  const lastIndexCarnes = currentPageCarnes * productsPerPageCarnes;
+  const firstIndexCarnes = lastIndexCarnes - productsPerPageCarnes;
+
+  //Postres
+  const [productsPerPagePostres, setProductsPerPagePostres] = useState(4);
+  const [currentPagePostres, setCurrentPagePostres] = useState(1);
+  const lastIndexPostres = currentPagePostres * productsPerPagePostres;
+  const firstIndexPostres = lastIndexPostres - productsPerPagePostres;
+
+  //Especies
+  const [productsPerPageEspecies, setProductsPerPageEspecies] = useState(4);
+  const [currentPageEspecies, setCurrentPageEspecies] = useState(1);
+  const lastIndexEspecies = currentPageEspecies * productsPerPageEspecies;
+  const firstIndexEspecies = lastIndexEspecies - productsPerPageEspecies;
+
+  //Frutas
+  const [productsPerPageFrutas, setProductsPerPageFrutas] = useState(4);
+  const [currentPageFrutas, setCurrentPageFrutas] = useState(1);
+  const lastIndexFrutas = currentPageFrutas * productsPerPageFrutas;
+  const firstIndexFrutas = lastIndexFrutas - productsPerPageFrutas;
+
   const filterBotana = (info) => {
     const botanasArray = info.products.product.filter(
       (type) => type.category === "Botana"
@@ -91,11 +126,12 @@ const SearchShoping = () => {
             Productos
           </span>
         </p>
-        <div className="flex flex-wrap w-full">
+        <div className="flex flex-wrap w-full md:flex md:justify-center">
           {products.product
             .map((product) => (
               <Search
                 key={product.id}
+                id={product._id}
                 name={product.name}
                 price={product.price}
                 description={product.description}
@@ -119,7 +155,7 @@ const SearchShoping = () => {
             Botanas
           </span>
         </p>
-        <div className="flex flex-wrap w-full">
+        <div className="flex flex-wrap w-fullmd:flex md:justify-center">
           {botanas.length === 0 ? (
             <>
               <h1 className="text-center">
@@ -131,30 +167,31 @@ const SearchShoping = () => {
               .map((product) => (
                 <Search
                   key={product.id}
+                  id={product._id}
                   name={product.name}
                   price={product.price}
                   description={product.description}
                   img={product.img}
                 />
               ))
-              .slice(firsIndex, lasIndex)
+              .slice(firstIndexBotanas, lastIndexBotanas)
           )}
         </div>
         <Pagination
-          productsPerPage={productsPerPage}
-          currentPage={currentPage}
-          setCurrentPage={setCurrentPage}
+          productsPerPage={productsPerPageBotanas}
+          currentPage={currentPageBotanas}
+          setCurrentPage={setCurrentPageBotanas}
           totalProducts={botanas.length}
         />
       </section>
-      <section className="w-full mt-6">
+      <section className="w-full mt-6 ">
         <p className="text-[#607D8B] font-Montserrat font-medium text-sm ml-3 block w-full mb-3">
           {bebidas.length} resultados de{" "}
           <span className="font-Montserrat font-bold text-sm text-black">
             Bebidas
           </span>
         </p>
-        <div className="flex flex-wrap w-full">
+        <div className="flex flex-wrap w-full md:flex md:justify-center">
           {bebidas.length === 0 ? (
             <>
               <h1 className="text-center">
@@ -166,19 +203,20 @@ const SearchShoping = () => {
               .map((product) => (
                 <Search
                   key={product.id}
+                  id={product._id}
                   name={product.name}
                   price={product.price}
                   description={product.description}
                   img={product.img}
                 />
               ))
-              .slice(firsIndex, lasIndex)
+              .slice(firstIndexBebidas, lastIndexBotanas)
           )}
         </div>
         <Pagination
-          productsPerPage={productsPerPage}
-          currentPage={currentPage}
-          setCurrentPage={setCurrentPage}
+          productsPerPage={productsPerPageBebidas}
+          currentPage={currentPageBebidas}
+          setCurrentPage={setCurrentPageBebidas}
           totalProducts={bebidas.length}
         />
       </section>
@@ -189,7 +227,7 @@ const SearchShoping = () => {
             Frutas y Verduras
           </span>
         </p>
-        <div className="flex flex-wrap w-full">
+        <div className="flex flex-wrap w-full md:flex md:justify-center">
           {frutas.length === 0 ? (
             <>
               <h1 className="text-center">
@@ -201,19 +239,20 @@ const SearchShoping = () => {
               .map((product) => (
                 <Search
                   key={product.id}
+                  id={product._id}
                   name={product.name}
                   price={product.price}
                   description={product.description}
                   img={product.img}
                 />
               ))
-              .slice(firsIndex, lasIndex)
+              .slice(firstIndexFrutas, lastIndexFrutas)
           )}
         </div>
         <Pagination
-          productsPerPage={productsPerPage}
-          currentPage={currentPage}
-          setCurrentPage={setCurrentPage}
+          productsPerPage={productsPerPageFrutas}
+          currentPage={currentPageFrutas}
+          setCurrentPage={setCurrentPageFrutas}
           totalProducts={frutas.length}
         />
       </section>
@@ -224,7 +263,7 @@ const SearchShoping = () => {
             Carnes
           </span>
         </p>
-        <div className="flex flex-wrap w-full">
+        <div className="flex flex-wrap w-full md:flex md:justify-center">
           {carnes.length === 0 ? (
             <>
               <h1 className="text-center">
@@ -236,19 +275,20 @@ const SearchShoping = () => {
               .map((product) => (
                 <Search
                   key={product.id}
+                  id={product._id}
                   name={product.name}
                   price={product.price}
                   description={product.description}
                   img={product.img}
                 />
               ))
-              .slice(firsIndex, lasIndex)
+              .slice(firstIndexCarnes, lastIndexCarnes)
           )}
         </div>
         <Pagination
-          productsPerPage={productsPerPage}
-          currentPage={currentPage}
-          setCurrentPage={setCurrentPage}
+          productsPerPage={productsPerPageCarnes}
+          currentPage={currentPageCarnes}
+          setCurrentPage={setCurrentPageCarnes}
           totalProducts={carnes.length}
         />
       </section>
@@ -259,7 +299,7 @@ const SearchShoping = () => {
             Especies
           </span>
         </p>
-        <div className="flex flex-wrap w-full">
+        <div className="flex flex-wrap w-full md:flex md:justify-center">
           {especies.length === 0 ? (
             <>
               <h1 className="text-center">
@@ -271,19 +311,20 @@ const SearchShoping = () => {
               .map((product) => (
                 <Search
                   key={product.id}
+                  id={product._id}
                   name={product.name}
                   price={product.price}
                   description={product.description}
                   img={product.img}
                 />
               ))
-              .slice(firsIndex, lasIndex)
+              .slice(firstIndexEspecies, lastIndexEspecies)
           )}
         </div>
         <Pagination
-          productsPerPage={productsPerPage}
-          currentPage={currentPage}
-          setCurrentPage={setCurrentPage}
+          productsPerPage={productsPerPageEspecies}
+          currentPage={currentPageEspecies}
+          setCurrentPage={setCurrentPageEspecies}
           totalProducts={especies.length}
         />
       </section>
@@ -294,7 +335,7 @@ const SearchShoping = () => {
             Postres
           </span>
         </p>
-        <div className="flex flex-wrap w-full">
+        <div className="flex flex-wrap w-full md:flex md:justify-center">
           {postres.length === 0 ? (
             <>
               <h1 className="text-center">
@@ -306,19 +347,20 @@ const SearchShoping = () => {
               .map((product) => (
                 <Search
                   key={product.id}
+                  id={product._id}
                   name={product.name}
                   price={product.price}
                   description={product.description}
                   img={product.img}
                 />
               ))
-              .slice(firsIndex, lasIndex)
+              .slice(firstIndexPostres, lastIndexPostres)
           )}
         </div>
         <Pagination
-          productsPerPage={productsPerPage}
-          currentPage={currentPage}
-          setCurrentPage={setCurrentPage}
+          productsPerPage={productsPerPagePostres}
+          currentPage={currentPagePostres}
+          setCurrentPage={setCurrentPagePostres}
           totalProducts={postres.length}
         />
       </section>

@@ -1,20 +1,23 @@
 "use client";
+
 import React, { useState, useEffect } from "react";
+
 import Image from "next/image";
 import Dropdown from "../components/Dropdown";
-import { Akaya_Telivigala } from "next/font/google";
 import { postPost } from "../api/post";
 import { useRouter } from "next/navigation";
+
 import { useUserContext } from "../contexts/userContext";
+
 const NewProduct = () => {
   const [selected, setSelected] = useState("");
   const [values, setValues] = useState({});
   const [active, setActive] = useState(false);
   const [isEmpty, setIsEmpty] = useState(false);
   const [error, setError] = useState();
+
   const [id, setId] = useState();
   const { token } = useUserContext();
-
   const router = useRouter();
   //Get Id
   const parseJwt = (token) => {
@@ -40,6 +43,10 @@ const NewProduct = () => {
     setId(userId);
   }, [token]);
 
+  const [file, setFile] = useState();
+  const router = useRouter();
+
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -56,6 +63,18 @@ const NewProduct = () => {
       active: active,
     };
     const { status } = await postPost(body);
+    const data = new FormData();
+    const newPrice = parseInt(values.price);
+    const newExt = parseInt(values.existence);
+    
+    data.append("avatar", file);
+    data.append("name", values.name);
+    data.append("description", values.description);
+    data.append("price", newPrice);
+    data.append("existence", newExt);
+    data.append("category", selected);
+    data.append("active", active);
+    const { status } = await postPost(data);
 
     if (status === 200) {
       router.push("/");
@@ -64,12 +83,17 @@ const NewProduct = () => {
       setIsEmpty(false);
     }
   };
-
   const handleChange = (e) => {
     setValues({ ...values, [e.target.name]: e.target.value });
   };
+
   return (
-    <form onSubmit={handleSubmit}>
+    <form
+      action="/profile"
+      method="post"
+      enctype="multipart/form-data"
+      onSubmit={handleSubmit}
+    >
       <div>
         <div className="hidden md:flex md:justify-center">
           <h1 className="mt-3.5 mb-5 text-3xl">Nuevo Producto</h1>
@@ -78,14 +102,32 @@ const NewProduct = () => {
         <div className="md:w-product-w md:h-product-h md:border-2 md:mx-auto md:rounded-xl md:flex md:flex-row-reverse md:justify-around">
           <div className="flex flex-col items-center  md:mb-9 ">
             <h1 className="mt-9 mb-5 text-3xl md:hidden">Nuevo Producto</h1>
-            <button className="border-2 w-64 h-40 rounded-md md:w-upload-w md:h-upload-h md:mt-11">
-              <Image
-                className="mx-auto my-auto"
-                src={"/Vector.svg"}
-                width={75}
-                height={66}
+            <div className="border-2 w-64 h-40 rounded-md md:w-upload-w md:h-upload-h md:mt-11">
+              <label htmlFor="file-upload">
+                {file ? (
+                  <img src={URL.createObjectURL(file)} alt="" />
+                ) : (
+                  <Image
+                    className="mx-auto my-auto"
+                    src={"/Vector.svg"}
+                    width={75}
+                    height={66}
+                  />
+                )}
+              </label>
+              <input
+                id="file-upload"
+                type="file"
+                label="Image"
+                name="avatar"
+                accept=".jpeg,.png,.jpg"
+                className="hidden"
+                onChange={(e) => {
+                  setFile(e.target.files[0]);
+                }}
               />
-            </button>
+            </div>
+
             <p className="mt-5 text-sm font-Sub-title">
               Proporcionar imagen clara y concisa
             </p>

@@ -1,12 +1,11 @@
 "use client";
 import React from "react";
 import Image from "next/image";
-import DetailButton from "../../components/detailButton";
 import Counter from "../../components/Counter";
 import { useEffect, useState } from "react";
 import { useUserContext } from "@/app/contexts/userContext";
-import { useRouter } from "next/navigation";
-import { deletePost } from "../../api/post";
+
+
 const detailProduct = ({ params: { id } }) => {
   const [data, setData] = useState([]);
   const [idUser, setIdUser] = useState();
@@ -39,7 +38,6 @@ const detailProduct = ({ params: { id } }) => {
         dataProduct,
       };
     };
-
     getPostId(id)
       .then((data) => {
         setData(data);
@@ -48,10 +46,22 @@ const detailProduct = ({ params: { id } }) => {
         console.log(error);
       });
 
+
     const userID = parseJwt(userToken.token);
 
     setIdUser(userID);
   }, [userToken.token]);
+
+  }, []);
+  
+  const checkout = async () => {
+    const response = await fetch("/create-order", {
+      method: "POST",
+    });
+    const data = await response.json();
+    window.location.href = data.links[1].href;
+  };
+
 
   if (data.length === 0) {
     return <span>loading.....</span>;
@@ -61,7 +71,7 @@ const detailProduct = ({ params: { id } }) => {
   };
 
   const { dataProduct } = data;
-
+ 
   const {
     setAllProducts,
     allProducts,
@@ -135,12 +145,13 @@ const detailProduct = ({ params: { id } }) => {
             width={144}
             height={150}
           />
-          <Image
+          {/* <Image
             className="hidden md:flex "
-            src={"/icon-person.svg"}
+            src={dataProduct.data.productss.file}
             width={414}
             height={431}
-          />
+          /> */}
+          <img src={dataProduct.data.products.file} alt="product" />
           <div className="ml-4 mt-4 text-xl">
             <h2 className="md:hidden">${dataProduct.data.products.price}/kg</h2>
             <div className="flex flex-col mt-4 text-xs font-bold md:items-center  md:text-base">
@@ -181,13 +192,13 @@ const detailProduct = ({ params: { id } }) => {
           <Counter existence={dataProduct.data.products.existence} />
 
           <div className="ml-6 flex flex-col mb-12 md:items-center">
-            <DetailButton name={"Compra rápida"} />
             <button
               onClick={() => onAddProduct(dataProduct.data.products)}
               className="text-white text-lg bg-button-color w-description-h h-12 rounded-full mt-7 drop-shadow-xl"
             >
               Agregar al carrito
             </button>
+            {/* <DetailButton name={"Agregar el carrito"} /> */}
           </div>
         </div>
       </div>

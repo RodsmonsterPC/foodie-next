@@ -8,9 +8,27 @@ import { useUserContext } from "@/app/contexts/userContext";
 
 const detailProduct = ({ params: { id } }) => {
   const [data, setData] = useState([]);
+  const [idUser, setIdUser] = useState();
   const userToken = useUserContext();
   const router = useRouter();
-  console.log(id);
+  //Get Id
+  const parseJwt = (token) => {
+    var base64Url = token?.split(".")[1] || "";
+    var base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
+    var jsonPayload = decodeURIComponent(
+      window
+        .atob(base64)
+        .split("")
+        .map(function (c) {
+          return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
+        })
+        .join("")
+    );
+    if (jsonPayload === "") {
+      return;
+    }
+    return JSON.parse(jsonPayload);
+  };
   useEffect(() => {
     const getPostId = async (id) => {
       const response = await fetch(`http://localhost:8081/posts/${id}`);
@@ -27,6 +45,13 @@ const detailProduct = ({ params: { id } }) => {
       .catch((error) => {
         console.log(error);
       });
+
+
+    const userID = parseJwt(userToken.token);
+
+    setIdUser(userID);
+  }, [userToken.token]);
+
   }, []);
   
   const checkout = async () => {
@@ -36,6 +61,7 @@ const detailProduct = ({ params: { id } }) => {
     const data = await response.json();
     window.location.href = data.links[1].href;
   };
+
 
   if (data.length === 0) {
     return <span>loading.....</span>;
@@ -78,7 +104,8 @@ const detailProduct = ({ params: { id } }) => {
       router.push("/");
     }
   };
-  console.log(dataProduct);
+  console.log(dataProduct.data.products.user);
+  console.log(idUser.id);
   return (
     <div>
       <div>
@@ -86,7 +113,11 @@ const detailProduct = ({ params: { id } }) => {
           {dataProduct.data.products.name}
         </p>
       </div>
-      <div className="flex justify-end mr-4">
+      <div
+        className={`flex justify-end mr-4 ${
+          dataProduct.data.products.user === idUser.id ? "" : "hidden"
+        }`}
+      >
         <button>
           <Image
             onClick={updatePost}

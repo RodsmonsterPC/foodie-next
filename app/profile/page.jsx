@@ -10,6 +10,7 @@ import newProduct from "../../assets/img-create-new-product.svg";
 import trash from "../../assets/img-trash.svg";
 
 import { getUser } from "../api/signUp";
+import { getPost } from "../api/post";
 const Products = () => {
   const info = [
     {
@@ -199,7 +200,9 @@ const Products = () => {
   const [productsPerPage, setproductsPerPage] = useState(6);
   const [showModal, setShowModal] = useState(false);
   const [infoUser, setInfoUser] = useState();
-  const totalProducts = info.length;
+  const [products, setProducts] = useState();
+  const [userProducts, setUserProducts] = useState();
+  const totalProducts = userProducts.length;
   const lasIndex = currentPage * productsPerPage;
   const firsIndex = lasIndex - productsPerPage;
 
@@ -220,7 +223,12 @@ const Products = () => {
     }
     return JSON.parse(jsonPayload);
   };
-
+  const filterProductsUser = (data, id) => {
+    const productsArray = data.products.product.filter(
+      (product) => product.user === id
+    );
+    return setUserProducts(productsArray);
+  };
   useEffect(() => {
     const dataUser = localStorage.getItem("token");
     const { id } = parseJwt(dataUser);
@@ -231,13 +239,21 @@ const Products = () => {
       .catch((error) => {
         console.log(error);
       });
+    getPost()
+      .then((data) => {
+        setProducts(data);
+        filterProductsUser(data, id);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }, []);
 
   if (!infoUser) {
     return;
   }
   const { dataJson } = infoUser;
-
+  console.log(userProducts);
   return (
     <section className="md:flex ">
       <DasboardUser
@@ -272,11 +288,10 @@ const Products = () => {
             <p>Editar</p>
             <p>Eliminar</p>
           </div>
-          {info
+          {userProducts
             .map((infoProduct) => (
               <>
-                <button
-                  onClick={() => setShowModal(true)}
+                <div
                   key={infoProduct.id}
                   className="flex flex-col h-16 bg-[#F7FBD3] w-full border-2 border-b-[#CFD8DC] md:justify-center md:w-full"
                 >
@@ -284,7 +299,7 @@ const Products = () => {
                     <div className="hidden md:flex md:w-[14%] md:justify-center">
                       <button>
                         <Image
-                          src={infoProduct.delete}
+                          src={"/delete-icon.svg"}
                           width={30}
                           height={30}
                           alt="img-delete"
@@ -294,7 +309,7 @@ const Products = () => {
                     <div className="hidden md:flex md:w-[14%] md:justify-center md:mt-3">
                       <Link href={"/newProduct"}>
                         <Image
-                          src={infoProduct.edit}
+                          src={"/edit-icon.svg"}
                           width={30}
                           height={30}
                           alt="img-edit"
@@ -302,7 +317,7 @@ const Products = () => {
                       </Link>
                     </div>
                     <p className="hidden md:block font-Montserrat font-medium text-xl truncate w-[50%] ml-4 mt-4 md:text-base  md:ml-0 md:text-center md:w-[14%]">
-                      {infoProduct.amout}
+                      {infoProduct.quantity}
                     </p>
                     <div className="hidden md:flex md:w-[14%] mt-2 md:justify-center">
                       <span
@@ -315,11 +330,12 @@ const Products = () => {
                     </div>
 
                     <p className="hidden md:block font-Montserrat font-medium text-xl truncate w-[50%] ml-4 mt-4 md:text-base  md:ml-0 md:text-center md:w-[14%]">
-                      {infoProduct.sell > 0
+                      {/* {infoProduct.sell > 0
                         ? `+${infoProduct.sell}`
-                        : `${infoProduct.sell}`}
+                        : `${infoProduct.sell}`} */}
+                      0
                     </p>
-                    <p className="truncate font-Montserrat ml-4 font-medium text-xl w-[50%] mt-4 md:text-base md:w-[14%] md:ml-0">
+                    <p className="truncate font-Montserrat ml-4 font-medium text-xl w-[50%] mt-4 md:text-base md:w-[13%] md:ml-0">
                       {infoProduct.name}
                     </p>
 
@@ -330,11 +346,11 @@ const Products = () => {
                         className="hidden md:inline-block md-border md:rounded-full md:w-10 md:h-10"
                       />
                       <p className="mr-7 font-Montserrat text-center font-medium text-xl w-[50%] mt-4 md:text-base md:w-1/4 md:mr-0">
-                        {infoProduct.price}
+                        {`$ ${infoProduct.price}`}
                       </p>
                     </div>
                   </div>
-                </button>
+                </div>
               </>
             ))
             .slice(firsIndex, lasIndex)}

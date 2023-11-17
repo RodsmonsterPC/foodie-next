@@ -1,9 +1,13 @@
 "use client";
-import React, { useEffect, useState } from "react";
+
+import React, { useState, useEffect } from "react";
+
 import Image from "next/image";
 import Dropdown from "../components/Dropdown";
 import { postPost } from "../api/post";
 import { useRouter } from "next/navigation";
+
+import { useUserContext } from "../contexts/userContext";
 
 const NewProduct = () => {
   const [selected, setSelected] = useState("");
@@ -11,14 +15,54 @@ const NewProduct = () => {
   const [active, setActive] = useState(false);
   const [isEmpty, setIsEmpty] = useState(false);
   const [error, setError] = useState();
+
+  const [id, setId] = useState();
+  const { token } = useUserContext();
+  const router = useRouter();
+  //Get Id
+  const parseJwt = (token) => {
+    var base64Url = token?.split(".")[1] || "";
+    var base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
+    var jsonPayload = decodeURIComponent(
+      window
+        .atob(base64)
+        .split("")
+        .map(function (c) {
+          return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
+        })
+        .join("")
+    );
+    if (jsonPayload === "") {
+      return;
+    }
+    return JSON.parse(jsonPayload);
+  };
+
+  useEffect(() => {
+    const userId = parseJwt(token);
+    setId(userId);
+  }, [token]);
+
   const [file, setFile] = useState();
   const router = useRouter();
 
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     if (Object.keys(values).length === 0 || selected === "Seleccionar") {
       return setIsEmpty(true);
     }
+    const body = {
+      name: values.name,
+      description: values.description,
+      price: values.price,
+      existence: values.existence,
+      category: selected,
+      user: id.id,
+      active: active,
+    };
+    const { status } = await postPost(body);
     const data = new FormData();
     const newPrice = parseInt(values.price);
     const newExt = parseInt(values.existence);
